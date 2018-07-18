@@ -12,10 +12,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
+        /// just cheack for commit
     public void signInButtonClickHandler(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+        if (true)
+        {
+            ///
+        }
     }
 
     public void signUpButtonClickHandler(View view) {
