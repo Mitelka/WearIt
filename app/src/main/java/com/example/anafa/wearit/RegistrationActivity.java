@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 public class RegistrationActivity extends AppCompatActivity {
 
     private AutoCompleteTextView mEmailView;
@@ -17,6 +19,12 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText mNicknameView;
     private View mProgressView;
     private View mLoginFormView;
+    private String FirsName;
+    private String lastName;
+    private String nickname;
+    private String EmailAddress;
+    private String Password;
+    private ServerRegistration RegistrationAttempt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,26 +38,26 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText etFirstName = (EditText) findViewById(R.id.firstNameEditText);
-                String entryFirstName = etFirstName.getText().toString();
+                FirsName = etFirstName.getText().toString();
 
                 EditText etLastName = (EditText) findViewById(R.id.lastNameEditText);
-                String entryLastName = etLastName.getText().toString();
+                lastName = etLastName.getText().toString();
 
                 EditText etNickname = (EditText) findViewById(R.id.nicknameEditText);
-                String entryNickname = etNickname.getText().toString();
+                nickname = etNickname.getText().toString();
 
                 EditText etEmailAddress = (EditText) findViewById(R.id.emailAddressEditText);
-                String entryEmailAddress = etEmailAddress.getText().toString();
+                EmailAddress = etEmailAddress.getText().toString();
 
                 EditText etPassword = (EditText) findViewById(R.id.passwordEditText);
-                String entryPassword = etPassword.getText().toString();
+                Password = etPassword.getText().toString();
 
-                Snackbar.make(v, "Hello " + entryFirstName + entryLastName +
-                        "You entered: \n" + " Nickname: " + entryNickname +
-                        "\nEmail: " + entryEmailAddress + "\nPassword: " +
-                        entryPassword + "\n", Snackbar.LENGTH_LONG)
+                Snackbar.make(v, "Hello " + FirsName + lastName +
+                        "You entered: \n" + " Nickname: " + nickname +
+                        "\nEmail: " + EmailAddress + "\nPassword: " +
+                        Password + "\n", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-
+                attemptRegistration();
                 registerButtonClickHandler(v);
             }
         });
@@ -58,14 +66,15 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void attemptRegistration() {
+        boolean RegistrationSuccess;
+        RegistrationAttempt = new ServerRegistration();
 
-        String nickname = mNicknameView.getText().toString();
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        JSONObject RegistrationJson  = RegistrationAttempt.createJSonToServer(FirsName,lastName,nickname,EmailAddress,Password);
+
+        //RegistrationSuccess = RegistrationAttempt.isConnectSucced;
     }
 
     public void registerButtonClickHandler(View view) {
-
 //        Toast.makeText(RegistrationActivity.this,
 //                "You selected sign in with email: " + email + " nickname " + nickname +
 //                        " and your fassword is: " + password,
