@@ -10,15 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView;
-    private EditText mNicknameView;
-    private View mProgressView;
-    private View mLoginFormView;
     private String FirsName;
     private String lastName;
     private String nickname;
@@ -61,17 +57,31 @@ public class RegistrationActivity extends AppCompatActivity {
                 registerButtonClickHandler(v);
             }
         });
-
-
     }
 
     private void attemptRegistration() {
         boolean RegistrationSuccess;
-        RegistrationAttempt = new ServerRegistration();
+        JSONObject RegistrationJson  = createJSonToServer(FirsName,lastName,nickname,EmailAddress,Password);
+        RegistrationAttempt = new ServerRegistration(RegistrationJson);
+        RegistrationSuccess = RegistrationAttempt.sendRequestToserver(RegistrationJson);
+    }
 
-        JSONObject RegistrationJson  = RegistrationAttempt.createJSonToServer(FirsName,lastName,nickname,EmailAddress,Password);
-
-        //RegistrationSuccess = RegistrationAttempt.isConnectSucced;
+    public JSONObject createJSonToServer(String FirsName,String lastName,String nickname, String EmailAddress, String Password)
+    {
+        JSONObject RegistrationJson  = new JSONObject();
+        try {
+            RegistrationJson.put("FirsName", FirsName);
+            RegistrationJson.put("FirsName", lastName);
+            RegistrationJson.put("nickname", nickname);
+            RegistrationJson.put("EmailAddress", EmailAddress);
+            RegistrationJson.put("Password", Password);
+        }
+        catch (JSONException e)
+        {
+            //TODO - Auto-generated catch block
+            e.printStackTrace();
+        }
+        return RegistrationJson;
     }
 
     public void registerButtonClickHandler(View view) {
