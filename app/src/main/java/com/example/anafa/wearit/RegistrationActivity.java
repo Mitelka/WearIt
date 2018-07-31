@@ -21,6 +21,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private String EmailAddress;
     private String Password;
     private ServerRegistration RegistrationAttempt;
+    int i = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
