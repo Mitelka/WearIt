@@ -61,6 +61,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private void attemptRegistration() {
         boolean RegistrationSuccess;
+
         JSONObject RegistrationJson  = createJSonToServer(FirsName,lastName,nickname,EmailAddress,Password);
         RegistrationAttempt = new ServerRegistration(RegistrationJson);
         RegistrationSuccess = RegistrationAttempt.sendRequestToserver(RegistrationJson);
@@ -71,9 +72,9 @@ public class RegistrationActivity extends AppCompatActivity {
         JSONObject RegistrationJson  = new JSONObject();
         try {
             RegistrationJson.put("FirsName", FirsName);
-            RegistrationJson.put("FirsName", lastName);
+            RegistrationJson.put("lastName", lastName);
             RegistrationJson.put("nickname", nickname);
-            RegistrationJson.put("EmailAddress", EmailAddress);
+            RegistrationJson.put("email", EmailAddress);
             RegistrationJson.put("Password", Password);
         }
         catch (JSONException e)
