@@ -5,10 +5,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,10 +18,11 @@ public class RegistrationActivity extends AppCompatActivity {
     private String nickname;
     private String EmailAddress;
     private String Password;
-    private ServerRegistration RegistrationAttempt;
+    private ServerConnector serverConnector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        serverConnector = new ServerConnector();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
@@ -59,12 +58,10 @@ public class RegistrationActivity extends AppCompatActivity {
         });
     }
 
-    private void attemptRegistration() {
-        boolean RegistrationSuccess;
-
+    private void attemptRegistration()
+    {
         JSONObject RegistrationJson  = createJSonToServer(FirsName,lastName,nickname,EmailAddress,Password);
-        RegistrationAttempt = new ServerRegistration(RegistrationJson);
-        RegistrationSuccess = RegistrationAttempt.sendRequestToserver(RegistrationJson);
+        String registrationResponse = serverConnector.sendRequestToServer(RegistrationJson, ServerConnector.RequestType.SIGNUP);
     }
 
     public JSONObject createJSonToServer(String FirsName,String lastName,String nickname, String EmailAddress, String Password)
