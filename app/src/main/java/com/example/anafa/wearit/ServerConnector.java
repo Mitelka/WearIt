@@ -5,6 +5,7 @@ import android.os.StrictMode;
 import com.example.anafa.wearit.DTO.GenericDTO;
 import com.example.anafa.wearit.DTO.SignupDTO;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -51,6 +52,12 @@ public class ServerConnector {
     private void initRequestTypeDtoMap() {
         requestTypeDtoMap = new HashMap<>();
         requestTypeDtoMap.put(RequestType.SIGNUP, SignupDTO.class);
+    }
+
+    public JSONObject createJSonToServer(HashMap<String,String> map)
+    {
+        JSONObject RegistrationJson  = new JSONObject(map);
+        return RegistrationJson;
     }
 
     public String sendRequestToServer(JSONObject jsonBody, RequestType requestType)

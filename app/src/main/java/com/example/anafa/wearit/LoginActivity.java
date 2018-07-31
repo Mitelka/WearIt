@@ -31,7 +31,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -64,6 +67,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mNicknameView;
     private View mProgressView;
     private View mLoginFormView;
+    private ServerConnector serverConnector;
 
     public static final String MESSAGE_KEY = "com.example.anafa.wearit.MESSAGE";
 
@@ -75,6 +79,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
+        serverConnector = new ServerConnector();
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -231,6 +236,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             Intent intent = new Intent(this, UserMenuActivity.class);
             intent.putExtra(MESSAGE_KEY, message);
+
+            HashMap<String,String> mapToSend = new HashMap<String, String>();
+            mapToSend.put("email", email);
+            mapToSend.put("password", password);
+            mapToSend.put("nickname", nickname);
+            JSONObject RegistrationJson  = serverConnector.createJSonToServer(mapToSend);
+            String registrationResponse = serverConnector.sendRequestToServer(RegistrationJson, ServerConnector.RequestType.LOGIN);
+            //TODO: Something with registrationResponse
             startActivity(intent);
 
         }

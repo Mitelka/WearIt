@@ -8,8 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -60,27 +61,17 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private void attemptRegistration()
     {
-        JSONObject RegistrationJson  = createJSonToServer(FirsName,lastName,nickname,EmailAddress,Password);
+        HashMap<String,String> mapToSend = new HashMap<String, String>();
+        mapToSend.put("FirsName", FirsName);
+        mapToSend.put("lastName", lastName);
+        mapToSend.put("nickname", nickname);
+        mapToSend.put("EmailAddress", EmailAddress);
+        mapToSend.put("Password", Password);
+        JSONObject RegistrationJson  = serverConnector.createJSonToServer(mapToSend);
         String registrationResponse = serverConnector.sendRequestToServer(RegistrationJson, ServerConnector.RequestType.SIGNUP);
+        //TODO: Something with registrationResponse
     }
 
-    public JSONObject createJSonToServer(String FirsName,String lastName,String nickname, String EmailAddress, String Password)
-    {
-        JSONObject RegistrationJson  = new JSONObject();
-        try {
-            RegistrationJson.put("FirsName", FirsName);
-            RegistrationJson.put("lastName", lastName);
-            RegistrationJson.put("nickname", nickname);
-            RegistrationJson.put("email", EmailAddress);
-            RegistrationJson.put("Password", Password);
-        }
-        catch (JSONException e)
-        {
-            //TODO - Auto-generated catch block
-            e.printStackTrace();
-        }
-        return RegistrationJson;
-    }
 
     public void registerButtonClickHandler(View view) {
 //        Toast.makeText(RegistrationActivity.this,
