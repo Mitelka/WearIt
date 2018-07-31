@@ -71,7 +71,7 @@ public class ServerRegistration extends AsyncTask<Void, Void, Void> {
         });
 
 
-        new SendDeviceDetails(Serverurl, registrationJson).execute(Serverurl,registrationJson.toString());
+        //new SendDeviceDetails(Serverurl, registrationJson).execute(Serverurl,registrationJson.toString());
 
         /*InputStreamReader respond = null;
         try

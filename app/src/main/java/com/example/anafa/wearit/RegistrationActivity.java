@@ -65,6 +65,7 @@ public class RegistrationActivity extends AppCompatActivity {
         JSONObject RegistrationJson  = createJSonToServer(FirsName,lastName,nickname,EmailAddress,Password);
         RegistrationAttempt = new ServerRegistration(RegistrationJson);
         RegistrationSuccess = RegistrationAttempt.sendRequestToserver(RegistrationJson);
+        int t = 3;
     }
 
     public JSONObject createJSonToServer(String FirsName,String lastName,String nickname, String EmailAddress, String Password)
