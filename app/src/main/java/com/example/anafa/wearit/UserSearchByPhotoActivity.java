@@ -8,14 +8,17 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 public class UserSearchByPhotoActivity extends AppCompatActivity {
 
     private static final Integer REQUEST_CAMERA = 0;
     private static final Integer SELECT_FILE = 1;
     ImageView dynamicImageView;
+    private boolean uploadedImage = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         RadioButton cameraRadioButton = (RadioButton) findViewById(R.id.takePictureCheckBox);
         RadioButton openPhotoFromFileRadioButton = (RadioButton) findViewById(R.id.uploadImageCheckBox);
         dynamicImageView = (ImageView) findViewById(R.id.dynamicPhotoImageView);
+        Button searchImageOnGoogle = (Button)findViewById(R.id.searchButton);
 
         // Take photo from camera
         cameraRadioButton.setOnClickListener(new View.OnClickListener() {
@@ -32,6 +36,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, REQUEST_CAMERA);
+                uploadedImage = true;
             }
         });
 
@@ -42,6 +47,23 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 intent.setType("image/*");
                 startActivityForResult(intent.createChooser(intent, "Select File"), SELECT_FILE);
+                uploadedImage = true;
+            }
+        });
+
+        //search button action
+        searchImageOnGoogle.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if(uploadedImage){
+                    Toast.makeText(UserSearchByPhotoActivity.this, "You selected search by image", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UserSearchByPhotoActivity.this, "Searching image on google", Toast.LENGTH_LONG).show();
+
+                    // TODO: add google image api
+                }
+                else{
+                    Toast.makeText(UserSearchByPhotoActivity.this, "You didn't selected an image to search", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
