@@ -59,6 +59,10 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                 Uri selectImageUri = data.getData();
                 dynamicImageView.setImageURI(selectImageUri);
             }
+
+            //TODO: Delete this after succeed to search photo at Google
+            // update bitmap to be an adidas gazelle photo - adidas_gazelle.jpg
+            dynamicImageView.setImageDrawable(getResources().getDrawable(R.drawable.adidas_gazelle));
         }
     }
 }
