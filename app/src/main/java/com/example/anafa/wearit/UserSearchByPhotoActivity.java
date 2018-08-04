@@ -69,6 +69,9 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                     Toast.makeText(UserSearchByPhotoActivity.this, "Searching image on google", Toast.LENGTH_LONG).show();
 
                     // TODO: add google image api
+
+                    // display results in TextView with scrollView
+                    displayMessageWithResults("This is the results of image search in Google API");
                 }
                 else{
                     Toast.makeText(UserSearchByPhotoActivity.this, "You didn't selected an image to search", Toast.LENGTH_LONG).show();
