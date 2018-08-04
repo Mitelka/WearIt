@@ -96,4 +96,9 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             dynamicImageView.setImageDrawable(getResources().getDrawable(R.drawable.adidas_gazelle));
         }
     }
+
+    public void displayMessageWithResults(String message){
+        mLog.append(message + "\n");
+        mScroll.scrollTo(0, mScroll.getBottom());
+    }
 }
