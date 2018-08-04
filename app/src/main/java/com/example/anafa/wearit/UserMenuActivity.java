@@ -132,6 +132,4 @@ public class UserMenuActivity extends AppCompatActivity
     public void searchButtonClickHandler(View view) {
     }
 
-    public void onClearBtnClick(View view) {
-    }
 }

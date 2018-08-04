@@ -71,6 +71,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                     // TODO: add google image api
 
                     // display results in TextView with scrollView
+                    clearResultsTextView();
                     displayMessageWithResults("This is the results of image search in Google API");
                 }
                 else{
@@ -100,8 +101,17 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         }
     }
 
-    public void displayMessageWithResults(String message){
+    public void displayMessageWithResults(String message) {
         mLog.append(message + "\n");
+        mScroll.scrollTo(0, mScroll.getBottom());
+    }
+
+    public void onClearBtnClick(View view) {
+        clearResultsTextView();
+    }
+
+    private void clearResultsTextView() {
+        mLog.setText("");
         mScroll.scrollTo(0, mScroll.getBottom());
     }
 }
