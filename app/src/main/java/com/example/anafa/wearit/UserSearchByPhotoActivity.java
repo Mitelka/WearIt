@@ -23,6 +23,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     private boolean uploadedImage = false;
     private ScrollView mScroll;
     private TextView mLog;
+    private static final String LOG_TEXT_KEY = "LOG_TEXT_KEY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,5 +114,18 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     private void clearResultsTextView() {
         mLog.setText("");
         mScroll.scrollTo(0, mScroll.getBottom());
+    }
+
+    // save and restore the text printed at TextView
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString(LOG_TEXT_KEY, mLog.getText().toString());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mLog.setText(savedInstanceState.getString(LOG_TEXT_KEY));
     }
 }
