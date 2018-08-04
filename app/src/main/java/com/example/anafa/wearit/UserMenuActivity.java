@@ -129,7 +129,4 @@ public class UserMenuActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void searchButtonClickHandler(View view) {
-    }
-
 }
