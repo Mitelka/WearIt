@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class UserSearchByPhotoActivity extends AppCompatActivity {
@@ -19,6 +21,8 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     private static final Integer SELECT_FILE = 1;
     ImageView dynamicImageView;
     private boolean uploadedImage = false;
+    private ScrollView mScroll;
+    private TextView mLog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,11 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         RadioButton openPhotoFromFileRadioButton = (RadioButton) findViewById(R.id.uploadImageCheckBox);
         dynamicImageView = (ImageView) findViewById(R.id.dynamicPhotoImageView);
         Button searchImageOnGoogle = (Button)findViewById(R.id.searchButton);
+
+        // Initialize the scrollView components
+        mScroll = (ScrollView)findViewById(R.id.scrollLog);
+        mLog = (TextView)findViewById(R.id.tvLog);
+        mLog.setText("");
 
         // Take photo from camera
         cameraRadioButton.setOnClickListener(new View.OnClickListener() {
