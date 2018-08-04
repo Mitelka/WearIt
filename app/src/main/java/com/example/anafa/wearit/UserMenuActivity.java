@@ -2,6 +2,7 @@ package com.example.anafa.wearit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -14,9 +15,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Locale;
 
 public class UserMenuActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, TextToSpeech.OnInitListener {
+
+    private TextToSpeech tts;
+    private boolean ttsInitialized;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +35,10 @@ public class UserMenuActivity extends AppCompatActivity
 
         TextView textView = (TextView) findViewById(R.id.messageDisplayTextView);
         textView.setText("Hello "+ message + "!");
+        //saySomething("Hello "+ message);
+        saySomething(textView.getText().toString());
+
+        tts = new TextToSpeech(getApplicationContext(), this);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -129,4 +140,30 @@ public class UserMenuActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    @Override
+    public void onInit(int status) {
+        if(status == TextToSpeech.SUCCESS) {
+            int result = tts.setLanguage(Locale.US);
+
+            if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                displayMessage("This language isn't supported");
+            } else {
+                ttsInitialized = true;
+            }
+        } else {
+            displayMessage("TTS initialization failed");
+        }
+    }
+
+    private void displayMessage(String message) {
+        Toast.makeText(UserMenuActivity.this, message, Toast.LENGTH_LONG).show();
+    }
+
+    private void saySomething(String speech) {
+        if(!ttsInitialized){
+            displayMessage("TextToSpeech wasn't initialized");
+        } else {
+            tts.speak(speech, TextToSpeech.QUEUE_FLUSH, null, "speech");
+        }
+    }
 }
