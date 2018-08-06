@@ -23,11 +23,13 @@ public class UserSearchByTextActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://www.google.com/search?q=obama";
+                String url = "https://www.google.co.il/search?&q=dog&oq=dog";
+                // {google:baseURL}search?q=%s&{google:RLZ}{google:originalQueryForSuggestion}{google:assistedQueryStats}{google:searchFieldtrialParameter}{google:iOSSearchLanguage}{google:searchClient}{google:sourceId}{google:contextualSearchVersion}ie={inputEncoding}
                 WebView webview = (WebView) findViewById(R.id.myWebView);
                 webview.setWebViewClient(new WebViewClient());
                 webview.getSettings().setJavaScriptEnabled(true);
                 webview.loadUrl(url);
+
 
             }
         });
