@@ -15,6 +15,16 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
 public class UserSearchByPhotoActivity extends AppCompatActivity {
 
     private static final Integer REQUEST_CAMERA = 0;
@@ -70,6 +80,12 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                     Toast.makeText(UserSearchByPhotoActivity.this, "Searching image on google", Toast.LENGTH_LONG).show();
 
                     // TODO: add google image api
+                    try {
+                        searchImageAtGoogleUsingGoogleImageAPI();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(UserSearchByPhotoActivity.this, "Exception!!" + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
 
                     // display results in TextView with scrollView
                     clearResultsTextView();
@@ -127,5 +143,33 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mLog.setText(savedInstanceState.getString(LOG_TEXT_KEY));
+    }
+
+    private void searchImageAtGoogleUsingGoogleImageAPI() throws IOException, JSONException {
+        //TODO: adding code of search image
+        // https.. = The standard URL for the Google Image Search API
+
+        // Required URL arguments:
+        // q = This argument supplies the query, or search expression, that is passed into the searcher.
+        // v = This argument supplies protocol version number.
+
+        // Optional URL arguments:
+        // imgtype=photo = restricts results to photographic images.
+        // rsz=4 = This argument supplies an integer from 1–8 indicating the number of results to return per page.
+        // userip=192.168.0.1 = This argument supplies the IP address of the end-user on whose behalf the request is being made.
+        URL url = new URL("https://ajax.googleapis.com/ajax/services/search/images?" +
+                "v=1.0&q=barack%20obama&imgtype=photo&rsz=4&userip=INSERT-USER-IP");
+        URLConnection connection = url.openConnection();
+        connection.addRequestProperty("Referer", ""/* TODO: Enter the URL of your site here */);
+
+        String line;
+        StringBuilder builder = new StringBuilder();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        while((line = reader.readLine()) != null) {
+            builder.append(line);
+        }
+
+        JSONObject json = new JSONObject(builder.toString());
+        // TODO: now have some fun with the results...
     }
 }
