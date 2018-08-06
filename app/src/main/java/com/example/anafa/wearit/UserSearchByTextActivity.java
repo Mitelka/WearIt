@@ -1,8 +1,10 @@
 package com.example.anafa.wearit;
 
 import android.graphics.Bitmap;
+import android.net.wifi.WifiManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.Formatter;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -23,7 +25,7 @@ public class UserSearchByTextActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://www.google.co.il/search?&q=dog&oq=dog";
+                String url = "https://www.google.co.il/search?&q=dog&oq=dog&userip=" + getUserIPAddress();
                 // {google:baseURL}search?q=%s&{google:RLZ}{google:originalQueryForSuggestion}{google:assistedQueryStats}{google:searchFieldtrialParameter}{google:iOSSearchLanguage}{google:searchClient}{google:sourceId}{google:contextualSearchVersion}ie={inputEncoding}
                 WebView webview = (WebView) findViewById(R.id.myWebView);
                 webview.setWebViewClient(new WebViewClient());
@@ -51,7 +53,15 @@ public class UserSearchByTextActivity extends AppCompatActivity {
 //        }
 //    }
 
+    private String getUserIPAddress() {
+        WifiManager wm = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
+        String userIPAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
 
+        // Only for test
+        Toast.makeText(UserSearchByTextActivity.this, "IP: " + userIPAddress, Toast.LENGTH_LONG).show();
+
+        return userIPAddress;
+    }
 
 
 }
