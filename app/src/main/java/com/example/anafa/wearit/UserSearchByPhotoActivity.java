@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.Formatter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -89,7 +91,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
                     // display results in TextView with scrollView
                     clearResultsTextView();
-                    displayMessageWithResults("This is the results of image search in Google API");
+                    displayMessageWithResults("This is the results of image search in Google API\n");
                 }
                 else{
                     Toast.makeText(UserSearchByPhotoActivity.this, "You didn't selected an image to search", Toast.LENGTH_LONG).show();
@@ -158,7 +160,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         // rsz=4 = This argument supplies an integer from 1–8 indicating the number of results to return per page.
         // userip=192.168.0.1 = This argument supplies the IP address of the end-user on whose behalf the request is being made.
         URL url = new URL("https://ajax.googleapis.com/ajax/services/search/images?" +
-                "v=1.0&q=barack%20obama&imgtype=photo&rsz=4&userip=INSERT-USER-IP");
+                "v=1.0&q=barack%20obama&imgtype=photo&rsz=4&userip=" + getUserIPAddress());
         URLConnection connection = url.openConnection();
         connection.addRequestProperty("Referer", ""/* TODO: Enter the URL of your site here */);
 
@@ -171,5 +173,15 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
         JSONObject json = new JSONObject(builder.toString());
         // TODO: now have some fun with the results...
+    }
+
+    private String getUserIPAddress() {
+        WifiManager wm = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
+        String userIPAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+
+        // Only for test
+        Toast.makeText(UserSearchByPhotoActivity.this, "IP: " + userIPAddress, Toast.LENGTH_LONG).show();
+
+        return userIPAddress;
     }
 }
