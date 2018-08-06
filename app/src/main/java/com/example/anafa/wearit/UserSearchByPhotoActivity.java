@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Map;
 
 public class UserSearchByPhotoActivity extends AppCompatActivity {
 
@@ -87,6 +88,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                         Toast.makeText(UserSearchByPhotoActivity.this, "Exception!!" + e.getMessage(), Toast.LENGTH_LONG).show();
+                        displayMessageWithResults("Exception!!" + e.getMessage() + "\n");
                     }
 
                     // display results in TextView with scrollView
@@ -162,7 +164,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         URL url = new URL("https://ajax.googleapis.com/ajax/services/search/images?" +
                 "v=1.0&q=barack%20obama&imgtype=photo&rsz=4&userip=" + getUserIPAddress());
         URLConnection connection = url.openConnection();
-        connection.addRequestProperty("Referer", ""/* TODO: Enter the URL of your site here */);
+        //connection.addRequestProperty("Referer", ""/* TODO: Enter the URL of your site here */);
 
         String line;
         StringBuilder builder = new StringBuilder();
@@ -172,7 +174,11 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         }
 
         JSONObject json = new JSONObject(builder.toString());
-        // TODO: now have some fun with the results...
+        // TODO: now send to json to server that bring you back the data
+//        //JSONObject movieObject = new JSONObject(String.valueOf(json));
+//        //String title = json.getString("Title");
+//        Toast.makeText(UserSearchByPhotoActivity.this, "Title: " + builder.toString(), Toast.LENGTH_LONG).show();
+//        displayMessageWithResults(builder.toString());
     }
 
     private String getUserIPAddress() {
