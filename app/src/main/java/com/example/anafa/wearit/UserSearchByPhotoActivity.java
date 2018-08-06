@@ -83,13 +83,18 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                     Toast.makeText(UserSearchByPhotoActivity.this, "Searching image on google", Toast.LENGTH_LONG).show();
 
                     // TODO: add google image api
-                    try {
-                        searchImageAtGoogleUsingGoogleImageAPI();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Toast.makeText(UserSearchByPhotoActivity.this, "Exception!!" + e.getMessage(), Toast.LENGTH_LONG).show();
-                        displayMessageWithResults("Exception!!" + e.getMessage() + "\n");
-                    }
+                    //search Image At Google Using Google ImageAPI()
+//                    try {
+//                        searchImageAtGoogleUsingGoogleImageAPI();
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                        Toast.makeText(UserSearchByPhotoActivity.this, "Exception!!" + e.getMessage(), Toast.LENGTH_LONG).show();
+//                        displayMessageWithResults("Exception!!" + e.getMessage() + "\n");
+//                    }
+
+
+                    //TODO: implement function
+                    searchImageAtGoogle();
 
                     // display results in TextView with scrollView
                     clearResultsTextView();
@@ -189,5 +194,10 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         Toast.makeText(UserSearchByPhotoActivity.this, "IP: " + userIPAddress, Toast.LENGTH_LONG).show();
 
         return userIPAddress;
+    }
+
+    private void searchImageAtGoogle() {
+        String query = "obama"; // Get the text from EditText here
+        String url = "https://www.google.com/search?q="+query;
     }
 }

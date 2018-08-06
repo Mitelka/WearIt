@@ -61,6 +61,27 @@
 
 
         </LinearLayout>
+
+
+        <WebView
+            android:id="@+id/myWebView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ScrollView
+            android:id="@+id/scrollWebLog"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/linearLayout"
+            android:layout_margin="16dp">
+
+
+
+
+        </ScrollView>
+
+
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
