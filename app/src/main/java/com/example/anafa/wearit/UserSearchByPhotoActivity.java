@@ -212,18 +212,10 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     }
 
     private void searchImageAtGoogle() throws IOException, JSONException {
-//        String query = "obama"; // Get the text from EditText here
-//        String url = "https://www.google.com/search?q="+query;
-        String beginningUrl = "https://www.googleapis.com/customsearch/v1?";
-        String apiKey = " ";
-        String customSearchEngineID = " ";
-        String searchQuery = "dog";
+        String urlString = createStringURL();
 
         InputMethodManager inputManager = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-
-        displayMessageWithResults("Searching for: " + searchQuery + "\n");
-        String urlString = beginningUrl + "key=" + apiKey + "&cx=" + customSearchEngineID + "&q=" + searchQuery;
 
         URL url = new URL(urlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -286,11 +278,13 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
     private String createStringURL() {
         String beginningUrl = "https://www.googleapis.com/customsearch/v1?";
-        String apiKey = "AIzaSyA0j1WIN3jBR9BTHkaGSU8uiQLLpNdYxdA";
-        String customSearchEngineID = "017133992413832849692:6zptmd-pqa4";
+        String apiKey = " ";
+        String customSearchEngineID = " ";
+        String searchQuery = "barak obma";
 
-        String searchQuery = "dog";
-        //String searchQueryWithoutSpaces = searchQuery.replace(" ", "+");
+        if(searchQuery.contains(" ")) {
+            searchQuery = searchQuery.replace(" ", "+");
+        }
 
         displayMessageWithResults("Searching for: " + searchQuery + "\n");
         String urlString = beginningUrl + "key=" + apiKey + "&cx=" + customSearchEngineID + "&q=" + searchQuery;
