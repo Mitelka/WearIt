@@ -211,22 +211,13 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     }
 
     private void searchImageAtGoogleWithCustomSearch() {
-        String beginningUrl = "https://www.googleapis.com/customsearch/v1?";
-        String apiKey = "AIzaSyA0j1WIN3jBR9BTHkaGSU8uiQLLpNdYxdA";
-        String customSearchEngineID = "017133992413832849692:6zptmd-pqa4";
-        String searchQuery = "dog";
-
-        String urlString = beginningUrl + "key=" + apiKey + "&cx=" + customSearchEngineID + "&q=" + searchQuery;
-
-        displayMessageWithResults("Searching for: " + searchQuery + "\n");
+        String urlString = createStringURL();
 
         //hide keyboard
         InputMethodManager inputManager = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
-        // TODO: delete spaces
-
-        // builden URL
+        // building URL
         URL url = null;
         try {
             url = new URL(urlString);
@@ -239,15 +230,26 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         searchTask.execute(url);
     }
 
+    private String createStringURL() {
+        String beginningUrl = "https://www.googleapis.com/customsearch/v1?";
+        String apiKey = "AIzaSyA0j1WIN3jBR9BTHkaGSU8uiQLLpNdYxdA";
+        String customSearchEngineID = "017133992413832849692:6zptmd-pqa4";
+        String searchQuery = "dog";
+        String searchQueryWithoutSpaces = searchQuery.replace(" ", "+");
+
+        displayMessageWithResults("Searching for: " + searchQuery + "\n");
+        String urlString = beginningUrl + "key=" + apiKey + "&cx=" + customSearchEngineID + "&q=" + searchQueryWithoutSpaces;
+
+        return urlString;
+    }
+
     private class GoogleSearchAsyncTask extends AsyncTask<URL, Integer, String> {
         Integer responseCode = null;
         String responseMessage = "";
         String result = null;
 
-
         @Override
         protected String doInBackground(URL... urls) {
-
             URL url = urls[0];
 
             // Http connection
@@ -255,26 +257,21 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             try {
                 conn = (HttpURLConnection) url.openConnection();
             } catch (IOException e) {
-
-                //Log.e(TAG, "Http connection ERROR " + e.toString());
+                Toast.makeText(UserSearchByPhotoActivity.this, "Http connection ERROR " + e.toString(), Toast.LENGTH_LONG).show();
             }
-
 
             try {
                 responseCode = conn.getResponseCode();
                 responseMessage = conn.getResponseMessage();
             } catch (IOException e) {
-                //Log.e(TAG, "Http getting response code ERROR " + e.toString());
+                Toast.makeText(UserSearchByPhotoActivity.this, "Http getting response code ERROR " + e.toString(), Toast.LENGTH_LONG).show();
             }
 
-            //Log.d(TAG, "Http response code =" + responseCode + " message=" + responseMessage);
+            Toast.makeText(UserSearchByPhotoActivity.this, "Http response code =" + responseCode + " message=" + responseMessage, Toast.LENGTH_LONG).show();
 
             try {
 
-                if(responseCode == 200) {
-
-                    // response OK
-
+                if(responseCode == 200) { // response OK
                     BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     StringBuilder sb = new StringBuilder();
                     String line;
@@ -282,53 +279,34 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                     while ((line = rd.readLine()) != null) {
                         sb.append(line + "\n");
                     }
+
                     rd.close();
-
                     conn.disconnect();
-
                     result = sb.toString();
 
-                    //Log.d(TAG, "result=" + result);
+                    Toast.makeText(UserSearchByPhotoActivity.this, "result=" + result, Toast.LENGTH_LONG).show();
 
                     return result;
 
-                }else{
-
-                    // response problem
-
+                }else{ // response problem
                     String errorMsg = "Http ERROR response " + responseMessage + "\n" + "Make sure to replace in code your own Google API key and Search Engine ID";
-                    //Log.e(TAG, errorMsg);
-                    result = errorMsg;
-                    return  result;
 
+                    Toast.makeText(UserSearchByPhotoActivity.this, errorMsg, Toast.LENGTH_LONG).show();
+
+                    result = errorMsg;
+
+                    return  result;
                 }
             } catch (IOException e) {
-                //Log.e(TAG, "Http Response ERROR " + e.toString());
+                Toast.makeText(UserSearchByPhotoActivity.this, "Http Response ERROR " + e.toString(), Toast.LENGTH_LONG).show();
             }
 
 
             return null;
         }
 
-        protected void onProgressUpdate(Integer... progress) {
-            //Log.d(TAG, "AsyncTask - onProgressUpdate, progress=" + progress);
-
-        }
-
         protected void onPostExecute(String result) {
-
-            //Log.d(TAG, "AsyncTask - onPostExecute, result=" + result);
-
-            // hide progressbar
-            //progressBar.setVisibility(View.GONE);
-
-            // make TextView scrollable
-            //resultTextView.setMovementMethod(new ScrollingMovementMethod());
-
-            // show result
-            //resultTextView.setText(result);
             displayMessageWithResults(result);
-
         }
 
 
