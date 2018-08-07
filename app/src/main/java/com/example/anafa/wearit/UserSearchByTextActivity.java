@@ -26,12 +26,17 @@ public class UserSearchByTextActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String txtToSearch = text.getText().toString();
-                String url = "https://www.google.co.il/search?&q=" + txtToSearch + "&oq=" + txtToSearch + "&userip=" + getUserIPAddress();
-                // {google:baseURL}search?q=%s&{google:RLZ}{google:originalQueryForSuggestion}{google:assistedQueryStats}{google:searchFieldtrialParameter}{google:iOSSearchLanguage}{google:searchClient}{google:sourceId}{google:contextualSearchVersion}ie={inputEncoding}
-                WebView webview = (WebView) findViewById(R.id.myWebView);
-                webview.setWebViewClient(new WebViewClient());
-                webview.getSettings().setJavaScriptEnabled(true);
-                webview.loadUrl(url);
+                Toast.makeText(UserSearchByTextActivity.this, "product name to search: " + txtToSearch , Toast.LENGTH_LONG).show();
+                if(txtToSearch != "") {
+                    String url = "https://www.google.co.il/search?&q=" + txtToSearch + "&oq=" + txtToSearch + "&userip=" + getUserIPAddress();
+                    // {google:baseURL}search?q=%s&{google:RLZ}{google:originalQueryForSuggestion}{google:assistedQueryStats}{google:searchFieldtrialParameter}{google:iOSSearchLanguage}{google:searchClient}{google:sourceId}{google:contextualSearchVersion}ie={inputEncoding}
+                    WebView webview = (WebView) findViewById(R.id.myWebView);
+                    webview.setWebViewClient(new WebViewClient());
+                    webview.getSettings().setJavaScriptEnabled(true);
+                    webview.loadUrl(url);
+                } else {
+                    Toast.makeText(UserSearchByTextActivity.this, "You didn't entered product name to search" , Toast.LENGTH_LONG).show();
+                }
 
 
             }
@@ -58,8 +63,8 @@ public class UserSearchByTextActivity extends AppCompatActivity {
         WifiManager wm = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
         String userIPAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
 
-        // Only for test
-        Toast.makeText(UserSearchByTextActivity.this, "IP: " + userIPAddress, Toast.LENGTH_LONG).show();
+//        // Only for test
+//        Toast.makeText(UserSearchByTextActivity.this, "IP: " + userIPAddress, Toast.LENGTH_LONG).show();
 
         return userIPAddress;
     }
