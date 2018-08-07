@@ -282,12 +282,14 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         String customSearchEngineID = " ";
         String searchQuery = "barak obma";
 
+        displayMessageWithResults("Searching for: " + searchQuery + "\n");
+
         if(searchQuery.contains(" ")) {
             searchQuery = searchQuery.replace(" ", "+");
         }
 
-        displayMessageWithResults("Searching for: " + searchQuery + "\n");
-        String urlString = beginningUrl + "key=" + apiKey + "&cx=" + customSearchEngineID + "&q=" + searchQuery;
+        String urlString = beginningUrl + "key=" + apiKey + "&cx=" + customSearchEngineID + "&q=" + searchQuery+ "&quotaUser" + getUserIPAddress();
+        //+ "&searchType=image"
 
         return urlString;
     }
