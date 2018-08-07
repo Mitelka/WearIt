@@ -232,13 +232,13 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
     private String createStringURL() {
         String beginningUrl = "https://www.googleapis.com/customsearch/v1?";
-        String apiKey = "AIzaSyA0j1WIN3jBR9BTHkaGSU8uiQLLpNdYxdA";
-        String customSearchEngineID = "017133992413832849692:6zptmd-pqa4";
+        String apiKey = " ";
+        String customSearchEngineID = " ";
         String searchQuery = "dog";
-        String searchQueryWithoutSpaces = searchQuery.replace(" ", "+");
+        //String searchQueryWithoutSpaces = searchQuery.replace(" ", "+");
 
         displayMessageWithResults("Searching for: " + searchQuery + "\n");
-        String urlString = beginningUrl + "key=" + apiKey + "&cx=" + customSearchEngineID + "&q=" + searchQueryWithoutSpaces;
+        String urlString = beginningUrl + "key=" + apiKey + "&cx=" + customSearchEngineID + "&q=" + searchQuery;
 
         return urlString;
     }
