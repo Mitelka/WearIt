@@ -94,7 +94,8 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
 
                     //TODO: implement function
-                    searchImageAtGoogle();
+                    //searchImageAtGoogle();
+                    searchImageAtGoogleWithCustomSearch();
 
                     // display results in TextView with scrollView
                     clearResultsTextView();
@@ -199,5 +200,14 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     private void searchImageAtGoogle() {
         String query = "obama"; // Get the text from EditText here
         String url = "https://www.google.com/search?q="+query;
+    }
+
+    private void searchImageAtGoogleWithCustomSearch() {
+        String beginningUrl = "https://www.googleapis.com/customsearch/v1?";
+        String apiKey = "AIzaSyA0j1WIN3jBR9BTHkaGSU8uiQLLpNdYxdA";
+        String customSearchEngineID = "017133992413832849692:6zptmd-pqa4";
+        String searchQuery = "dog";
+
+        String url = beginningUrl + "key=" + apiKey + "&cx=" + customSearchEngineID + "&q=" + searchQuery;
     }
 }
