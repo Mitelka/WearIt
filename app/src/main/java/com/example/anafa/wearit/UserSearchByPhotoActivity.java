@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -32,6 +33,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Map;
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.android.MediaManager;
+import com.cloudinary.utils.ObjectUtils;
 
 public class UserSearchByPhotoActivity extends AppCompatActivity {
 
@@ -42,6 +47,8 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     private ScrollView mScroll;
     public TextView mLog;
     private static final String LOG_TEXT_KEY = "LOG_TEXT_KEY";
+    Boolean isUploadPhotoSelected = false;
+    String imageUrlString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +93,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                 if(uploadedImage){
                     Toast.makeText(UserSearchByPhotoActivity.this, "You selected search by image", Toast.LENGTH_LONG).show();
                     Toast.makeText(UserSearchByPhotoActivity.this, "Searching image on google", Toast.LENGTH_LONG).show();
-
 
                     // TODO: add google image api
                     //search Image At Google Using Google ImageAPI()
@@ -135,6 +141,10 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             } else if(requestCode == SELECT_FILE){
                 Uri selectImageUri = data.getData();
                 dynamicImageView.setImageURI(selectImageUri);
+                isUploadPhotoSelected = true;
+                displayMessageWithResults("isUploadPhotoSelected = " + isUploadPhotoSelected);
+                imageUrlString = selectImageUri.toString();
+                displayMessageWithResults("selectImageUri = " + imageUrlString);
             }
 
             //TODO: Delete this after succeed to search photo at Google
@@ -279,8 +289,8 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
     private String createStringURL() {
         String beginningUrl = "https://www.googleapis.com/customsearch/v1?";
-        String apiKey = " ";
-        String customSearchEngineID = " ";
+        String apiKey = "AIzaSyA0j1WIN3jBR9BTHkaGSU8uiQLLpNdYxdA";
+        String customSearchEngineID = "017133992413832849692:6zptmd-pqa4";
         String searchQuery = "barak obma";
 
         displayMessageWithResults("Searching for: " + searchQuery + "\n");
