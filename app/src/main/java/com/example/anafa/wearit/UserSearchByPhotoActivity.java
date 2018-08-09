@@ -105,7 +105,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 //                    }
 
 
-                    if(isUploadPhotoSelected) { // Try to search by photo that uploaded by the user
+                    if(isUploadPhotoSelected) { //TODO: Try to search by photo that uploaded by the user
                         //displayMessageWithResults("StartUrl = http://www.google.com/searchbyimage?hl=en&image_url=");
                         //displayMessageWithResults("EndUrl = " + imageUrlString);
                         String newUrl = "https://www.google.com/searchbyimage?&image_url=" + imageUrlString;
@@ -259,6 +259,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
              Toast.makeText(UserSearchByPhotoActivity.this, errorMsg, Toast.LENGTH_LONG).show();
          }
 
+         //TODO: send this json to server - EREZ
          JSONObject json = new JSONObject(builder.toString());
 
          displayMessageWithResults(builder.toString());
@@ -295,6 +296,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 //        searchTask.execute(url);
 //    }
 
+    //TODO: Delete apiKey and customSearchEngineID!!!
     private String createStringURL() {
         String beginningUrl = "https://www.googleapis.com/customsearch/v1?";
         String apiKey = " ";
