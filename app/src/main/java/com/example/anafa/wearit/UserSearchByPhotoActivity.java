@@ -105,6 +105,14 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 //                    }
 
 
+                    if(isUploadPhotoSelected) { // Try to search by photo that uploaded by the user
+                        //displayMessageWithResults("StartUrl = http://www.google.com/searchbyimage?hl=en&image_url=");
+                        //displayMessageWithResults("EndUrl = " + imageUrlString);
+                        String newUrl = "https://www.google.com/searchbyimage?&image_url=" + imageUrlString;
+                        //displayMessageWithResults("newUrl = " + newUrl);
+                    }
+
+
                     //TODO: implement function
                     try {
                         searchImageAtGoogle();
@@ -289,8 +297,8 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
     private String createStringURL() {
         String beginningUrl = "https://www.googleapis.com/customsearch/v1?";
-        String apiKey = "AIzaSyA0j1WIN3jBR9BTHkaGSU8uiQLLpNdYxdA";
-        String customSearchEngineID = "017133992413832849692:6zptmd-pqa4";
+        String apiKey = " ";
+        String customSearchEngineID = " ";
         String searchQuery = "barak obma";
 
         displayMessageWithResults("Searching for: " + searchQuery + "\n");
