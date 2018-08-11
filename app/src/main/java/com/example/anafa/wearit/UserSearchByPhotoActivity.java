@@ -305,7 +305,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         String beginningUrl = "https://www.googleapis.com/customsearch/v1?";
         String apiKey = "";
         String customSearchEngineID = "";
-        String searchQuery = "barak obma";
+        String searchQuery = "zinedine zidane";
 
         displayMessageWithResults("Searching for: " + searchQuery + "\n");
 
