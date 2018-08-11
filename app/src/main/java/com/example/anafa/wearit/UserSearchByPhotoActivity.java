@@ -49,6 +49,8 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     private static final String LOG_TEXT_KEY = "LOG_TEXT_KEY";
     Boolean isUploadPhotoSelected = false;
     String imageUrlString;
+    private ServerConnector serverConnector;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -259,8 +261,10 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
              Toast.makeText(UserSearchByPhotoActivity.this, errorMsg, Toast.LENGTH_LONG).show();
          }
 
-         //TODO: send this json to server - EREZ
-         JSONObject json = new JSONObject(builder.toString());
+         serverConnector = new ServerConnector();
+         JSONObject GoogleSearchjson = new JSONObject(builder.toString());
+         String GoogleSearchResponse = serverConnector.sendRequestToServer(GoogleSearchjson, ServerConnector.RequestType.GoogleSearch);
+        //TODO: DO somtehing with the GoogleSearchResponse
 
          displayMessageWithResults(builder.toString());
     }
@@ -299,8 +303,8 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     //TODO: Delete apiKey and customSearchEngineID!!!
     private String createStringURL() {
         String beginningUrl = "https://www.googleapis.com/customsearch/v1?";
-        String apiKey = " ";
-        String customSearchEngineID = " ";
+        String apiKey = "";
+        String customSearchEngineID = "";
         String searchQuery = "barak obma";
 
         displayMessageWithResults("Searching for: " + searchQuery + "\n");
