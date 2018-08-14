@@ -250,7 +250,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             toast.show();
         }
 
-
     }
 
 //    private void searchImageAtGoogleWithCustomSearch() {

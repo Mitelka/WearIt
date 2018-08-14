@@ -61,7 +61,7 @@ public class GoogleSearch
         String beginningUrl = "https://www.googleapis.com/customsearch/v1?";
         String apiKey = "";
         String customSearchEngineID = "";
-        String searchQuery = " leo messi";
+        String searchQuery = " red shirt";
 
         if(searchQuery.contains(" ")) {
             searchQuery = searchQuery.replace(" ", "+");
