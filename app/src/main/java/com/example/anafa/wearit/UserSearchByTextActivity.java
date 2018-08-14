@@ -38,14 +38,14 @@ public class UserSearchByTextActivity extends AppCompatActivity {
                     Toast.makeText(UserSearchByTextActivity.this, "You didn't entered product name to search" , Toast.LENGTH_LONG).show();
                 }
 
-
             }
         });
     }
 
+
+
     public void searchButtonClickHandler(View view) {
     }
-
 //    public class MyWebViewClient extends WebViewClient {
 //        public MyWebViewClient(UserSearchByTextActivity userSearchByTextActivity) {
 //            public MyWebViewClient() {

@@ -80,7 +80,8 @@ public class ServerConnector {
 
             //Get Response
             InputStream is;
-            if (client.getResponseCode() == 200) {
+            if (client.getResponseCode() == 200)
+            {
                 is = client.getInputStream();
             } else {
                 is = client.getErrorStream();

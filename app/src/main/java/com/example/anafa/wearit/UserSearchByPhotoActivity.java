@@ -50,7 +50,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     Boolean isUploadPhotoSelected = false;
     String imageUrlString;
     private ServerConnector serverConnector;
-
+    private GoogleSearch googleSearch = new GoogleSearch();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,13 +116,9 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
 
                     //TODO: implement function
-                    try {
+
                         searchImageAtGoogle();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+
                     //searchImageAtGoogleWithCustomSearch();
 
                     // display results in TextView with scrollView
@@ -232,41 +228,29 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         return userIPAddress;
     }
 
-    private void searchImageAtGoogle() throws IOException, JSONException {
-        String urlString = createStringURL();
-
+    private void searchImageAtGoogle()
+    {
+        String responseMessage;
         InputMethodManager inputManager = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
-        URL url = new URL(urlString);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        try
+        {
+            responseMessage = googleSearch.searchImageAtGoogle();
 
-        String line;
-        StringBuilder builder = new StringBuilder();
-        Integer responseCode = connection.getResponseCode();
-        String responseMessage = connection.getResponseMessage();
+            displayMessageWithResults(responseMessage);
+            serverConnector = new ServerConnector();
+            JSONObject GoogleSearchjson = new JSONObject(responseMessage);
+            String GoogleSearchResponse = serverConnector.sendRequestToServer(GoogleSearchjson, ServerConnector.RequestType.GoogleSearch);
+            //TODO: DO somtehing with the GoogleSearchResponse
+        }
+        catch (Exception e)
+        {
+            Toast toast = Toast.makeText(this, "Cannot connect googleSearch", Toast.LENGTH_SHORT);
+            toast.show();
+        }
 
-         if(responseCode == 200) { // response OK
-             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-             while ((line = reader.readLine()) != null) {
-                 builder.append(line + "\n");
-             }
-
-             reader.close();
-             connection.disconnect();
-         }else{ // response problem
-             String errorMsg = "Http ERROR response " + responseMessage + "\n" + "Make sure to replace in code your own Google API key and Search Engine ID";
-
-             Toast.makeText(UserSearchByPhotoActivity.this, errorMsg, Toast.LENGTH_LONG).show();
-         }
-
-         serverConnector = new ServerConnector();
-         JSONObject GoogleSearchjson = new JSONObject(builder.toString());
-         String GoogleSearchResponse = serverConnector.sendRequestToServer(GoogleSearchjson, ServerConnector.RequestType.GoogleSearch);
-        //TODO: DO somtehing with the GoogleSearchResponse
-
-         displayMessageWithResults(builder.toString());
     }
 
 //    private void searchImageAtGoogleWithCustomSearch() {
@@ -299,25 +283,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 //        GoogleSearchAsyncTask searchTask = new GoogleSearchAsyncTask();
 //        searchTask.execute(url);
 //    }
-
-    //TODO: Delete apiKey and customSearchEngineID!!!
-    private String createStringURL() {
-        String beginningUrl = "https://www.googleapis.com/customsearch/v1?";
-        String apiKey = "";
-        String customSearchEngineID = "";
-        String searchQuery = "zinedine zidane";
-
-        displayMessageWithResults("Searching for: " + searchQuery + "\n");
-
-        if(searchQuery.contains(" ")) {
-            searchQuery = searchQuery.replace(" ", "+");
-        }
-
-        String urlString = beginningUrl + "key=" + apiKey + "&cx=" + customSearchEngineID + "&q=" + searchQuery+ "&quotaUser" + getUserIPAddress();
-        //+ "&searchType=image"
-
-        return urlString;
-    }
 
 //    private class GoogleSearchAsyncTask extends AsyncTask<URL, Integer, String> {
 //        Integer responseCode = null;
