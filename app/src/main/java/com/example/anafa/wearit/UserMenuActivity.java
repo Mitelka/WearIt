@@ -123,7 +123,11 @@ public class UserMenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         } else if (id == R.id.nav_switch_user) {
+            //TODO: Log off from current user
 
+            //Switch to LoginActivity to make login from another user
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_log_off) {
 
         }
