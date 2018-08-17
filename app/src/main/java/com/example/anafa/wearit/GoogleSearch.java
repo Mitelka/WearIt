@@ -23,16 +23,17 @@ import java.util.List;
 
 public class GoogleSearch
 {
+    String searchQuery = "";
 
     public GoogleSearch()
     {
     }
 
-    public String searchImageAtGoogle() throws IOException, JSONException
+    public String searchAtGoogle(String searchString) throws IOException
     {
-        String urlString = createStringURL();
+        String fullurlString = createStringURL(searchString);
 
-        URL url = new URL(urlString);
+        URL url = new URL(fullurlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         String line;
         StringBuilder responsebuilder = new StringBuilder();
@@ -57,11 +58,12 @@ public class GoogleSearch
             return responsebuilder.toString();
     }
 
-    private String createStringURL() {
-        String beginningUrl = "https://www.googleapis.com/customsearch/v1?";
-        String apiKey = "";
-        String customSearchEngineID = "";
-        String searchQuery = " red shirt";
+    private String createStringURL(String searchString)
+    {
+        String beginningUrl = "https://www.googleapis.com/customsearch/v1/siterestrict?";
+        String apiKey = "AIzaSyDo1bwMTQdoCaSTL-w41PY5uA4w2R0s1OQ";
+        String customSearchEngineID = "012620021035627110891:0qjq-estbfm";
+        searchQuery = searchString;
 
         if(searchQuery.contains(" ")) {
             searchQuery = searchQuery.replace(" ", "+");

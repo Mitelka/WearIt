@@ -236,13 +236,13 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
         try
         {
-            responseMessage = googleSearch.searchImageAtGoogle();
+            responseMessage = googleSearch.searchAtGoogle("Red Shirt");
 
             displayMessageWithResults(responseMessage);
             serverConnector = new ServerConnector();
             JSONObject GoogleSearchjson = new JSONObject(responseMessage);
             String GoogleSearchResponse = serverConnector.sendRequestToServer(GoogleSearchjson, ServerConnector.RequestType.GoogleSearch);
-            //TODO: DO somtehing with the GoogleSearchResponse
+            //TODO: DO something with the GoogleSearchResponse
         }
         catch (Exception e)
         {
@@ -251,105 +251,5 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         }
 
     }
-
-//    private void searchImageAtGoogleWithCustomSearch() {
-//        //String urlString = createStringURL();
-//        String beginningUrl = "https://www.googleapis.com/customsearch/v1?";
-//        String apiKey = "AIzaSyA0j1WIN3jBR9BTHkaGSU8uiQLLpNdYxdA";
-//        String customSearchEngineID = "017133992413832849692:6zptmd-pqa4";
-//
-//        String searchQuery = "dog";
-//        //String searchQueryWithoutSpaces = searchQuery.replace(" ", "+");
-//
-//
-//
-//        //hide keyboard
-//        InputMethodManager inputManager = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
-//        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-//
-//        displayMessageWithResults("Searching for: " + searchQuery + "\n");
-//        String urlString = beginningUrl + "key=" + apiKey + "&cx=" + customSearchEngineID + "&q=" + searchQuery;
-//
-//        // building URL
-//        URL url = null;
-//        try {
-//            url = new URL(urlString);
-//        } catch (MalformedURLException e) {
-//            Toast.makeText(UserSearchByPhotoActivity.this, "ERROR: CANOT CONVERT URL", Toast.LENGTH_LONG).show();
-//        }
-//
-//        // start AsyncTask
-//        GoogleSearchAsyncTask searchTask = new GoogleSearchAsyncTask();
-//        searchTask.execute(url);
-//    }
-
-//    private class GoogleSearchAsyncTask extends AsyncTask<URL, Integer, String> {
-//        Integer responseCode = null;
-//        String responseMessage = "";
-//        String result = null;
-//
-//        @Override
-//        protected String doInBackground(URL... urls) {
-//            URL url = urls[0];
-//
-//            // Http connection
-//            HttpURLConnection conn = null;
-//            try {
-//                conn = (HttpURLConnection) url.openConnection();
-//            } catch (IOException e) {
-//                Toast.makeText(UserSearchByPhotoActivity.this, "Http connection ERROR " + e.toString(), Toast.LENGTH_LONG).show();
-//            }
-//
-//            try {
-//                responseCode = conn.getResponseCode();
-//                responseMessage = conn.getResponseMessage();
-//            } catch (IOException e) {
-//                Toast.makeText(UserSearchByPhotoActivity.this, "Http getting response code ERROR " + e.toString(), Toast.LENGTH_LONG).show();
-//            }
-//
-//            Toast.makeText(UserSearchByPhotoActivity.this, "Http response code =" + responseCode + " message=" + responseMessage, Toast.LENGTH_LONG).show();
-//
-//            try {
-//
-//                if(responseCode == 200) { // response OK
-//                    BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-//                    StringBuilder sb = new StringBuilder();
-//                    String line;
-//
-//                    while ((line = rd.readLine()) != null) {
-//                        sb.append(line + "\n");
-//                    }
-//
-//                    rd.close();
-//                    conn.disconnect();
-//                    result = sb.toString();
-//
-//                    Toast.makeText(UserSearchByPhotoActivity.this, "result=" + result, Toast.LENGTH_LONG).show();
-//
-//                    return result;
-//
-//                }else{ // response problem
-//                    String errorMsg = "Http ERROR response " + responseMessage + "\n" + "Make sure to replace in code your own Google API key and Search Engine ID";
-//
-//                    Toast.makeText(UserSearchByPhotoActivity.this, errorMsg, Toast.LENGTH_LONG).show();
-//
-//                    result = errorMsg;
-//
-//                    return  result;
-//                }
-//            } catch (IOException e) {
-//                Toast.makeText(UserSearchByPhotoActivity.this, "Http Response ERROR " + e.toString(), Toast.LENGTH_LONG).show();
-//            }
-//
-//
-//            return null;
-//        }
-//
-//        protected void onPostExecute(String result) {
-//            displayMessageWithResults(result);
-//        }
-//
-//
-//    }
 
 }
