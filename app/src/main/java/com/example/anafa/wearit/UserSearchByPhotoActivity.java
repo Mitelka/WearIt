@@ -5,13 +5,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.format.Formatter;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -25,18 +22,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Map;
-
-import com.cloudinary.Cloudinary;
-import com.cloudinary.android.MediaManager;
-import com.cloudinary.utils.ObjectUtils;
 
 public class UserSearchByPhotoActivity extends AppCompatActivity {
 
