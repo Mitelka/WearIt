@@ -43,7 +43,7 @@
             android:orientation="vertical"
             android:paddingTop="10dp"
             android:text="@string/about_title"
-            android:textColor="@color/blackColor"
+            android:textColor="@color/darkBlueColor"
             android:textSize="20sp" />
 
         <ScrollView
@@ -84,8 +84,9 @@
             android:orientation="vertical"
             android:paddingTop="10dp"
             android:text="@string/team_members_title"
-            android:textColor="@color/blackColor"
-            android:textSize="20sp" />
+            android:textColor="@color/darkBlueColor"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -100,29 +101,40 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        app:srcCompat="@drawable/wearitphoto"/>
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/anafa_hyams" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Anafa"/>
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/arblanca"
+                        android:textStyle="bold"
+                        android:text="Anafa Hyams" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_weight="1">
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        app:srcCompat="@drawable/wearitphoto" />
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/erez_mitelka" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Erez"/>
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/arblanca"
+                        android:textStyle="bold"
+                        android:text="Erez Mitelka"/>
                 </LinearLayout>
 
 
@@ -131,34 +143,46 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        app:srcCompat="@drawable/wearitphoto"/>
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/naor_levi"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Naor"/>
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/arblanca"
+                        android:textStyle="bold"
+                        android:text="Naor Levi"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_weight="1">
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        app:srcCompat="@drawable/wearitphoto" />
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/matan_frank" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Matan"/>
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/arblanca"
+                        android:textStyle="bold"
+                        android:text="Matan Frank"/>
                 </LinearLayout>
 
 
