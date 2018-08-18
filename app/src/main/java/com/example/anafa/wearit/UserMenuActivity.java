@@ -140,7 +140,16 @@ public class UserMenuActivity extends AppCompatActivity
             startActivity(Intent.createChooser(i, "choose where to share this application"));
 
         } else if (id == R.id.nav_send) {
+            Intent i = new Intent(Intent.ACTION_SEND);
 
+            i.setType("message/rfc822");
+            i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"wearitapp2018@gmail.com"});
+            i.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+            i.putExtra(Intent.EXTRA_TEXT   , "Write email");
+
+            startActivity(Intent.createChooser(i, "Send mail..."));
+
+            //Toast.makeText(UserMenuActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_switch_user) {
             //TODO: Log off from current user
 
