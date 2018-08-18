@@ -1,5 +1,6 @@
 package com.example.anafa.wearit;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -103,6 +104,7 @@ public class UserMenuActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        //TODO: Deleting the start activity on each condition and adding it outside the loop
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
@@ -117,7 +119,8 @@ public class UserMenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_about) {
-
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

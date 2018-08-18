@@ -64,6 +64,10 @@
     <string name="upload_an_image">Upload an image</string>
     <string name="take_a_picture">Take a picture from camera</string>
     <string name="title_search_product">Search Product</string>
+    <string name="about_title">about</string>
+    <string name="about_app_details">We at WearIt! believes that everyone\'s shopping experience should be simple, fast, efficient and cost-effective.\nOur app allows you to search for clothing items by name or even a picture of the item that a friend sent to your phone or even by a photo that you take of someone clothes in the street.\nThe app searches the item on selected shopping sites throughout the Internet and returns the user the best results combined with several parameters: price, rating and maximum matching to the search request.\nAll this allows you to find the cheapest and most recommended item on the net!</string>
+    <string name="about_close_sent_app_details">Hope you will enjoy doing shopping with us!</string>
+    <string name="team_members_title">Team Members</string>
 
 
 </resources>

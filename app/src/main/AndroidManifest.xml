@@ -38,12 +38,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".UserSearchByTextActivity"
-            android:label="@string/title_search_product"/>
+            android:label="@string/title_search_product" />
         <activity
             android:name=".UserSearchByPhotoActivity"
-            android:label="@string/title_search_product">
-
-        </activity>
+            android:label="@string/title_search_product"></activity>
+        <activity android:name=".AboutActivity"></activity>
     </application>
 
 </manifest>
