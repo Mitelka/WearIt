@@ -94,10 +94,17 @@ public class UserMenuActivity extends AppCompatActivity
         }
 
         else if (id == R.id.action_logoff) {
+            logOffFunc();
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void logOffFunc() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -132,8 +139,7 @@ public class UserMenuActivity extends AppCompatActivity
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_log_off) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            logOffFunc();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
