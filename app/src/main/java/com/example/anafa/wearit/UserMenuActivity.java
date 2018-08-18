@@ -129,6 +129,15 @@ public class UserMenuActivity extends AppCompatActivity
             Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_share) {
+            Intent i = new Intent(Intent.ACTION_SEND);
+            //TODO: Add our WearIt! app link
+            String message = "\nLet me recommend you WearIt! application: *WearIt! app link* \n\n";
+
+            i.setType("text/plain");
+            i.putExtra(Intent.EXTRA_SUBJECT, "WearIt!");
+            i.putExtra(Intent.EXTRA_TEXT, message);
+
+            startActivity(Intent.createChooser(i, "choose where to share this application"));
 
         } else if (id == R.id.nav_send) {
 
