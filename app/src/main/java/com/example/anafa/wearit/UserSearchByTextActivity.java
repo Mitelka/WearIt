@@ -1,22 +1,21 @@
 package com.example.anafa.wearit;
 
-import android.graphics.Bitmap;
-import android.net.wifi.WifiManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.format.Formatter;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.util.Properties;
+
 public class UserSearchByTextActivity extends AppCompatActivity
 {
+    public static final String EMPTY_STRING = "";
+    private PropertyReader propertyReader;
     private GoogleSearch googleSearch;
     private ServerConnector serverConnector;
 
@@ -25,6 +24,11 @@ public class UserSearchByTextActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_search_by_text);
+
+        propertyReader = new PropertyReader(getBaseContext());
+        String stringApiKey = propertyReader.getProperties().getProperty("StringapiKey");
+        String customSearchEngingID = propertyReader.getProperties().getProperty("StringcustomSearchEngineID");
+        googleSearch = new GoogleSearch(stringApiKey, customSearchEngingID);
 
         final TextView text = (TextView) findViewById(R.id.textToSearch);
         Button searchBtn = (Button) findViewById(R.id.searchButton);
@@ -35,7 +39,7 @@ public class UserSearchByTextActivity extends AppCompatActivity
             public void onClick(View v) {
                 String txtToSearch = text.getText().toString();
                 Toast.makeText(UserSearchByTextActivity.this, "product name to search: " + txtToSearch , Toast.LENGTH_LONG).show();
-                if(txtToSearch != "")
+                if(!txtToSearch.equals(EMPTY_STRING))
                 {
                     searchTextAtGoogle(txtToSearch);
                 }
@@ -51,7 +55,6 @@ public class UserSearchByTextActivity extends AppCompatActivity
 
     private void searchTextAtGoogle(String txtToSearch)
     {
-        googleSearch = new GoogleSearch();
         String responseMessage;
         InputMethodManager inputManager = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);

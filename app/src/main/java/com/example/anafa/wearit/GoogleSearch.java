@@ -1,15 +1,8 @@
 package com.example.anafa.wearit;
 
-import android.net.wifi.WifiManager;
-import android.text.format.Formatter;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.Inet4Address;
@@ -17,13 +10,18 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.Enumeration;
-import java.util.List;
 
 public class GoogleSearch
 {
-    String searchQuery = "";
+    public static final String EMPTY_STRING = "";
+    private String stringApiKey;
+    private String searchEngineID;
+
+    public GoogleSearch(String stringApiKey, String searchEngineID) {
+        this.stringApiKey = stringApiKey;
+        this.searchEngineID = searchEngineID;
+    }
 
     public GoogleSearch()
     {
@@ -52,24 +50,23 @@ public class GoogleSearch
             connection.disconnect();
         }
         else
-            { // response problem
-                 responsebuilder.append("Http ERROR response " + responseMessage + "\n" + "Make sure to replace in code your own Google API key and Search Engine ID");
-            }
-            return responsebuilder.toString();
+        { // response problem
+            responsebuilder.append("Http ERROR response " + responseMessage + "\n" + "Make sure to replace in code your own Google API key and Search Engine ID");
+        }
+        return responsebuilder.toString();
     }
 
     private String createStringURL(String searchString)
     {
+        InputStream input = null;
+        String urlString = EMPTY_STRING;
         String beginningUrl = "https://www.googleapis.com/customsearch/v1/siterestrict?";
-        String apiKey = "AIzaSyDo1bwMTQdoCaSTL-w41PY5uA4w2R0s1OQ";
-        String customSearchEngineID = "012620021035627110891:0qjq-estbfm";
-        searchQuery = searchString;
 
-        if(searchQuery.contains(" ")) {
-            searchQuery = searchQuery.replace(" ", "+");
+        if(searchString.contains(" ")) {
+            searchString = searchString.replace(" ", "+");
         }
 
-        String urlString = beginningUrl + "key=" + apiKey + "&cx=" + customSearchEngineID + "&q=" + searchQuery+ "&quotaUser" + getUserIPAddress();
+        urlString = beginningUrl + "key=" + stringApiKey + "&cx=" + searchEngineID + "&q=" + searchString + "&quotaUser" + getUserIPAddress();
         //+ "&searchType=image"
 
         return urlString;
