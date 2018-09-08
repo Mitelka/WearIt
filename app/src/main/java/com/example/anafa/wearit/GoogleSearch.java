@@ -30,7 +30,6 @@ public class GoogleSearch
     public String searchAtGoogle(String searchString) throws IOException
     {
         String fullurlString = createStringURL(searchString);
-
         URL url = new URL(fullurlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         String line;

@@ -12,7 +12,6 @@
             <option value="$PROJECT_DIR$/Libraries" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/libr" />
-            <option value="$PROJECT_DIR$/volley" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

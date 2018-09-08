@@ -40,7 +40,9 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     Boolean isUploadPhotoSelected = false;
     String imageUrlString;
     private ServerConnector serverConnector;
+    private GoogleAnalysisImage googleAnalysisImage;
     private GoogleSearch googleSearch = new GoogleSearch();
+    private PropertyReader propertyReader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,8 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         RadioButton openPhotoFromFileRadioButton = (RadioButton) findViewById(R.id.uploadImageCheckBox);
         dynamicImageView = (ImageView) findViewById(R.id.dynamicPhotoImageView);
         Button searchImageOnGoogle = (Button)findViewById(R.id.searchButton);
+        propertyReader = new PropertyReader(getBaseContext());
+        final String stringApiKeyForAnalyse = propertyReader.getProperties().getProperty("stringApiKeyForAnalyse");
 
         // Initialize the scrollView components
         mScroll = (ScrollView)findViewById(R.id.scrollLog);
@@ -86,26 +90,8 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                     Toast.makeText(UserSearchByPhotoActivity.this, "You selected search by image", Toast.LENGTH_LONG).show();
                     Toast.makeText(UserSearchByPhotoActivity.this, "Searching image on google", Toast.LENGTH_LONG).show();
 
-                    // TODO: add google image api
-                    //search Image At Google Using Google ImageAPI()
-//                    try {
-//                        searchImageAtGoogleUsingGoogleImageAPI();
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                        Toast.makeText(UserSearchByPhotoActivity.this, "Exception!!" + e.getMessage(), Toast.LENGTH_LONG).show();
-//                        displayMessageWithResults("Exception!!" + e.getMessage() + "\n");
-//                    }
-
-
-                    if(isUploadPhotoSelected) { //TODO: Try to search by photo that uploaded by the user
-                        //displayMessageWithResults("StartUrl = http://www.google.com/searchbyimage?hl=en&image_url=");
-                        //displayMessageWithResults("EndUrl = " + imageUrlString);
-                        String newUrl = "https://www.google.com/searchbyimage?&image_url=" + imageUrlString;
-                        //displayMessageWithResults("newUrl = " + newUrl);
-                    }
-
-
-                    //TODO: implement function
+                    googleAnalysisImage = new GoogleAnalysisImage(imageUrlString, stringApiKeyForAnalyse);
+                    String string = googleAnalysisImage.imageAnalyzeRequest();
 
                         searchImageAtGoogle();
 
@@ -174,38 +160,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mLog.setText(savedInstanceState.getString(LOG_TEXT_KEY));
-    }
-
-    private void searchImageAtGoogleUsingGoogleImageAPI() throws IOException, JSONException {
-        //TODO: adding code of search image
-        // https.. = The standard URL for the Google Image Search API
-
-        // Required URL arguments:
-        // q = This argument supplies the query, or search expression, that is passed into the searcher.
-        // v = This argument supplies protocol version number.
-
-        // Optional URL arguments:
-        // imgtype=photo = restricts results to photographic images.
-        // rsz=4 = This argument supplies an integer from 1–8 indicating the number of results to return per page.
-        // userip=192.168.0.1 = This argument supplies the IP address of the end-user on whose behalf the request is being made.
-        URL url = new URL("https://ajax.googleapis.com/ajax/services/search/images?" +
-                "v=1.0&q=barack%20obama&imgtype=photo&rsz=4&userip=" + getUserIPAddress());
-        URLConnection connection = url.openConnection();
-        //connection.addRequestProperty("Referer", ""/* TODO: Enter the URL of your site here */);
-
-        String line;
-        StringBuilder builder = new StringBuilder();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        while((line = reader.readLine()) != null) {
-            builder.append(line);
-        }
-
-        JSONObject json = new JSONObject(builder.toString());
-        // TODO: now send to json to server that bring you back the data
-//        //JSONObject movieObject = new JSONObject(String.valueOf(json));
-//        //String title = json.getString("Title");
-//        Toast.makeText(UserSearchByPhotoActivity.this, "Title: " + builder.toString(), Toast.LENGTH_LONG).show();
-//        displayMessageWithResults(builder.toString());
     }
 
     private String getUserIPAddress() {
