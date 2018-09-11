@@ -6,11 +6,9 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.text.format.Formatter;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -21,22 +19,17 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
+import java.io.StringReader;
 
 public class UserSearchByPhotoActivity extends AppCompatActivity {
 
+    private static final String EMPTY_STRING = "";
     private static final Integer REQUEST_CAMERA = 0;
     private static final Integer SELECT_FILE = 1;
     ImageView dynamicImageView;
@@ -100,18 +93,13 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
                     googleAnalysisImage = new GoogleAnalysisImage(imageUrlString, stringApiKeyForAnalyse);
 
-                    String string = googleAnalysisImage.imageAnalyzeRequest();
+                    String Response = googleAnalysisImage.imageAnalyzeRequest();
+                    String toSearch =  AnalysisResponse(Response);
 
-
-                        searchImageAtGoogle();
-
-                    //searchImageAtGoogleWithCustomSearch();
-
-                    // display results in TextView with scrollView
-//                    clearResultsTextView();
-//                    displayMessageWithResults("This is the results of image search in Google API\n");
+                    searchTextAtGoogle(toSearch);
                 }
-                else{
+
+                else {
                     Toast.makeText(UserSearchByPhotoActivity.this, "You didn't selected an image to search", Toast.LENGTH_LONG).show();
                 }
             }
@@ -119,6 +107,41 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private String AnalysisResponse(String response) {
+        String to_Search = EMPTY_STRING;
+
+        String bestScore;
+        String secondScore;
+        String bestGuessLabels;
+
+        try
+        {
+            JSONObject jsonToAnalysis = new JSONObject(response);
+
+            JSONArray responses;
+            responses = jsonToAnalysis.getJSONArray("responses");
+
+            JSONObject respon = responses.getJSONObject(0);
+            JSONObject webDetection = respon.getJSONObject("webDetection");
+            JSONArray webEntities = webDetection.getJSONArray("webEntities");
+            bestScore = webEntities.getJSONObject(0).getString("description");
+            secondScore = webEntities.getJSONObject(1).getString("description");
+
+            JSONArray bestGuessLabelsObject = webDetection.getJSONArray("bestGuessLabels");
+            bestGuessLabels = bestGuessLabelsObject.getJSONObject(0).getString("label");
+
+            to_Search = bestGuessLabels + " " + bestScore  + " " + secondScore;
+        }
+
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+            Toast.makeText(UserSearchByPhotoActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+        }
+
+        return to_Search;
     }
 
     @Override
@@ -183,38 +206,27 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         mLog.setText(savedInstanceState.getString(LOG_TEXT_KEY));
     }
 
-    private String getUserIPAddress() {
-        WifiManager wm = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
-        String userIPAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-
-        // Only for test
-        Toast.makeText(UserSearchByPhotoActivity.this, "IP: " + userIPAddress, Toast.LENGTH_LONG).show();
-
-        return userIPAddress;
-    }
-
-    private void searchImageAtGoogle()
+    private void searchTextAtGoogle(String txtToSearch)
     {
         String responseMessage;
         InputMethodManager inputManager = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
-        try
-        {
-            responseMessage = googleSearch.searchAtGoogle("Red Shirt");
+        try {
+            responseMessage = googleSearch.searchAtGoogle(txtToSearch);
 
-            displayMessageWithResults(responseMessage);
             serverConnector = new ServerConnector();
             JSONObject GoogleSearchjson = new JSONObject(responseMessage);
+
             String GoogleSearchResponse = serverConnector.sendRequestToServer(GoogleSearchjson, ServerConnector.RequestType.GoogleSearch);
-            //TODO: DO something with the GoogleSearchResponse
+            //TODO: DO somtehing with the GoogleSearchResponse
         }
+
         catch (Exception e)
         {
             Toast toast = Toast.makeText(this, "Cannot connect googleSearch", Toast.LENGTH_SHORT);
             toast.show();
         }
-
     }
 
 }

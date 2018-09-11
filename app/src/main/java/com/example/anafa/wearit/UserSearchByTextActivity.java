@@ -14,7 +14,7 @@ import java.util.Properties;
 
 public class UserSearchByTextActivity extends AppCompatActivity
 {
-    public static final String EMPTY_STRING = "";
+    private static final String EMPTY_STRING = "";
     private PropertyReader propertyReader;
     private GoogleSearch googleSearch;
     private ServerConnector serverConnector;
