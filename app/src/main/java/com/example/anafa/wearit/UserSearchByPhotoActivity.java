@@ -3,12 +3,15 @@ package com.example.anafa.wearit;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Formatter;
+import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -22,8 +25,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -90,8 +97,11 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                     Toast.makeText(UserSearchByPhotoActivity.this, "You selected search by image", Toast.LENGTH_LONG).show();
                     Toast.makeText(UserSearchByPhotoActivity.this, "Searching image on google", Toast.LENGTH_LONG).show();
 
+
                     googleAnalysisImage = new GoogleAnalysisImage(imageUrlString, stringApiKeyForAnalyse);
+
                     String string = googleAnalysisImage.imageAnalyzeRequest();
+
 
                         searchImageAtGoogle();
 
@@ -114,6 +124,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Bitmap picture= null;
 
         if (resultCode == Activity.RESULT_OK)
         {
@@ -124,14 +135,24 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                 Uri selectImageUri = data.getData();
                 dynamicImageView.setImageURI(selectImageUri);
                 isUploadPhotoSelected = true;
-                displayMessageWithResults("isUploadPhotoSelected = " + isUploadPhotoSelected);
-                imageUrlString = selectImageUri.toString();
-                displayMessageWithResults("selectImageUri = " + imageUrlString);
-            }
+                try
+                {
+                    picture = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+                    ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+                    picture.compress(Bitmap.CompressFormat.JPEG, 90, byteStream);
+                    String base64Data = Base64.encodeToString(byteStream.toByteArray(),
+                            Base64.URL_SAFE);
 
-            //TODO: Delete this after succeed to search photo at Google
-            // update bitmap to be an adidas gazelle photo - adidas_gazelle.jpg
-            dynamicImageView.setImageDrawable(getResources().getDrawable(R.drawable.adidas_gazelle));
+                    imageUrlString = base64Data;
+
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            Drawable verticalImage = new BitmapDrawable(getResources(),picture);
+            dynamicImageView.setImageDrawable(verticalImage);
         }
     }
 
