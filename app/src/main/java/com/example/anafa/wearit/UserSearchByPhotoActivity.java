@@ -26,6 +26,8 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserSearchByPhotoActivity extends AppCompatActivity {
 
@@ -112,22 +114,31 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     private String AnalysisResponse(String response) {
         String to_Search = EMPTY_STRING;
 
-        String bestScore;
-        String secondScore;
+        String bestScore= EMPTY_STRING;
+        String secondScore = EMPTY_STRING;
         String bestGuessLabels;
+        List<String> descriptionList = new ArrayList<>();
 
         try
         {
             JSONObject jsonToAnalysis = new JSONObject(response);
-
             JSONArray responses;
             responses = jsonToAnalysis.getJSONArray("responses");
 
             JSONObject respon = responses.getJSONObject(0);
             JSONObject webDetection = respon.getJSONObject("webDetection");
             JSONArray webEntities = webDetection.getJSONArray("webEntities");
-            bestScore = webEntities.getJSONObject(0).getString("description");
-            secondScore = webEntities.getJSONObject(1).getString("description");
+
+            for (int index = 0; index< webEntities.length(); index++)
+            {
+                if (webEntities.getJSONObject(index).has("description"))
+                {
+                        descriptionList.add(webEntities.getJSONObject(index).getString("description"));
+                }
+            }
+
+            bestScore = descriptionList.get(0);
+            secondScore = descriptionList.get(1);
 
             JSONArray bestGuessLabelsObject = webDetection.getJSONArray("bestGuessLabels");
             bestGuessLabels = bestGuessLabelsObject.getJSONObject(0).getString("label");
@@ -141,6 +152,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             Toast.makeText(UserSearchByPhotoActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
         }
 
+        to_Search = removeduplicate(to_Search);
         return to_Search;
     }
 
@@ -177,11 +189,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             Drawable verticalImage = new BitmapDrawable(getResources(),picture);
             dynamicImageView.setImageDrawable(verticalImage);
         }
-    }
-
-    public void displayMessageWithResults(String message) {
-        mLog.append(message + "\n");
-        mScroll.scrollTo(0, mScroll.getBottom());
     }
 
     public void onClearBtnClick(View view) {
@@ -227,6 +234,43 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Cannot connect googleSearch", Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+
+    public  String removeduplicate(String input)
+    {
+        String out = EMPTY_STRING;
+        String sentence = input;
+        int max_word_length = sentence.length()/2;
+        int min_word_length = 2;
+        while(max_word_length>=min_word_length)
+        {
+            int si = 0;
+            int ei = max_word_length;
+            while ( ei<sentence.length() )
+            {
+                int e=ei;
+                while ( e<sentence.length() )
+                {
+                    int ind = sentence.indexOf ( sentence.substring ( si, ei ),e );
+                    if ( ind!=-1 )
+                    {
+                        sentence = sentence.substring ( 0,ind ) +sentence.substring ( ind+max_word_length,sentence.length() );
+                        e=ind+max_word_length;
+                    }
+                    else break;
+                }
+
+
+                si+=1;
+                ei+=1;
+
+            }
+            max_word_length--;
+        }
+
+        out = sentence;
+
+        return out;
     }
 
 }
