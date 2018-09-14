@@ -66,7 +66,6 @@ public class GoogleSearch
         }
 
         urlString = beginningUrl + "key=" + stringApiKey + "&cx=" + searchEngineID + "&q=" + searchString + "&quotaUser" + getUserIPAddress();
-        //+ "&searchType=image"
 
         return urlString;
     }

@@ -18,15 +18,14 @@ import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 public class UserSearchByPhotoActivity extends AppCompatActivity {
@@ -238,39 +237,25 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
     public  String removeduplicate(String input)
     {
-        String out = EMPTY_STRING;
-        String sentence = input;
-        int max_word_length = sentence.length()/2;
-        int min_word_length = 2;
-        while(max_word_length>=min_word_length)
+        StringBuilder out = new StringBuilder();
+        String[] temp = input.split(" ");
+
+        LinkedHashSet<String> lhtemp =
+                new LinkedHashSet<>(Arrays.asList(temp));
+
+        //create array from the LinkedHashSet
+        temp = lhtemp.toArray(new String[ lhtemp.size() ]);
+
+        for (String string : temp)
         {
-            int si = 0;
-            int ei = max_word_length;
-            while ( ei<sentence.length() )
+            if (out.length() > 0)
             {
-                int e=ei;
-                while ( e<sentence.length() )
-                {
-                    int ind = sentence.indexOf ( sentence.substring ( si, ei ),e );
-                    if ( ind!=-1 )
-                    {
-                        sentence = sentence.substring ( 0,ind ) +sentence.substring ( ind+max_word_length,sentence.length() );
-                        e=ind+max_word_length;
-                    }
-                    else break;
-                }
-
-
-                si+=1;
-                ei+=1;
-
+                out.append(" ");
             }
-            max_word_length--;
+            out.append(string);
         }
 
-        out = sentence;
-
-        return out;
+        return out.toString();
     }
 
 }
