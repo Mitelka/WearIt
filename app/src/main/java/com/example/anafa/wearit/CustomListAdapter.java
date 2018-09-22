@@ -33,14 +33,20 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         View res = convertView;
         DetailsViewHolder detailsViewHolder = null;
 
-        if(res == null) {
-            LayoutInflater layoutInflater = context.getLayoutInflater();
-            res = layoutInflater.inflate(R.layout.content_list_view_results, null, true);
-            detailsViewHolder = new DetailsViewHolder(res);
-            res.setTag(detailsViewHolder);
-        } else {
-            detailsViewHolder = (DetailsViewHolder) res.getTag();
-        }
+
+        LayoutInflater layoutInflater = context.getLayoutInflater();
+        res = layoutInflater.inflate(R.layout.content_list_view_results, null);
+        detailsViewHolder = new DetailsViewHolder(res);
+        //res.setTag(detailsViewHolder);
+
+//        if(res == null) {
+//            LayoutInflater layoutInflater = context.getLayoutInflater();
+//            res = layoutInflater.inflate(R.layout.content_list_view_results, null, true);
+//            detailsViewHolder = new DetailsViewHolder(res);
+//            res.setTag(detailsViewHolder);
+//        } else {
+//            detailsViewHolder = (DetailsViewHolder) res.getTag();
+//        }
 
         detailsViewHolder.image.setImageResource(imageIDArr[position]);
         detailsViewHolder.nameTextView.setText(itemNameArr[position]);
@@ -50,23 +56,21 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         return res;
     }
 
-    //    @Override
-//    public int getCount() {
-//        return 0;
-//    }
-//
+    @Override
+    public int getCount() {
+        return itemNameArr.length;
+    }
+
+
 //    @Override
 //    public Object getItem(int i) {
 //        return null;
 //    }
-//
-//    @Override
-//    public long getItemId(int i) {
-//        return 0;
-//    }
-//
-//    @Override
-//    public View getView(int i, View view, ViewGroup viewGroup) {
-//        return null;
-//    }
+
+    @Override
+    public long getItemId(int i) {
+        return 0;
+    }
+
+
 }
