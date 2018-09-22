@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,12 @@ public class UserSearchByTextActivity extends AppCompatActivity
     private GoogleSearch googleSearch;
     private ServerConnector serverConnector;
 
+    ListView listViewContent;
+    // TODO: Delete custom datasorce
+    String[] itemNameArr = {"Adidas", "LV"};
+    String[] itemPriceArr = {"13.98$", "56.9$"};
+    String[] itemLinkArr = {"www.adidas.com", "www.aliexpress/lv.co.il"};
+    Integer[] imageIDArr = {R.drawable.adidas_gazelle, R.drawable.wearitphoto};
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -67,12 +74,26 @@ public class UserSearchByTextActivity extends AppCompatActivity
             JSONObject GoogleSearchjson = new JSONObject(responseMessage);
             String GoogleSearchResponse = serverConnector.sendRequestToServer(GoogleSearchjson, ServerConnector.RequestType.GoogleSearch);
             //TODO: DO somtehing with the GoogleSearchResponse
+
+            //showResults();
+
+//            listViewContent = (ListView) findViewById(R.id.ResultsListView);
+//            CustomListAdapter customListAdapter = new CustomListAdapter(this, itemNameArr,
+//                    itemPriceArr, itemLinkArr, imageIDArr);
+//            listViewContent.setAdapter(customListAdapter);
         }
         catch (Exception e)
         {
             Toast toast = Toast.makeText(this, "Cannot connect googleSearch", Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+
+    private void showResults() {
+        listViewContent = (ListView) findViewById(R.id.ResultsListView);
+        CustomListAdapter customListAdapter = new CustomListAdapter(this, itemNameArr,
+                itemPriceArr, itemLinkArr, imageIDArr);
+        listViewContent.setAdapter(customListAdapter);
     }
 
 
