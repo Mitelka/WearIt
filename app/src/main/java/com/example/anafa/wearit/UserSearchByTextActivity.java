@@ -75,12 +75,7 @@ public class UserSearchByTextActivity extends AppCompatActivity
             String GoogleSearchResponse = serverConnector.sendRequestToServer(GoogleSearchjson, ServerConnector.RequestType.GoogleSearch);
             //TODO: DO somtehing with the GoogleSearchResponse
 
-            //showResults();
-
-//            listViewContent = (ListView) findViewById(R.id.ResultsListView);
-//            CustomListAdapter customListAdapter = new CustomListAdapter(this, itemNameArr,
-//                    itemPriceArr, itemLinkArr, imageIDArr);
-//            listViewContent.setAdapter(customListAdapter);
+            showResults();
         }
         catch (Exception e)
         {

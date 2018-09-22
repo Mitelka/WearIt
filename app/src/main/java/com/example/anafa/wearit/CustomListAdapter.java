@@ -23,6 +23,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         this.itemPriceArr = itemPrice;
         this.itemLinkArr = itemLink;
         this.imageIDArr = imageID;
+        this.context = context;
     }
 
     @NonNull

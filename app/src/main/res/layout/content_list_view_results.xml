@@ -9,12 +9,11 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:padding="15dp"
-        android:background="#ffffff"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/itemImageView"
-            android:layout_width="259dp"
+            android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_weight="0.11" />
 
@@ -25,6 +24,7 @@
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@id/itemImageView"
             android:layout_toRightOf="@id/itemImageView"
+            android:paddingLeft="5dp"
             android:textColor="#333"
             android:textSize="20dp"
             android:textStyle="bold"/>
@@ -36,9 +36,8 @@
             android:layout_below="@id/itemNameTextView"
             android:layout_toEndOf="@id/itemImageView"
             android:layout_toRightOf="@id/itemImageView"
-            android:paddingLeft="5dp"
-            android:textColor="#333"
-            android:textSize="20dp" />
+            android:paddingLeft="10dp"
+            android:textSize="18dp" />
 
         <TextView
             android:id="@+id/itemLinkTextView"
@@ -47,9 +46,9 @@
             android:layout_below="@id/itemPriceTextView"
             android:layout_toEndOf="@id/itemImageView"
             android:layout_toRightOf="@id/itemImageView"
-            android:paddingLeft="5dp"
-            android:textColor="#333"
-            android:textSize="20dp" />
+            android:paddingLeft="10dp"
+
+            android:textSize="18dp" />
 
 
     </RelativeLayout>
