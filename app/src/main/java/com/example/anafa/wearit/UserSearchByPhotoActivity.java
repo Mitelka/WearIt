@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -45,6 +46,12 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     private GoogleSearch googleSearch = new GoogleSearch();
     private PropertyReader propertyReader;
 
+    ListView listViewContent;
+    // TODO: Delete custom datasorce
+    String[] itemNameArr = {"Adidas", "LV"};
+    String[] itemPriceArr = {"13.98$", "56.9$"};
+    String[] itemLinkArr = {"www.adidas.com", "www.aliexpress/lv.co.il"};
+    Integer[] imageIDArr = {R.drawable.adidas_gazelle, R.drawable.wearitphoto};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +105,8 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                     String toSearch =  AnalysisResponse(Response);
 
                     searchTextAtGoogle(toSearch);
+
+                    showResults();
                 }
 
                 else {
@@ -106,8 +115,16 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    // Same as at UserSearchByText
+    //TODO: don't forget to delete ScrollView if not necessary
+    private void showResults() {
+        listViewContent = (ListView) findViewById(R.id.ResultsListView);
 
+        CustomListAdapter customListAdapter = new CustomListAdapter(this,
+                itemNameArr, itemPriceArr, itemLinkArr, imageIDArr);
+        listViewContent.setAdapter(customListAdapter);
     }
 
     private String AnalysisResponse(String response) {
