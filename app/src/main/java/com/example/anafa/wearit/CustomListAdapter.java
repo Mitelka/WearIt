@@ -34,24 +34,24 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         DetailsViewHolder detailsViewHolder = null;
 
 
-        LayoutInflater layoutInflater = context.getLayoutInflater();
-        res = layoutInflater.inflate(R.layout.content_list_view_results, null);
-        detailsViewHolder = new DetailsViewHolder(res);
+//        LayoutInflater layoutInflater = context.getLayoutInflater();
+//        res = layoutInflater.inflate(R.layout.content_list_view_results, null);
+//        detailsViewHolder = new DetailsViewHolder(res);
         //res.setTag(detailsViewHolder);
 
-//        if(res == null) {
-//            LayoutInflater layoutInflater = context.getLayoutInflater();
-//            res = layoutInflater.inflate(R.layout.content_list_view_results, null, true);
-//            detailsViewHolder = new DetailsViewHolder(res);
-//            res.setTag(detailsViewHolder);
-//        } else {
-//            detailsViewHolder = (DetailsViewHolder) res.getTag();
-//        }
+        if(res == null) {
+            LayoutInflater layoutInflater = context.getLayoutInflater();
+            res = layoutInflater.inflate(R.layout.content_list_view_results, null, true);
+            detailsViewHolder = new DetailsViewHolder(res);
+            res.setTag(detailsViewHolder);
+        } else {
+            detailsViewHolder = (DetailsViewHolder) res.getTag();
+        }
 
-        detailsViewHolder.image.setImageResource(imageIDArr[position]);
-        detailsViewHolder.nameTextView.setText(itemNameArr[position]);
-        detailsViewHolder.priceTextView.setText(itemPriceArr[position]);
-        detailsViewHolder.linkTextView.setText(itemLinkArr[position]);
+        detailsViewHolder.getImage().setImageResource(imageIDArr[position]);
+        detailsViewHolder.getNameTextView().setText(itemNameArr[position]);
+        detailsViewHolder.getPriceTextView().setText(itemPriceArr[position]);
+        detailsViewHolder.getLinkTextView().setText(itemLinkArr[position]);
 
         return res;
     }

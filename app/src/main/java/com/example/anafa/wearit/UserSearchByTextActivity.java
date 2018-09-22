@@ -24,9 +24,9 @@ public class UserSearchByTextActivity extends AppCompatActivity
 
     ListView listViewContent;
     // TODO: Delete custom datasorce
-    String[] itemNameArr = {"Adidas", "Adidas", "LV"};
-    String[] itemPriceArr = {"13.98$", "13.98$", "56.9$"};
-    String[] itemLinkArr = {"www.adidas.com", "www.adidas.com", "www.aliexpress/lv.co.il"};
+    String[] itemNameArr = {"Adidas", "LV"};
+    String[] itemPriceArr = {"13.98$", "56.9$"};
+    String[] itemLinkArr = {"www.adidas.com", "www.aliexpress/lv.co.il"};
     Integer[] imageIDArr = {R.drawable.adidas_gazelle, R.drawable.wearitphoto};
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -88,27 +88,10 @@ public class UserSearchByTextActivity extends AppCompatActivity
 
     private void showResults() {
         listViewContent = (ListView) findViewById(R.id.ResultsListView);
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList)
-        //CustomListAdapter customListAdapter = new CustomListAdapter(this, itemNameArr, itemPriceArr, itemLinkArr, imageIDArr);
-        //listViewContent.setAdapter(customListAdapter);
 
-        // for StableArrayAdapter
-        ArrayList<String> itemNameList = new ArrayList<>();
-        itemNameList.add("Adidas");
-        itemNameList.add("LV");
-
-        ArrayList<String> itemPriceList = new ArrayList<>();
-        itemPriceList.add("18.30$");
-        itemPriceList.add("100$");
-
-        final ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < itemNameList.size(); i++) {
-            list.add((i + 1) + ". " + itemNameList.get(i) + " " + itemPriceList.get(i));
-        }
-
-        final StableArrayAdapter adapter = new StableArrayAdapter(this,
-                android.R.layout.simple_list_item_1, list);
-        listViewContent.setAdapter(adapter);
+        CustomListAdapter customListAdapter = new CustomListAdapter(this,
+                itemNameArr, itemPriceArr, itemLinkArr, imageIDArr);
+        listViewContent.setAdapter(customListAdapter);
     }
 
 

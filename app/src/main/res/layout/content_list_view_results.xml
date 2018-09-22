@@ -13,8 +13,8 @@
 
         <ImageView
             android:id="@+id/itemImageView"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/item_image_size"
+            android:layout_height="@dimen/item_image_size"
             android:layout_weight="0.11" />
 
         <TextView
@@ -24,9 +24,9 @@
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@id/itemImageView"
             android:layout_toRightOf="@id/itemImageView"
-            android:paddingLeft="5dp"
+            android:paddingLeft="@dimen/item_name_padding"
             android:textColor="#333"
-            android:textSize="20dp"
+            android:textSize="@dimen/item_name_size"
             android:textStyle="bold"/>
 
         <TextView
@@ -36,8 +36,8 @@
             android:layout_below="@id/itemNameTextView"
             android:layout_toEndOf="@id/itemImageView"
             android:layout_toRightOf="@id/itemImageView"
-            android:paddingLeft="10dp"
-            android:textSize="18dp" />
+            android:paddingLeft="@dimen/item_description_padding"
+            android:textSize="@dimen/item_descreption_size" />
 
         <TextView
             android:id="@+id/itemLinkTextView"
@@ -46,9 +46,8 @@
             android:layout_below="@id/itemPriceTextView"
             android:layout_toEndOf="@id/itemImageView"
             android:layout_toRightOf="@id/itemImageView"
-            android:paddingLeft="10dp"
-
-            android:textSize="18dp" />
+            android:paddingLeft="@dimen/item_description_padding"
+            android:textSize="@dimen/item_descreption_size" />
 
 
     </RelativeLayout>
