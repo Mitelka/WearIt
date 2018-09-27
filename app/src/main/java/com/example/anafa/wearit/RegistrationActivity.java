@@ -80,15 +80,14 @@ public class RegistrationActivity extends AppCompatActivity {
             }
             else
             {
-                Toast.makeText(RegistrationActivity.this,"You're details is unveiled ! ",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(this, RegistrationActivity.class);
+                Toast.makeText(RegistrationActivity.this,"Email is already exist ! ",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        //TODO: Something with registrationResponse
     }
 
 

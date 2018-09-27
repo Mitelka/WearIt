@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +32,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -242,10 +244,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mapToSend.put("password", password);
             mapToSend.put("nickname", nickname);
             JSONObject RegistrationJson  = serverConnector.createJSonToServer(mapToSend);
-            String registrationResponse = serverConnector.sendRequestToServer(RegistrationJson, ServerConnector.RequestType.LOGIN);
-            //TODO: Something with registrationResponse
-            startActivity(intent);
-
+            String loginResponse = serverConnector.sendRequestToServer(RegistrationJson, ServerConnector.RequestType.LOGIN);
+            try
+            {
+                JSONObject response = new JSONObject(loginResponse);
+                if (response.has("_id"))
+                {
+                    Toast.makeText(LoginActivity.this,"Login successfully ! ",Toast.LENGTH_LONG).show();
+                    startActivity(intent);
+                }
+                else
+                {
+                    String servermessage = response.getString("message");
+                    Toast.makeText(LoginActivity.this, servermessage, Toast.LENGTH_LONG);
+                    intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
