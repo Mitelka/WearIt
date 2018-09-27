@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -65,10 +67,27 @@ public class RegistrationActivity extends AppCompatActivity {
         mapToSend.put("FirsName", FirsName);
         mapToSend.put("lastName", lastName);
         mapToSend.put("nickname", nickname);
-        mapToSend.put("EmailAddress", EmailAddress);
-        mapToSend.put("Password", Password);
+        mapToSend.put("email", EmailAddress);
+        mapToSend.put("password", Password);
         JSONObject RegistrationJson  = serverConnector.createJSonToServer(mapToSend);
         String registrationResponse = serverConnector.sendRequestToServer(RegistrationJson, ServerConnector.RequestType.SIGNUP);
+        try
+        {
+            JSONObject response = new JSONObject(registrationResponse);
+            if (response.has("_id"))
+            {
+                Toast.makeText(RegistrationActivity.this,"registration successfully ! ",Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                Toast.makeText(RegistrationActivity.this,"You're details is unveiled ! ",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, RegistrationActivity.class);
+                startActivity(intent);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         //TODO: Something with registrationResponse
     }
 
@@ -79,7 +98,7 @@ public class RegistrationActivity extends AppCompatActivity {
 //                        " and your fassword is: " + password,
 //                Toast.LENGTH_LONG).show();
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, UserMenuActivity.class);
         startActivity(intent);
     }
 }

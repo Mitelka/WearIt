@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class ServerConnector {
 
-    private final static String BASE_SERVER_URL = "http://10.0.2.2:3000/";
+    private final static String BASE_SERVER_URL = "https://mighty-hollows-89031.herokuapp.com/";
     private static final String POST = "POST";
     public static final String CONTENT_TYPE = "Content-Type";
     public static final String APPLICATION_JSON = "application/json";
