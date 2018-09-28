@@ -179,10 +179,25 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
         if (resultCode == Activity.RESULT_OK)
         {
-            if (requestCode == REQUEST_CAMERA){
+            if (requestCode == REQUEST_CAMERA)
+            {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Uri selectImageUri = takePicture.getData();
                 dynamicImageView.setImageBitmap(bitmap);
-            } else if(requestCode == SELECT_FILE){
+                dynamicImageView.setImageURI(selectImageUri);
+                ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, byteStream);
+                String base64Data = Base64.encodeToString(byteStream.toByteArray(),
+                        Base64.URL_SAFE);
+
+                imageUrlString = base64Data;
+
+                Drawable verticalImage = new BitmapDrawable(getResources(),bitmap);
+                dynamicImageView.setImageDrawable(verticalImage);
+            }
+            else if(requestCode == SELECT_FILE)
+            {
                 Uri selectImageUri = data.getData();
                 dynamicImageView.setImageURI(selectImageUri);
                 isUploadPhotoSelected = true;
@@ -201,9 +216,10 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                Drawable verticalImage = new BitmapDrawable(getResources(),picture);
+                dynamicImageView.setImageDrawable(verticalImage);
+
             }
-            Drawable verticalImage = new BitmapDrawable(getResources(),picture);
-            dynamicImageView.setImageDrawable(verticalImage);
         }
     }
 

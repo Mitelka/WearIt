@@ -4,16 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Properties;
 
 public class UserSearchByTextActivity extends AppCompatActivity
 {
@@ -93,21 +88,4 @@ public class UserSearchByTextActivity extends AppCompatActivity
                 itemNameArr, itemPriceArr, itemLinkArr, imageIDArr);
         listViewContent.setAdapter(customListAdapter);
     }
-
-
-    public void searchButtonClickHandler(View view) {
-    }
-//    public class MyWebViewClient extends WebViewClient {
-//        public MyWebViewClient(UserSearchByTextActivity userSearchByTextActivity) {
-//            public MyWebViewClient() {
-//                super();
-//                //start anything you need to
-//            }
-//
-//            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//                //Do something to the urls, views, etc.
-//            }
-//        }
-//    }
-
 }

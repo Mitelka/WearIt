@@ -4,10 +4,7 @@ import android.os.StrictMode;
 
 import com.example.anafa.wearit.DTO.GenericDTO;
 import com.example.anafa.wearit.DTO.SignupDTO;
-
-import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
