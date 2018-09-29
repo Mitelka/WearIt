@@ -3,8 +3,10 @@ package com.example.anafa.wearit;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
@@ -247,13 +249,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 JSONObject response = new JSONObject(loginResponse);
                 if (response.has("_id"))
                 {
-                    Toast.makeText(LoginActivity.this,"Login successfully ! ",Toast.LENGTH_LONG).show();
+                    String successMessage = "Login successfully!";
+                    showAlert(successMessage);
                     startActivity(intent);
                 }
                 else
                 {
                     String servermessage = response.getString("message");
-                    Toast.makeText(LoginActivity.this, servermessage, Toast.LENGTH_LONG);
+                    showAlert(servermessage);
                     intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                 }
@@ -261,6 +264,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 e.printStackTrace();
             }
         }
+    }
+
+    private void showAlert(String message)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private boolean isEmailValid(String email) {
@@ -432,5 +443,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
+
 }
 

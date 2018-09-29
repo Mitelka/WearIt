@@ -1,5 +1,6 @@
 package com.example.anafa.wearit;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -55,13 +56,13 @@ public class RegistrationActivity extends AppCompatActivity {
                         "\nEmail: " + EmailAddress + "\nPassword: " +
                         Password + "\n", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                attemptRegistration();
-                registerButtonClickHandler(v);
+                Boolean isRegistration = attemptRegistration();
+                registerButtonClickHandler(v,isRegistration);
             }
         });
     }
 
-    private void attemptRegistration()
+    private boolean attemptRegistration()
     {
         HashMap<String,String> mapToSend = new HashMap<String, String>();
         mapToSend.put("FirsName", FirsName);
@@ -76,28 +77,45 @@ public class RegistrationActivity extends AppCompatActivity {
             JSONObject response = new JSONObject(registrationResponse);
             if (response.has("_id"))
             {
-                Toast.makeText(RegistrationActivity.this,"registration successfully ! ",Toast.LENGTH_LONG).show();
+                showAlert("Registration completed successfully!");
+                return true;
             }
             else
             {
-                Toast.makeText(RegistrationActivity.this,"Email is already exist ! ",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                showAlert("Email is already exist!");
+                return false;
             }
-        } catch (JSONException e) {
+        } catch (JSONException e)
+
+        {
             e.printStackTrace();
         }
 
+        return true;
+    }
+
+    private void showAlert(String message)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 
-    public void registerButtonClickHandler(View view) {
-//        Toast.makeText(RegistrationActivity.this,
-//                "You selected sign in with email: " + email + " nickname " + nickname +
-//                        " and your fassword is: " + password,
-//                Toast.LENGTH_LONG).show();
+    public void registerButtonClickHandler(View view, Boolean isRegistration)
+    {
+        Intent intent;
 
-        Intent intent = new Intent(this, UserMenuActivity.class);
+        if (isRegistration)
+        {
+            intent = new Intent(this, UserMenuActivity.class);
+        }
+        else
+        {
+            intent = new Intent(this, MainActivity.class);
+        }
+
         startActivity(intent);
     }
 }
