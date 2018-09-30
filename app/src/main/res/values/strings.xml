@@ -54,7 +54,7 @@
     <string name="action_open_gallery_and_search">Open Gallery and Search</string>
     <string name="action_import_and_search">Import and Search</string>
     <string name="search_by_text">Search by text</string>
-    <string name="recommended_for_you">Recommended for you</string>
+    <string name="recommended_sub_title">Recommended</string>
     <string name="prompt_text_to_search">Insert your product name you want to search</string>
     <string name="search">Search</string>
     <string name="search_by_photo">Search by photo</string>

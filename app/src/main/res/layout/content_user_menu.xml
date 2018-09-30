@@ -62,8 +62,15 @@
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:fontFamily="@font/arblanca"
-            android:text="@string/recommended_for_you"/>
+            android:text="@string/recommended_sub_title"/>
 
+        <ListView
+            android:id="@+id/ResultsListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp">
+
+        </ListView>
 
     </LinearLayout>
 

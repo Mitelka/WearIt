@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,13 @@ public class UserMenuActivity extends AppCompatActivity
 
     private TextToSpeech tts;
     private boolean ttsInitialized;
+
+    ListView listViewContent;
+    // TODO: Delete custom datasorce
+    String[] itemNameArr = {"Adidas", "LV"};
+    String[] itemPriceArr = {"13.98$", "56.9$"};
+    String[] itemLinkArr = {"www.adidas.com", "www.aliexpress/lv.co.il"};
+    Integer[] imageIDArr = {R.drawable.adidas_gazelle, R.drawable.wearitphoto};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +67,18 @@ public class UserMenuActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // TODO: Get recommended list from server
+        // Show recommended list results
+        showResults();
+    }
+
+    private void showResults() {
+        listViewContent = (ListView) findViewById(R.id.ResultsListView);
+
+        CustomListAdapter customListAdapter = new CustomListAdapter(this,
+                itemNameArr, itemPriceArr, itemLinkArr, imageIDArr);
+        listViewContent.setAdapter(customListAdapter);
     }
 
     @Override
