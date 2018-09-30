@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +32,11 @@ public class UserMenuActivity extends AppCompatActivity
     String[] itemPriceArr = {"13.98$", "56.9$"};
     String[] itemLinkArr = {"www.adidas.com", "www.aliexpress/lv.co.il"};
     Integer[] imageIDArr = {R.drawable.adidas_gazelle, R.drawable.wearitphoto};
+
+    //Show as GridView
+    GridView gridView;
+    String[] teams = {"Man Utd", "Man City", "Chelsea", "Arsenal", "Liverpool", "Totenham", "Everton"};
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +77,20 @@ public class UserMenuActivity extends AppCompatActivity
 
         // TODO: Get recommended list from server
         // Show recommended list results
-        showResults();
+        //showResults();
+
+        //Show results as GridView
+        showResultsAtGridView();
+
+    }
+
+    private void showResultsAtGridView() {
+        //initialize view
+        gridView = (GridView) findViewById(R.id.ResultsGridView);
+
+        // Set adapter
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, teams);
+        gridView.setAdapter(adapter);
     }
 
     private void showResults() {
