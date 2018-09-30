@@ -41,8 +41,9 @@
             android:label="@string/title_search_product" />
         <activity
             android:name=".UserSearchByPhotoActivity"
-            android:label="@string/title_search_product"></activity>
-        <activity android:name=".AboutActivity"></activity>
+            android:label="@string/title_search_product" />
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".HistoryActivity"></activity>
     </application>
 
 </manifest>
