@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
 import java.util.Locale;
 
 public class UserMenuActivity extends AppCompatActivity
@@ -30,7 +31,7 @@ public class UserMenuActivity extends AppCompatActivity
     // TODO: Delete custom datasorce
     String[] itemNameArr = {"Adidas", "LV"};
     String[] itemPriceArr = {"13.98$", "56.9$"};
-    String[] itemLinkArr = {"www.adidas.com", "www.aliexpress/lv.co.il"};
+    String[] itemLinkArr = {" ", " "};
     Integer[] imageIDArr = {R.drawable.adidas_gazelle, R.drawable.wearitphoto};
 
     //Show as GridView
@@ -81,23 +82,29 @@ public class UserMenuActivity extends AppCompatActivity
 
         //Show results as GridView
         showResultsAtGridView();
-
     }
 
     private void showResultsAtGridView() {
         //initialize view
         gridView = (GridView) findViewById(R.id.ResultsGridView);
 
+        //Show list of words
         // Set adapter
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, teams);
-        gridView.setAdapter(adapter);
+//        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, teams);
+//        gridView.setAdapter(adapter);
+
+        CustomListAdapter customListAdapter = new CustomListAdapter(this,
+                itemNameArr, itemPriceArr, itemLinkArr, imageIDArr,
+                R.layout.content_grid_view_results);
+        gridView.setAdapter(customListAdapter);
     }
 
     private void showResults() {
         listViewContent = (ListView) findViewById(R.id.ResultsListView);
 
         CustomListAdapter customListAdapter = new CustomListAdapter(this,
-                itemNameArr, itemPriceArr, itemLinkArr, imageIDArr);
+                itemNameArr, itemPriceArr, itemLinkArr, imageIDArr,
+                R.layout.content_list_view_results);
         listViewContent.setAdapter(customListAdapter);
     }
 

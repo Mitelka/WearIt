@@ -16,8 +16,18 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     private Integer[] imageIDArr;
     private Activity context;
 
-    public CustomListAdapter(Activity context, String[] itemName, String[] itemPrice, String[] itemLink, Integer[] imageID) {
-        super(context, R.layout.content_list_view_results, itemName);
+//    public CustomListAdapter(Activity context, String[] itemName, String[] itemPrice, String[] itemLink, Integer[] imageID) {
+//        super(context, R.layout.content_list_view_results, itemName);
+//
+//        this.itemNameArr = itemName;
+//        this.itemPriceArr = itemPrice;
+//        this.itemLinkArr = itemLink;
+//        this.imageIDArr = imageID;
+//        this.context = context;
+//    }
+
+    public CustomListAdapter(Activity context, String[] itemName, String[] itemPrice, String[] itemLink, Integer[] imageID, int content_view_results) {
+        super(context, content_view_results, itemName);
 
         this.itemNameArr = itemName;
         this.itemPriceArr = itemPrice;
@@ -25,6 +35,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         this.imageIDArr = imageID;
         this.context = context;
     }
+
 
     @NonNull
     @Override

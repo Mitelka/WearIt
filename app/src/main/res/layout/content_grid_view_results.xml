@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:padding="15dp"
+    android:orientation="vertical"
+    android:layout_centerHorizontal="true">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/itemNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#333"
+        android:textSize="@dimen/recommended_item_name_size"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <ImageView
+        android:id="@+id/itemImageView"
+        android:layout_width="@dimen/recommended_item_image_size"
+        android:layout_height="@dimen/recommended_item_image_size"/>
+
+    <TextView
+        android:id="@+id/itemPriceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/recommended_item_descreption_size"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/itemLinkTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/recommended_item_descreption_size"
+        android:gravity="center"/>
+
+    </FrameLayout>
+</LinearLayout>

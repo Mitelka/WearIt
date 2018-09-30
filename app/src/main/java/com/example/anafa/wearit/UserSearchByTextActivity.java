@@ -85,7 +85,8 @@ public class UserSearchByTextActivity extends AppCompatActivity
         listViewContent = (ListView) findViewById(R.id.ResultsListView);
 
         CustomListAdapter customListAdapter = new CustomListAdapter(this,
-                itemNameArr, itemPriceArr, itemLinkArr, imageIDArr);
+                itemNameArr, itemPriceArr, itemLinkArr, imageIDArr,
+                R.layout.content_list_view_results);
         listViewContent.setAdapter(customListAdapter);
     }
 }
