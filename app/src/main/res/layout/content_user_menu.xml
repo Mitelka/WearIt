@@ -54,7 +54,6 @@
                 android:textStyle="bold"
                 android:onClick="searchByPhotoButtonClickHandler"/>
 
-
         </LinearLayout>
 
         <TextView
@@ -64,19 +63,10 @@
             android:fontFamily="@font/arblanca"
             android:text="@string/recommended_sub_title"/>
 
-        <ListView
-            android:id="@+id/ResultsListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp">
-
-        </ListView>
-
         <GridView
             android:id="@+id/ResultsGridView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:numColumns="3" >
 
         </GridView>

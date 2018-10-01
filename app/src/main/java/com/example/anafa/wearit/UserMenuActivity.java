@@ -28,17 +28,8 @@ public class UserMenuActivity extends AppCompatActivity
     private TextToSpeech tts;
     private boolean ttsInitialized;
 
-    ListView listViewContent;
-    // TODO: Delete custom datasorce
-    String[] itemNameArr = {"Adidas", "LV"};
-    String[] itemPriceArr = {"13.98$", "56.9$"};
-    String[] itemLinkArr = {" ", " "};
-    Integer[] imageIDArr = {R.drawable.adidas_gazelle, R.drawable.wearitphoto};
-
     //Show as GridView
     GridView gridView;
-    String[] teams = {"Man Utd", "Man City", "Chelsea", "Arsenal", "Liverpool", "Totenham", "Everton"};
-    ArrayAdapter<String> adapter;
 
     //Use array list
     ArrayList itemList = new ArrayList<>();
@@ -80,18 +71,13 @@ public class UserMenuActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // TODO: Get recommended list from server
-        // Show recommended list results
-        //showResults();
-
-        //Show results as GridView
-        //showResultsAtGridView();
-
         showResultsAtGridViewUsingArrayList();
     }
 
     private void showResultsAtGridViewUsingArrayList() {
         gridView = (GridView) findViewById(R.id.ResultsGridView);
+
+        //TODO: Get recommended list from server
         //TODO: DELETE after getting this ArrayList from SERVER
         itemList.add(new Item("Adidas", R.drawable.adidas_gazelle, "13.98$", "www.adidas.com"));
         itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il"));
@@ -99,30 +85,6 @@ public class UserMenuActivity extends AppCompatActivity
 
         CustomArrayListAdapter myAdapter = new CustomArrayListAdapter(this, R.layout.content_grid_view_results, itemList);
         gridView.setAdapter(myAdapter);
-    }
-
-    private void showResultsAtGridView() {
-        //initialize view
-        gridView = (GridView) findViewById(R.id.ResultsGridView);
-
-        //Show list of words
-        // Set adapter
-//        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, teams);
-//        gridView.setAdapter(adapter);
-
-        CustomListAdapter customListAdapter = new CustomListAdapter(this,
-                itemNameArr, itemPriceArr, itemLinkArr, imageIDArr,
-                R.layout.content_grid_view_results);
-        gridView.setAdapter(customListAdapter);
-    }
-
-    private void showResults() {
-        listViewContent = (ListView) findViewById(R.id.ResultsListView);
-
-        CustomListAdapter customListAdapter = new CustomListAdapter(this,
-                itemNameArr, itemPriceArr, itemLinkArr, imageIDArr,
-                R.layout.content_list_view_results);
-        listViewContent.setAdapter(customListAdapter);
     }
 
     @Override
