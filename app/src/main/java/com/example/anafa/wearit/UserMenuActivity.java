@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -38,6 +39,9 @@ public class UserMenuActivity extends AppCompatActivity
     GridView gridView;
     String[] teams = {"Man Utd", "Man City", "Chelsea", "Arsenal", "Liverpool", "Totenham", "Everton"};
     ArrayAdapter<String> adapter;
+
+    //Use array list
+    ArrayList itemList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +85,20 @@ public class UserMenuActivity extends AppCompatActivity
         //showResults();
 
         //Show results as GridView
-        showResultsAtGridView();
+        //showResultsAtGridView();
+
+        showResultsAtGridViewUsingArrayList();
+    }
+
+    private void showResultsAtGridViewUsingArrayList() {
+        gridView = (GridView) findViewById(R.id.ResultsGridView);
+        //TODO: DELETE after getting this ArrayList from SERVER
+        itemList.add(new Item("Adidas", R.drawable.adidas_gazelle, "13.98$", "www.adidas.com"));
+        itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il"));
+
+
+        CustomArrayListAdapter myAdapter = new CustomArrayListAdapter(this, R.layout.content_grid_view_results, itemList);
+        gridView.setAdapter(myAdapter);
     }
 
     private void showResultsAtGridView() {
