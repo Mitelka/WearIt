@@ -71,21 +71,21 @@ public class UserMenuActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        showResultsAtGridViewUsingArrayList();
+        showRecommended();
     }
 
-    private void showResultsAtGridViewUsingArrayList() {
-        gridView = (GridView) findViewById(R.id.ResultsGridView);
+    private void showRecommended() {
+        UI ui = new UI();
+        GridView gridView = (GridView) findViewById(R.id.ResultsGridView);
 
         //TODO: Get recommended list from server
         //TODO: DELETE after getting this ArrayList from SERVER
         itemList.add(new Item("Adidas", R.drawable.adidas_gazelle, "13.98$", "www.adidas.com"));
         itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il"));
 
-
-        CustomArrayListAdapter myAdapter = new CustomArrayListAdapter(this, R.layout.content_grid_view_results, itemList);
-        gridView.setAdapter(myAdapter);
+        ui.showResults(gridView, this, itemList, R.layout.content_grid_view_results);
     }
+
 
     @Override
     public void onBackPressed() {
