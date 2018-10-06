@@ -56,6 +56,7 @@ public class ServerConnector {
     public JSONObject createJSonToServer(HashMap<String,String> map)
     {
         JSONObject RegistrationJson  = new JSONObject(map);
+
         return RegistrationJson;
     }
 

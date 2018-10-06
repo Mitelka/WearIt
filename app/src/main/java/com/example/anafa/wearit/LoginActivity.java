@@ -65,7 +65,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    private EditText mNicknameView;
     private View mProgressView;
     private View mLoginFormView;
     private ServerConnector serverConnector;
@@ -93,8 +92,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
-
-        mNicknameView = (EditText) findViewById(R.id.nickname);
 
         Button mEmailSignInButton = (Button) findViewById(R.id.sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -173,12 +170,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
-        mNicknameView.setError(null);
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String nickname = mNicknameView.getText().toString();
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
@@ -208,12 +203,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(nickname)) {
-            mNicknameView.setError(getString(R.string.error_field_required));
-            focusView = mNicknameView;
-            cancel = true;
-        }
-
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -222,18 +211,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(nickname, email, password);
+            mAuthTask = new UserLoginTask(email, password);
             //Toast.makeText(LoginActivity.this, "You selected sign in", Toast.LENGTH_LONG).show();
             Toast.makeText(LoginActivity.this,
-                    "You selected sign in with email: " + email + " nickname " + nickname +
+                    "You selected sign in with email: " + email + " nickname " +
                     " and your fassword is: " + password,
                     Toast.LENGTH_LONG).show();
             mAuthTask.execute((Void) null);
 
 
             //pass data to next activity
-            EditText editText = (EditText)findViewById(R.id.nickname);
-            String message = editText.getText().toString();
+            //TODO: GET user nickname from SERVER to pass to next window
+            String message = "UNKNOWN";
 
             Intent intent = new Intent(this, UserMenuActivity.class);
             intent.putExtra(MESSAGE_KEY, message);
@@ -241,7 +230,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             HashMap<String,String> mapToSend = new HashMap<String, String>();
             mapToSend.put("email", email);
             mapToSend.put("password", password);
-            mapToSend.put("nickname", nickname);
+
             JSONObject RegistrationJson  = serverConnector.createJSonToServer(mapToSend);
             String loginResponse = serverConnector.sendRequestToServer(RegistrationJson, ServerConnector.RequestType.LOGIN);
             try
@@ -255,8 +244,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
                 else
                 {
-                    String servermessage = response.getString("message");
-                    showAlert(servermessage);
+                    String serverMessage = response.getString("message");
+                    showAlert(serverMessage);
                     intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                 }
@@ -390,13 +379,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * the user.
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-        private final String mNickname;
         private final String mEmail;
         private final String mPassword;
 
 
-        UserLoginTask(String nickname, String email, String password) {
-            mNickname = nickname;
+        UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
         }
