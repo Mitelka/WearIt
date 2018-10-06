@@ -46,6 +46,8 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     private GoogleSearch googleSearch = new GoogleSearch();
     private PropertyReader propertyReader;
 
+    public static final int List_View_Type = 2;
+
     ListView listViewContent;
     // TODO: Delete custom datasorce
     String[] itemNameArr = {"Adidas", "LV"};
@@ -105,8 +107,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                     String toSearch =  AnalysisResponse(Response);
 
                     searchTextAtGoogle(toSearch);
-
-                    showResults();
                 }
 
                 else {
@@ -169,7 +169,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             Toast.makeText(UserSearchByPhotoActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
         }
 
-        to_Search = removeduplicate(to_Search);
+        to_Search = removeDuplicate(to_Search);
         return to_Search;
     }
 
@@ -260,6 +260,8 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
             String GoogleSearchResponse = serverConnector.sendRequestToServer(GoogleSearchjson, ServerConnector.RequestType.GoogleSearch);
             //TODO: DO somtehing with the GoogleSearchResponse
+
+            showResultsOfSearch();
         }
 
         catch (Exception e)
@@ -269,7 +271,21 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         }
     }
 
-    public  String removeduplicate(String input)
+    private void showResultsOfSearch() {
+        ListView listView = (ListView) findViewById(R.id.ResultsListView);
+
+        //TODO: Get results item list list from server
+        //TODO: DELETE after getting this ArrayList from SERVER
+
+        ArrayList itemList = new ArrayList<>();
+        itemList.add(new Item("Adidas", R.drawable.adidas_gazelle, "13.98$", "www.adidas.com"));
+        itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il"));
+
+        //type=2-->ListView
+        UI.showResults(listView, this, itemList, R.layout.content_list_view_results, List_View_Type);
+    }
+
+    public  String removeDuplicate(String input)
     {
         StringBuilder out = new StringBuilder();
         String[] temp = input.split(" ");

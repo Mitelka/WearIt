@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class UserSearchByTextActivity extends AppCompatActivity
 {
     private static final String EMPTY_STRING = "";
@@ -23,6 +25,9 @@ public class UserSearchByTextActivity extends AppCompatActivity
     String[] itemPriceArr = {"13.98$", "56.9$"};
     String[] itemLinkArr = {"www.adidas.com", "www.aliexpress/lv.co.il"};
     Integer[] imageIDArr = {R.drawable.adidas_gazelle, R.drawable.wearitphoto};
+
+    public static final int List_View_Type = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -72,7 +77,8 @@ public class UserSearchByTextActivity extends AppCompatActivity
             String GoogleSearchResponse = serverConnector.sendRequestToServer(GoogleSearchjson, ServerConnector.RequestType.GoogleSearch);
             //TODO: DO somtehing with the GoogleSearchResponse
 
-            showResults();
+            //showResults();
+            showResultsOfSearch();
         }
         catch (Exception e)
         {
@@ -81,12 +87,17 @@ public class UserSearchByTextActivity extends AppCompatActivity
         }
     }
 
-    private void showResults() {
-        listViewContent = (ListView) findViewById(R.id.ResultsListView);
+    private void showResultsOfSearch() {
+        ListView listView = (ListView) findViewById(R.id.ResultsListView);
 
-        CustomListAdapter customListAdapter = new CustomListAdapter(this,
-                itemNameArr, itemPriceArr, itemLinkArr, imageIDArr,
-                R.layout.content_list_view_results);
-        listViewContent.setAdapter(customListAdapter);
+        //TODO: Get results item list list from server
+        //TODO: DELETE after getting this ArrayList from SERVER
+
+        ArrayList itemList = new ArrayList<>();
+        itemList.add(new Item("Adidas", R.drawable.adidas_gazelle, "13.98$", "www.adidas.com"));
+        itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il"));
+
+        //type=2-->ListView
+        UI.showResults(listView, this, itemList, R.layout.content_list_view_results, List_View_Type);
     }
 }
