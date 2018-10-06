@@ -139,7 +139,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:paddingRight="@dimen/padding_registration_form"/>
+                    android:paddingRight="@dimen/padding_registration_form" />
 
             </LinearLayout>
 

@@ -24,6 +24,8 @@ public class RegistrationActivity extends AppCompatActivity {
     private String Password;
     private ServerConnector serverConnector;
 
+    public static final String MESSAGE_KEY = "com.example.anafa.wearit.MESSAGE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         serverConnector = new ServerConnector();
@@ -109,7 +111,13 @@ public class RegistrationActivity extends AppCompatActivity {
 
         if (isRegistration)
         {
+            //pass data to next activity
+            EditText editText = (EditText)findViewById(R.id.nicknameEditText);
+            String message = editText.getText().toString();
+
             intent = new Intent(this, UserMenuActivity.class);
+
+            intent.putExtra(MESSAGE_KEY, message);
         }
         else
         {
