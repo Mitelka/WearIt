@@ -12,4 +12,3 @@ public class UI {
         gridView.setAdapter(myAdapter);
     }
 }
-
