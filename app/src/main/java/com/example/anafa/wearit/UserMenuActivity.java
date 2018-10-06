@@ -33,6 +33,7 @@ public class UserMenuActivity extends AppCompatActivity
 
     //Use array list
     ArrayList itemList = new ArrayList<>();
+    public static final int Grid_View_Type = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +76,7 @@ public class UserMenuActivity extends AppCompatActivity
     }
 
     private void showRecommended() {
-        UI ui = new UI();
+
         GridView gridView = (GridView) findViewById(R.id.ResultsGridView);
 
         //TODO: Get recommended list from server
@@ -83,7 +84,8 @@ public class UserMenuActivity extends AppCompatActivity
         itemList.add(new Item("Adidas", R.drawable.adidas_gazelle, "13.98$", "www.adidas.com"));
         itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il"));
 
-        ui.showResults(gridView, this, itemList, R.layout.content_grid_view_results);
+        //type=1-->GridView
+        UI.showResults(gridView, this, itemList, R.layout.content_grid_view_results, Grid_View_Type);
     }
 
 

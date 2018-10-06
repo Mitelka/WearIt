@@ -2,16 +2,16 @@ package com.example.anafa.wearit;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.GridView;
 import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class HistoryActivity extends AppCompatActivity {
 
     ListView listViewContent;
-    // TODO: Delete custom datasorce
-    String[] itemNameArr = {"Adidas", "LV"};
-    String[] itemPriceArr = {"13.98$", "56.9$"};
-    String[] itemLinkArr = {"www.adidas.com", "www.aliexpress/lv.co.il"};
-    Integer[] imageIDArr = {R.drawable.adidas_gazelle, R.drawable.wearitphoto};
+
+    public static final int List_View_Type = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,15 +20,21 @@ public class HistoryActivity extends AppCompatActivity {
 
         // TODO: Get history list from user
         // Show history list results
-        showResults();
+        showHistory();
     }
 
-    private void showResults() {
-        listViewContent = (ListView) findViewById(R.id.ResultsListView);
+    private void showHistory() {
 
-        CustomListAdapter customListAdapter = new CustomListAdapter(this,
-                itemNameArr, itemPriceArr, itemLinkArr, imageIDArr,
-                R.layout.content_list_view_results);
-        listViewContent.setAdapter(customListAdapter);
+        ListView listView = (ListView) findViewById(R.id.ResultsListView);
+
+        //TODO: Get recommended list from server
+        //TODO: DELETE after getting this ArrayList from SERVER
+
+        ArrayList itemList = new ArrayList<>();
+        itemList.add(new Item("Adidas", R.drawable.adidas_gazelle, "13.98$", "www.adidas.com"));
+        itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il"));
+
+        //type=2-->ListView
+        UI.showResults(listView, this, itemList, R.layout.content_list_view_results, List_View_Type);
     }
 }
