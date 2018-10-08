@@ -5,8 +5,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.app.ProgressDialog;
 import android.content.CursorLoader;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private ServerConnector serverConnector;
+    private ProgressDialog pd;
 
     public static final String MESSAGE_KEY = "com.example.anafa.wearit.MESSAGE";
 
@@ -80,6 +81,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
         serverConnector = new ServerConnector();
+        pd = null;
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -245,14 +247,29 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 else
                 {
                     String serverMessage = response.getString("message");
-                    showAlert(serverMessage);
-                    intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
+
+                        AlertDialog.Builder builder;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+                        } else {
+                            builder = new AlertDialog.Builder(this);
+                        }
+                        builder.setTitle(serverMessage);
+                        final AlertDialog alert = builder.create();
+                        alert.show();
+                        goBackToMainActivity();
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void goBackToMainActivity()
+    {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     private void showAlert(String message)
@@ -429,6 +446,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    @Override
+    public void onPause(){
+
+        super.onPause();
+        if(pd != null)
+            pd.dismiss();
     }
 
 }

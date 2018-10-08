@@ -43,7 +43,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     String imageUrlString;
     private ServerConnector serverConnector;
     private GoogleAnalysisImage googleAnalysisImage;
-    private GoogleSearch googleSearch = new GoogleSearch();
     private PropertyReader propertyReader;
 
     public static final int List_View_Type = 2;
@@ -96,6 +95,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         searchImageOnGoogle.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+
                 if(uploadedImage){
                     Toast.makeText(UserSearchByPhotoActivity.this, "You selected search by image", Toast.LENGTH_LONG).show();
                     Toast.makeText(UserSearchByPhotoActivity.this, "Searching image on google", Toast.LENGTH_LONG).show();
@@ -248,6 +248,10 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
     private void searchTextAtGoogle(String txtToSearch)
     {
+        String stringApiKey = propertyReader.getProperties().getProperty("StringapiKey");
+        String customSearchEngingID = propertyReader.getProperties().getProperty("StringcustomSearchEngineID");
+        GoogleSearch googleSearch = new GoogleSearch(stringApiKey, customSearchEngingID );
+
         String responseMessage;
         InputMethodManager inputManager = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);

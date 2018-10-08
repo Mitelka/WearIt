@@ -1,14 +1,17 @@
 package com.example.anafa.wearit;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +26,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private String EmailAddress;
     private String Password;
     private ServerConnector serverConnector;
+    private ProgressDialog pd;
 
     public static final String MESSAGE_KEY = "com.example.anafa.wearit.MESSAGE";
 
@@ -31,6 +35,7 @@ public class RegistrationActivity extends AppCompatActivity {
         serverConnector = new ServerConnector();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+        pd = null;
 
 
         //android:onClick="registerButtonClickHandler"
@@ -58,8 +63,8 @@ public class RegistrationActivity extends AppCompatActivity {
                         "\nEmail: " + EmailAddress + "\nPassword: " +
                         Password + "\n", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                Boolean isRegistration = attemptRegistration();
-                registerButtonClickHandler(v,isRegistration);
+                attemptRegistration();
+
             }
         });
     }
@@ -80,20 +85,32 @@ public class RegistrationActivity extends AppCompatActivity {
             if (response.has("_id"))
             {
                 showAlert("Registration completed successfully!");
-                return true;
+                registerButtonClickHandler(true);
             }
             else
             {
-                showAlert("Email is already exist!");
-                return false;
+                AlertDialog.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+                } else {
+                    builder = new AlertDialog.Builder(this);
+                }
+                builder.setTitle("Email is already exist!")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                registerButtonClickHandler(false);
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
             }
-        } catch (JSONException e)
+        }
 
+        catch (JSONException e)
         {
             e.printStackTrace();
         }
-
-        return true;
+        return false;
     }
 
     private void showAlert(String message)
@@ -105,7 +122,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
 
-    public void registerButtonClickHandler(View view, Boolean isRegistration)
+    public void registerButtonClickHandler(Boolean isRegistration)
     {
         Intent intent;
 
@@ -125,5 +142,13 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
         startActivity(intent);
+    }
+
+    @Override
+    public void onPause(){
+
+        super.onPause();
+        if(pd != null)
+            pd.dismiss();
     }
 }

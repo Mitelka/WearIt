@@ -23,10 +23,6 @@ public class GoogleSearch
         this.searchEngineID = searchEngineID;
     }
 
-    public GoogleSearch()
-    {
-    }
-
     public String searchAtGoogle(String searchString) throws IOException
     {
         String fullurlString = createStringURL(searchString);
