@@ -397,7 +397,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             public void onClick(DialogInterface dialog, int whichButton)
             {
                 String email = editText.getText().toString();
-                sendMailToServer(email);
+                sendeMailToServer(email);
             }
         });
         alertDialog.show();
@@ -405,15 +405,68 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
 
-    private void sendMailToServer(String email)
+    private void sendeMailToServer(String email)
     {
+        sendEmail("dsf","sdf");
         HashMap<String,String> mapToSend = new HashMap<>();
         mapToSend.put("email", email);
 
         JSONObject forgetPassword  = serverConnector.createJSonToServer(mapToSend);
         String passwordRecovery = serverConnector.sendRequestToServer(forgetPassword, ServerConnector.RequestType.ForgotPassword);
 
+        try
+        {
+            JSONObject response = new JSONObject(passwordRecovery);
+            if (response.has("passwordRecovery"))
+            {
+                String password = response.getString("passwordRecovery");
+                sendEmail(email, password);
+            }
+            else
+            {
+                AlertDialog.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+                } else {
+                    builder = new AlertDialog.Builder(this);
+                }
+                builder.setTitle("Email is Not exist!")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which)
+                            {
 
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        }
+
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    protected void sendEmail(String email, String password) {
+        String[] TO = {"mitelka2013@gmail.com"};
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "mitelka2013@gmail.com"));
+        //emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.setType("text/plain");
+
+
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+        //emailIntent.putExtra(Intent.EXTRA_CC, CC);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
+
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            finish();
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this,
+                    "There is no email client installed.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
