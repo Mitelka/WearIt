@@ -26,7 +26,8 @@ public class ServerConnector {
     public enum RequestType {
         SIGNUP,
         LOGIN,
-        GoogleSearch
+        GoogleSearch,
+        ForgotPassword
     }
 
     public static Map<RequestType, String> requestTypeUrlMap;
@@ -45,7 +46,8 @@ public class ServerConnector {
         requestTypeUrlMap = new HashMap<>();
         requestTypeUrlMap.put(RequestType.SIGNUP, "auth/signup");
         requestTypeUrlMap.put(RequestType.LOGIN, "auth/login");
-        requestTypeUrlMap.put(RequestType.GoogleSearch, "auth/login"); // TODO: change the URL - adjust to the server
+        requestTypeUrlMap.put(RequestType.GoogleSearch, "upload/processGoogleSearchData");
+        requestTypeUrlMap.put(RequestType.ForgotPassword, "forgotPassword");
     }
 
     private void initRequestTypeDtoMap() {

@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.app.ProgressDialog;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
@@ -19,6 +20,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,6 +30,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private LinearLayout mdata_login_form;
     private ServerConnector serverConnector;
     private ProgressDialog pd;
 
@@ -105,6 +109,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        mdata_login_form = findViewById(R.id.data_login_form);
     }
 
     private void populateAutoComplete() {
@@ -376,8 +381,39 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
 
-    public void forgetPasswordButtonClickHandler(View view) {
-        Toast.makeText(LoginActivity.this, "You selected sign in", Toast.LENGTH_LONG).show();
+    public void forgetPasswordButtonClickHandler(View view)
+    {
+        addEditText();
+    }
+
+    private void addEditText()
+    {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this);
+        final EditText editText = new EditText(this);
+        alertDialog.setMessage("Enter Your Email for resat password");
+        alertDialog.setView(editText);
+        alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int whichButton)
+            {
+                String email = editText.getText().toString();
+                sendMailToServer(email);
+            }
+        });
+        alertDialog.show();
+
+
+    }
+
+    private void sendMailToServer(String email)
+    {
+        HashMap<String,String> mapToSend = new HashMap<>();
+        mapToSend.put("email", email);
+
+        JSONObject forgetPassword  = serverConnector.createJSonToServer(mapToSend);
+        String passwordRecovery = serverConnector.sendRequestToServer(forgetPassword, ServerConnector.RequestType.ForgotPassword);
+
+
     }
 
 
