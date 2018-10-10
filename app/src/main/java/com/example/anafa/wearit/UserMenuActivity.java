@@ -81,8 +81,8 @@ public class UserMenuActivity extends AppCompatActivity
 
         //TODO: Get recommended list from server
         //TODO: DELETE after getting this ArrayList from SERVER
-        itemList.add(new Item("Adidas", R.drawable.adidas_gazelle, "13.98$", "www.adidas.com"));
-        itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il"));
+        itemList.add(new Item("Adidas", R.drawable.adidas_gazelle, "13.98$", "www.adidas.com", 5));
+        itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il", 4));
 
         //type=1-->GridView
         UI.showResults(gridView, this, itemList, R.layout.content_grid_view_results, Grid_View_Type);

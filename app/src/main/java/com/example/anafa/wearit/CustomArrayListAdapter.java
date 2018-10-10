@@ -43,6 +43,11 @@ public class CustomArrayListAdapter extends ArrayAdapter {
         itemPriceTextView.setText(itemList.get(position).getItemListPrice());
         itemLinkTextView.setText(itemList.get(position).getItemListLink());
 
+
+        if(itemList.get(position).getItemListStars() != 0){
+            TextView itemStarsTextView = (TextView) convertView.findViewById(R.id.itemStarsTextView);
+            itemStarsTextView.setText(itemList.get(position).getItemListStars() + "");
+        }
         return convertView;
     }
 }

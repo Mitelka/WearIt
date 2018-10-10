@@ -40,4 +40,11 @@
         android:textSize="@dimen/recommended_item_descreption_size"
         android:gravity="center"/>
 
+    <TextView
+        android:id="@+id/itemStarsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/recommended_item_descreption_size"
+        android:gravity="center"/>
+
 </LinearLayout>

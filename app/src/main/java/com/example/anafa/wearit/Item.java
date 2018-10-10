@@ -5,6 +5,7 @@ public class Item {
     private int itemListImage;
     private String itemListPrice;
     private String itemListLink;
+    private int itemListStars;
 
     public Item(String itemName, int itemImage, String itemPrice, String itemLink)
     {
@@ -12,6 +13,16 @@ public class Item {
         this.itemListImage = itemImage;
         this.itemListPrice = itemPrice;
         this.itemListLink = itemLink;
+        this.itemListStars = 0;
+    }
+
+    public Item(String itemName, int itemImage, String itemPrice, String itemLink, int itemStars)
+    {
+        this.itemListName = itemName;
+        this.itemListImage = itemImage;
+        this.itemListPrice = itemPrice;
+        this.itemListLink = itemLink;
+        this.itemListStars = itemStars;
     }
 
     public String getItemListName() {
@@ -28,5 +39,9 @@ public class Item {
 
     public String getItemListLink() {
         return itemListLink;
+    }
+
+    public int getItemListStars() {
+        return itemListStars;
     }
 }
