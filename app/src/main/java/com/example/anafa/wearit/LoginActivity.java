@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private LinearLayout mdata_login_form;
     private ServerConnector serverConnector;
     private ProgressDialog pd;
+    private PropertyReader propertyReader;
 
     public static final String MESSAGE_KEY = "com.example.anafa.wearit.MESSAGE";
 
@@ -434,7 +435,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which)
                             {
-
                             }
                         });
                 AlertDialog alert = builder.create();
@@ -449,25 +449,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     protected void sendEmail(String email, String password) {
-        String[] TO = {"mitelka2013@gmail.com"};
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "mitelka2013@gmail.com"));
-        //emailIntent.setData(Uri.parse("mailto:"));
-        emailIntent.setType("text/plain");
+        try
+        {
+            propertyReader = new PropertyReader(getBaseContext());
+            final String wearitappMail = propertyReader.getProperties().getProperty("stringWearitAppMail");
+            final String wearitApppassword = propertyReader.getProperties().getProperty("stringWearitAppPassword");
+            GmailSender sender = new GmailSender(wearitappMail, wearitApppassword);
+            sender.sendMail("Your Recovery Password",
+                    "your Password is" + "bla bla bla",
+                    "wearitapp2018@gmail.com",
+                    "mitelka2013@gmail.com");
+        } catch (Exception e)
+        {
 
-
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-        //emailIntent.putExtra(Intent.EXTRA_CC, CC);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
-
-        try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            finish();
-        } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(this,
-                    "There is no email client installed.", Toast.LENGTH_SHORT).show();
         }
     }
+
 
 
     private interface ProfileQuery {
