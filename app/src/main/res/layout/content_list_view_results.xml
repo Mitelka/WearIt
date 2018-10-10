@@ -49,6 +49,16 @@
             android:paddingLeft="@dimen/item_description_padding"
             android:textSize="@dimen/item_descreption_size" />
 
+        <TextView
+            android:id="@+id/itemStarsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/itemLinkTextView"
+            android:layout_toEndOf="@id/itemImageView"
+            android:layout_toRightOf="@id/itemImageView"
+            android:paddingLeft="@dimen/item_description_padding"
+            android:textSize="@dimen/item_descreption_size"/>
+
 
     </RelativeLayout>
 </LinearLayout>

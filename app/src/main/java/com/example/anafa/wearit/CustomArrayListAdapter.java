@@ -47,6 +47,9 @@ public class CustomArrayListAdapter extends ArrayAdapter {
         if(itemList.get(position).getItemListStars() != 0){
             TextView itemStarsTextView = (TextView) convertView.findViewById(R.id.itemStarsTextView);
             itemStarsTextView.setText(itemList.get(position).getItemListStars() + "");
+        } else {
+            TextView itemStarsTextView = (TextView) convertView.findViewById(R.id.itemStarsTextView);
+            itemStarsTextView.setText(itemList.get(position).getItemListStars() + "");
         }
         return convertView;
     }
