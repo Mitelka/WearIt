@@ -36,8 +36,8 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     private static final Integer SELECT_FILE = 1;
     ImageView dynamicImageView;
     private boolean uploadedImage = false;
-    private ScrollView mScroll;
-    public TextView mLog;
+    //TODO: mLog - example for save content by inverting phone
+    //public TextView mLog;
     private static final String LOG_TEXT_KEY = "LOG_TEXT_KEY";
     Boolean isUploadPhotoSelected = false;
     String imageUrlString;
@@ -66,9 +66,8 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         final String stringApiKeyForAnalyse = propertyReader.getProperties().getProperty("stringApiKeyForAnalyse");
 
         // Initialize the scrollView components
-        mScroll = (ScrollView)findViewById(R.id.scrollLog);
-        mLog = (TextView)findViewById(R.id.tvLog);
-        mLog.setText("");
+//        mLog = (TextView)findViewById(R.id.tvLog);
+//        mLog.setText("");
 
         // Take photo from camera
         cameraRadioButton.setOnClickListener(new View.OnClickListener() {
@@ -224,27 +223,19 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         }
     }
 
-    public void onClearBtnClick(View view) {
-        clearResultsTextView();
-    }
-
-    private void clearResultsTextView() {
-        mLog.setText("");
-        mScroll.scrollTo(0, mScroll.getBottom());
-    }
 
     // save and restore the text printed at TextView
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putString(LOG_TEXT_KEY, mLog.getText().toString());
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        mLog.setText(savedInstanceState.getString(LOG_TEXT_KEY));
-    }
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        outState.putString(LOG_TEXT_KEY, mLog.getText().toString());
+//        super.onSaveInstanceState(outState);
+//    }
+//
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        mLog.setText(savedInstanceState.getString(LOG_TEXT_KEY));
+//    }
 
     private void searchTextAtGoogle(String txtToSearch)
     {
