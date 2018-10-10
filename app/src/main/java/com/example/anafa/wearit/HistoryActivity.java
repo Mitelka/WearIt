@@ -31,8 +31,8 @@ public class HistoryActivity extends AppCompatActivity {
         //TODO: DELETE after getting this ArrayList from SERVER
 
         ArrayList itemList = new ArrayList<>();
-        itemList.add(new Item("Adidas", R.drawable.adidas_gazelle, "13.98$", "www.adidas.com"));
-        itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il"));
+        itemList.add(new Item("Adidas", R.drawable.adidas_gazelle, "13.98$", "www.adidas.com", 5));
+        itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il", 4));
 
         //type=2-->ListView
         UI.showResults(listView, this, itemList, R.layout.content_list_view_results, List_View_Type);
