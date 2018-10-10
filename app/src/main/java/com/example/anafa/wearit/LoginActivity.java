@@ -408,7 +408,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private void sendeMailToServer(String email)
     {
-        sendEmail("dsf","sdf");
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
         HashMap<String,String> mapToSend = new HashMap<>();
         mapToSend.put("email", email);
 
@@ -422,15 +427,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             {
                 String password = response.getString("passwordRecovery");
                 sendEmail(email, password);
+                builder.setTitle("Email Sent Successfully!")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
             }
             else
             {
-                AlertDialog.Builder builder;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
-                } else {
-                    builder = new AlertDialog.Builder(this);
-                }
                 builder.setTitle("Email is Not exist!")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which)
@@ -456,9 +463,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             final String wearitApppassword = propertyReader.getProperties().getProperty("stringWearitAppPassword");
             GmailSender sender = new GmailSender(wearitappMail, wearitApppassword);
             sender.sendMail("Your Recovery Password",
-                    "your Password is" + "bla bla bla",
+                    "Your Password is: " + " "+ password,
                     "wearitapp2018@gmail.com",
-                    "mitelka2013@gmail.com");
+                    email);
         } catch (Exception e)
         {
 
