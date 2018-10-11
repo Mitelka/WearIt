@@ -8,7 +8,7 @@
     tools:context=".UserSearchByPhotoActivity">
 
     <include
-        layout="@layout/app_bar_user_search_by_photo"
+        layout="@layout/content_search_by_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

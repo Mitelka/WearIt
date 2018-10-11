@@ -1,32 +1,26 @@
 package com.example.anafa.wearit;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class UserSearchByTextActivity extends AppCompatActivity
 {
     private static final String EMPTY_STRING = "";
+    public static final int List_View_Type = 2;
     private PropertyReader propertyReader;
     private GoogleSearch googleSearch;
     private ServerConnector serverConnector;
 
-    ListView listViewContent;
-    // TODO: Delete custom datasorce
-    String[] itemNameArr = {"Adidas", "LV"};
-    String[] itemPriceArr = {"13.98$", "56.9$"};
-    String[] itemLinkArr = {"www.adidas.com", "www.aliexpress/lv.co.il"};
-    Integer[] imageIDArr = {R.drawable.adidas_gazelle, R.drawable.wearitphoto};
-
-    public static final int List_View_Type = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,8 +50,6 @@ public class UserSearchByTextActivity extends AppCompatActivity
                 {
                     Toast.makeText(UserSearchByTextActivity.this, "You didn't entered product name to search" , Toast.LENGTH_LONG).show();
                 }
-
-
             }
         });
     }
@@ -72,6 +64,7 @@ public class UserSearchByTextActivity extends AppCompatActivity
             UI ui = new UI();
             ArrayList itemListToShow;
 
+            // Get results item list list from server
             itemListToShow= ui.genericSearchByText(txtToSearch, propertyReader);
             showResultsOfSearch(itemListToShow);
         }
@@ -86,10 +79,20 @@ public class UserSearchByTextActivity extends AppCompatActivity
     {
         ListView listView = (ListView) findViewById(R.id.ResultsListView);
 
-        //TODO: Get results item list list from server
-        //TODO: DELETE after getting this ArrayList from SERVER
-
         //type=2-->ListView
         UI.showResults(listView, this, itemListToShow, R.layout.content_list_view_results, List_View_Type);
+        addClickListener(listView, itemListToShow);
+    }
+
+    private void addClickListener(ListView listView, final ArrayList itemListToShow) {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Item currentItem = (Item) itemListToShow.get(position);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(currentItem.getItemListLink()));
+                startActivity(intent);
+            }
+        });
     }
 }

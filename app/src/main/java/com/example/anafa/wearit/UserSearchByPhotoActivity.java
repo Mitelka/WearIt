@@ -17,8 +17,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,8 +35,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     private static final Integer SELECT_FILE = 1;
     ImageView dynamicImageView;
     private boolean uploadedImage = false;
-    //TODO: mLog - example for save content by inverting phone
-    //public TextView mLog;
     private static final String LOG_TEXT_KEY = "LOG_TEXT_KEY";
     Boolean isUploadPhotoSelected = false;
     String imageUrlString;
@@ -48,12 +44,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
     public static final int List_View_Type = 2;
 
-    ListView listViewContent;
-    // TODO: Delete custom datasorce
-    String[] itemNameArr = {"Adidas", "LV"};
-    String[] itemPriceArr = {"13.98$", "56.9$"};
-    String[] itemLinkArr = {"www.adidas.com", "www.aliexpress/lv.co.il"};
-    Integer[] imageIDArr = {R.drawable.adidas_gazelle, R.drawable.wearitphoto};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +56,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         Button searchImageOnGoogle = (Button)findViewById(R.id.searchButton);
         propertyReader = new PropertyReader(getBaseContext());
         final String stringApiKeyForAnalyse = propertyReader.getProperties().getProperty("stringApiKeyForAnalyse");
-
-        // Initialize the scrollView components
-//        mLog = (TextView)findViewById(R.id.tvLog);
-//        mLog.setText("");
 
         // Take photo from camera
         cameraRadioButton.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +83,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
 
-                if(uploadedImage){
+                if(uploadedImage) {
                     Toast.makeText(UserSearchByPhotoActivity.this, "You selected search by image", Toast.LENGTH_LONG).show();
                     Toast.makeText(UserSearchByPhotoActivity.this, "Searching image on google", Toast.LENGTH_LONG).show();
 
@@ -104,33 +91,18 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                     googleAnalysisImage = new GoogleAnalysisImage(imageUrlString, stringApiKeyForAnalyse);
 
                     String Response = googleAnalysisImage.imageAnalyzeRequest();
-                    String toSearch =  AnalysisResponse(Response);
+                    String toSearch = AnalysisResponse(Response);
 
                     searchTextAtGoogle(toSearch);
-                }
-
-                else {
+                } else {
                     Toast.makeText(UserSearchByPhotoActivity.this, "You didn't selected an image to search", Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-    }
-
-    // Same as at UserSearchByText
-    //TODO: don't forget to delete ScrollView if not necessary
-    private void showResults() {
-        listViewContent = (ListView) findViewById(R.id.ResultsListView);
-
-        CustomListAdapter customListAdapter = new CustomListAdapter(this,
-                itemNameArr, itemPriceArr, itemLinkArr, imageIDArr,
-                R.layout.content_list_view_results);
-        listViewContent.setAdapter(customListAdapter);
     }
 
     private String AnalysisResponse(String response) {
         String to_Search = EMPTY_STRING;
-
         String bestScore= EMPTY_STRING;
         String secondScore = EMPTY_STRING;
         String bestGuessLabels;
@@ -142,11 +114,11 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             JSONArray responses;
             responses = jsonToAnalysis.getJSONArray("responses");
 
-            JSONObject respon = responses.getJSONObject(0);
-            JSONObject webDetection = respon.getJSONObject("webDetection");
+            JSONObject respond = responses.getJSONObject(0);
+            JSONObject webDetection = respond.getJSONObject("webDetection");
             JSONArray webEntities = webDetection.getJSONArray("webEntities");
 
-            for (int index = 0; index< webEntities.length(); index++)
+            for (int index = 0; index < webEntities.length(); index++)
             {
                 if (webEntities.getJSONObject(index).has("description"))
                 {
@@ -162,7 +134,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
             to_Search = bestGuessLabels + " " + bestScore  + " " + secondScore;
         }
-
         catch (JSONException e)
         {
             e.printStackTrace();
@@ -211,7 +182,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                             Base64.URL_SAFE);
 
                     imageUrlString = base64Data;
-
                 }
                 catch (IOException e) {
                     e.printStackTrace();
@@ -219,7 +189,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
                 Drawable verticalImage = new BitmapDrawable(getResources(),picture);
                 dynamicImageView.setImageDrawable(verticalImage);
-
             }
         }
     }
@@ -240,7 +209,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
     private void searchTextAtGoogle(String txtToSearch)
     {
-
         InputMethodManager inputManager = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
@@ -249,11 +217,11 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             UI ui = new UI();
             ArrayList itemListToShow;
 
+            // Get results item list list from server
             itemListToShow= ui.genericSearchByText(txtToSearch, propertyReader);
             showResultsOfSearch(itemListToShow);
 
         }
-
         catch (Exception e)
         {
             Toast toast = Toast.makeText(this, "Cannot connect googleSearch", Toast.LENGTH_SHORT);
@@ -264,17 +232,9 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     private void showResultsOfSearch(ArrayList itemListToShow) {
         ListView listView = (ListView) findViewById(R.id.ResultsListView);
 
-        //TODO: Get results item list list from server
-        //TODO: DELETE after getting this ArrayList from SERVER
-
-      /*  ArrayList itemList = new ArrayList<>();
-        itemList.add(new Item("Adidas", R.drawable.adidas_gazelle, "13.98$", "www.adidas.com", 5));
-        itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il", 4));*/
-
         //type=2-->ListView
         UI.showResults(listView, this, itemListToShow, R.layout.content_list_view_results, List_View_Type);
         addClickListener(listView, itemListToShow);
-
     }
 
     private void addClickListener(ListView listView, final ArrayList itemListToShow) {
@@ -311,5 +271,4 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
         return out.toString();
     }
-
 }
