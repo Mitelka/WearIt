@@ -252,8 +252,14 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
             serverConnector = new ServerConnector();
             JSONObject GoogleSearchjson = new JSONObject(responseMessage);
+            JSONObject GoogleSearchjsonSendToServer = new JSONObject();
+            JSONObject sendTOServer = new JSONObject();
+            JSONArray items;
+            items = GoogleSearchjson.getJSONArray("items");
+            GoogleSearchjsonSendToServer.put("items", items);
+            sendTOServer.put("googleSearchResult", GoogleSearchjsonSendToServer);
 
-            String GoogleSearchResponse = serverConnector.sendRequestToServer(GoogleSearchjson, ServerConnector.RequestType.GoogleSearch);
+            String ServerResponse = serverConnector.sendRequestToServer(sendTOServer, ServerConnector.RequestType.GoogleSearch);
             //TODO: DO somtehing with the GoogleSearchResponse
 
             showResultsOfSearch();

@@ -46,7 +46,7 @@ public class ServerConnector {
         requestTypeUrlMap = new HashMap<>();
         requestTypeUrlMap.put(RequestType.SIGNUP, "auth/signup");
         requestTypeUrlMap.put(RequestType.LOGIN, "auth/login");
-        requestTypeUrlMap.put(RequestType.GoogleSearch, "uploads/processGoogleSearchData");
+        requestTypeUrlMap.put(RequestType.GoogleSearch, "upload/processGoogleSearchData");
         requestTypeUrlMap.put(RequestType.ForgotPassword, "auth/forgotPassword");
     }
 
