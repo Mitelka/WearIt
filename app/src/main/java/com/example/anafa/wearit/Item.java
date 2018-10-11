@@ -2,21 +2,13 @@ package com.example.anafa.wearit;
 
 public class Item {
     private String itemListName;
-    private int itemListImage;
+    private String itemListImage;
     private String itemListPrice;
     private String itemListLink;
-    private int itemListStars;
+    private String itemListStars;
 
-    public Item(String itemName, int itemImage, String itemPrice, String itemLink)
-    {
-        this.itemListName = itemName;
-        this.itemListImage = itemImage;
-        this.itemListPrice = itemPrice;
-        this.itemListLink = itemLink;
-        this.itemListStars = 0;
-    }
 
-    public Item(String itemName, int itemImage, String itemPrice, String itemLink, int itemStars)
+    public Item(String itemName, String itemImage, String itemPrice, String itemLink, String itemStars)
     {
         this.itemListName = itemName;
         this.itemListImage = itemImage;
@@ -29,7 +21,7 @@ public class Item {
         return itemListName;
     }
 
-    public int getItemListImage() {
+    public String getItemListImage() {
         return itemListImage;
     }
 
@@ -41,7 +33,7 @@ public class Item {
         return itemListLink;
     }
 
-    public int getItemListStars() {
+    public String getItemListStars() {
         return itemListStars;
     }
 }

@@ -77,7 +77,7 @@ public class UserMenuActivity extends AppCompatActivity
 
     private void showRecommended() {
 
-        GridView gridView = (GridView) findViewById(R.id.ResultsGridView);
+        /*GridView gridView = (GridView) findViewById(R.id.ResultsGridView);
 
         //TODO: Get recommended list from server
         //TODO: DELETE after getting this ArrayList from SERVER
@@ -85,7 +85,7 @@ public class UserMenuActivity extends AppCompatActivity
         itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il", 4));
 
         //type=1-->GridView
-        UI.showResults(gridView, this, itemList, R.layout.content_grid_view_results, Grid_View_Type);
+        UI.showResults(gridView, this, itemList, R.layout.content_grid_view_results, Grid_View_Type);*/
     }
 
 

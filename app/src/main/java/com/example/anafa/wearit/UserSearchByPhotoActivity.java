@@ -239,6 +239,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
     private void searchTextAtGoogle(String txtToSearch)
     {
+        ArrayList itemListToShow = new ArrayList<>();
         String stringApiKey = propertyReader.getProperties().getProperty("StringapiKey");
         String customSearchEngingID = propertyReader.getProperties().getProperty("StringcustomSearchEngineID");
         GoogleSearch googleSearch = new GoogleSearch(stringApiKey, customSearchEngingID );
@@ -254,9 +255,17 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             JSONObject sendTOServer = modifyJsonForServer(responseMessage);
 
             String ServerResponse = serverConnector.sendRequestToServer(sendTOServer, ServerConnector.RequestType.GoogleSearch);
-            //TODO: DO somtehing with the ServerResponseResponse
+            JSONObject resultFromServer = new JSONObject(ServerResponse);
+            JSONArray resultByPrice = new JSONArray();
+            JSONArray resultByRank = new JSONArray();
 
-            showResultsOfSearch();
+            resultByPrice =  resultFromServer.getJSONArray("googleResultSortedByPrice");
+            resultByRank =  resultFromServer.getJSONArray("googleResultSortedByRank");
+
+            itemListToShow = createArrayResultToShow(resultByPrice);
+
+
+            showResultsOfSearch(itemListToShow);
         }
 
         catch (Exception e)
@@ -264,6 +273,56 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Cannot connect googleSearch", Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+
+    private ArrayList createArrayResultToShow(JSONArray resultFromServer)
+    {
+        ArrayList listToReturn = new ArrayList<>();
+
+        for(int i = 0; i < resultFromServer.length(); i++)
+        {
+            JSONObject current;
+            String itemName = EMPTY_STRING;
+            String itemImage = EMPTY_STRING;
+            String itemPrice = EMPTY_STRING;
+            String itemLink = EMPTY_STRING;
+            String itemStars = EMPTY_STRING;
+
+            try
+            {
+                current = resultFromServer.getJSONObject(i);
+                if (current.has("itemName"))
+                {
+                    itemName = current.getString("itemName");
+                }
+                if (current.has("image"))
+                {
+                    itemImage = current.getString("image");
+                }
+                if (current.has("itemPrice"))
+                {
+                    itemPrice = current.getString("itemPrice");
+                }
+                if (current.has("link"))
+                {
+                    itemLink = current.getString("link");
+                }
+                if (current.has("rank"))
+                {
+                    itemStars = current.getString("rank");
+                }
+
+                listToReturn.add(new Item(itemName, itemImage,itemPrice, itemLink, itemStars));
+
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
+        return listToReturn;
     }
 
     private JSONObject modifyJsonForServer(String responseMessage) throws JSONException {
@@ -299,18 +358,18 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         return sendTOServer;
     }
 
-    private void showResultsOfSearch() {
+    private void showResultsOfSearch(ArrayList itemListToShow) {
         ListView listView = (ListView) findViewById(R.id.ResultsListView);
 
         //TODO: Get results item list list from server
         //TODO: DELETE after getting this ArrayList from SERVER
 
-        ArrayList itemList = new ArrayList<>();
+      /*  ArrayList itemList = new ArrayList<>();
         itemList.add(new Item("Adidas", R.drawable.adidas_gazelle, "13.98$", "www.adidas.com", 5));
-        itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il", 4));
+        itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il", 4));*/
 
         //type=2-->ListView
-        UI.showResults(listView, this, itemList, R.layout.content_list_view_results, List_View_Type);
+        UI.showResults(listView, this, itemListToShow, R.layout.content_list_view_results, List_View_Type);
     }
 
     public  String removeDuplicate(String input)

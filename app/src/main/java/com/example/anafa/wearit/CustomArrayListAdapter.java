@@ -39,18 +39,21 @@ public class CustomArrayListAdapter extends ArrayAdapter {
         TextView itemLinkTextView = (TextView) convertView.findViewById(R.id.itemLinkTextView);
 
         itemNameTextView.setText(itemList.get(position).getItemListName());
-        itemImageView.setImageResource(itemList.get(position).getItemListImage());
+        //itemImageView.setImageResource(itemList.get(position).getItemListImage());
         itemPriceTextView.setText(itemList.get(position).getItemListPrice());
         itemLinkTextView.setText(itemList.get(position).getItemListLink());
 
 
-        if(itemList.get(position).getItemListStars() != 0){
-            TextView itemStarsTextView = (TextView) convertView.findViewById(R.id.itemStarsTextView);
-            itemStarsTextView.setText(itemList.get(position).getItemListStars() + "");
-        } else {
-            TextView itemStarsTextView = (TextView) convertView.findViewById(R.id.itemStarsTextView);
-            itemStarsTextView.setText(itemList.get(position).getItemListStars() + "");
-        }
+        TextView itemStarsTextView = (TextView) convertView.findViewById(R.id.itemStarsTextView);
+        itemStarsTextView.setText(itemList.get(position).getItemListStars() + "");
+
+//        if(itemList.get(position).getItemListStars() != 0){
+//            TextView itemStarsTextView = (TextView) convertView.findViewById(R.id.itemStarsTextView);
+//            itemStarsTextView.setText(itemList.get(position).getItemListStars() + "");
+//        } else {
+//            TextView itemStarsTextView = (TextView) convertView.findViewById(R.id.itemStarsTextView);
+//            itemStarsTextView.setText(itemList.get(position).getItemListStars() + "");
+//        }
         return convertView;
     }
 }
