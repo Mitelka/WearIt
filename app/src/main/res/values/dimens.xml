@@ -18,4 +18,5 @@
     <dimen name="recommended_item_name_size">14sp</dimen>
     <dimen name="recommended_item_image_size">90dp</dimen>
     <dimen name="recommended_item_descreption_size">12sp</dimen>
+    <dimen name="middle_title_size">30sp</dimen>
 </resources>

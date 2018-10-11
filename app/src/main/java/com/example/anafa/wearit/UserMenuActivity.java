@@ -115,6 +115,7 @@ public class UserMenuActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
             return true;
         }
 
@@ -149,8 +150,9 @@ public class UserMenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_history) {
             Intent intent = new Intent(this, HistoryActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_tools) {
+            Intent intent = new Intent(this, ToolsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_about) {
             Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
