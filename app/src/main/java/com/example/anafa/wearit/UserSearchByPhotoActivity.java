@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.TabHost;
 import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,6 +57,21 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         Button searchImageOnGoogle = (Button)findViewById(R.id.searchButton);
         propertyReader = new PropertyReader(getBaseContext());
         final String stringApiKeyForAnalyse = propertyReader.getProperties().getProperty("stringApiKeyForAnalyse");
+
+        TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
+        tabHost.setup();
+
+        //tab1
+        TabHost.TabSpec spec = tabHost.newTabSpec("Tab1");
+        spec.setContent(R.id.tab1);
+        spec.setIndicator("Tab One");
+        tabHost.addTab(spec);
+
+        //tab2
+        spec = tabHost.newTabSpec("tab2");
+        spec.setContent(R.id.tab2);
+        spec.setIndicator("Tab Two");
+        tabHost.addTab(spec);
 
         // Take photo from camera
         cameraRadioButton.setOnClickListener(new View.OnClickListener() {
@@ -215,11 +231,13 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         try
         {
             UI ui = new UI();
-            ArrayList itemListToShow;
 
-            // Get results item list list from server
-            itemListToShow= ui.genericSearchByText(txtToSearch, propertyReader);
-            showResultsOfSearch(itemListToShow);
+            // Get results item list from server
+            ArrayList itemListsToShow = ui.genericSearchByText(txtToSearch, propertyReader);
+            ArrayList itemListToShowByPrice = (ArrayList) itemListsToShow.get(0);
+            ArrayList itemListToShowByStars = (ArrayList) itemListsToShow.get(1);
+
+            showResultsOfSearch(itemListToShowByPrice, itemListToShowByStars);
 
         }
         catch (Exception e)
@@ -229,12 +247,18 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         }
     }
 
-    private void showResultsOfSearch(ArrayList itemListToShow) {
-        ListView listView = (ListView) findViewById(R.id.ResultsListView);
+    private void showResultsOfSearch(ArrayList itemListToShowByPrice, ArrayList itemListToShowByStars) {
+        ListView priceListView = (ListView) findViewById(R.id.ResultsByPriceListView);
+        ListView starsListView = (ListView) findViewById(R.id.ResultsByStarsListView);
 
         //type=2-->ListView
-        UI.showResults(listView, this, itemListToShow, R.layout.content_list_view_results, List_View_Type);
-        addClickListener(listView, itemListToShow);
+        // Sorted by price
+        UI.showResults(priceListView, this, itemListToShowByPrice, R.layout.content_list_view_results, List_View_Type);
+        addClickListener(priceListView, itemListToShowByPrice);
+
+        // Sorted by stars
+        UI.showResults(starsListView, this, itemListToShowByStars, R.layout.content_list_view_results, List_View_Type);
+        addClickListener(starsListView, itemListToShowByStars);
     }
 
     private void addClickListener(ListView listView, final ArrayList itemListToShow) {

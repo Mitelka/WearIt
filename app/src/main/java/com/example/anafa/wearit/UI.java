@@ -57,7 +57,11 @@ public class UI {
             resultByPrice = resultFromServer.getJSONArray("googleResultSortedByPrice");
             resultByRank = resultFromServer.getJSONArray("googleResultSortedByRank");
 
-            itemListToShow = createArrayResultToShow(resultByPrice);
+            ArrayList itemListToShowByPrice = createArrayResultToShow(resultByPrice);
+            ArrayList itemListToShowByStars = createArrayResultToShow(resultByRank);
+
+            itemListToShow.add(itemListToShowByPrice);
+            itemListToShow.add(itemListToShowByStars);
 
         } catch (Exception e) {
             e.printStackTrace();
