@@ -35,6 +35,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     private static final Integer REQUEST_CAMERA = 0;
     private static final Integer SELECT_FILE = 1;
     ImageView dynamicImageView;
+    TabHost tabHost;
     private boolean uploadedImage = false;
     private static final String LOG_TEXT_KEY = "LOG_TEXT_KEY";
     Boolean isUploadPhotoSelected = false;
@@ -58,19 +59,20 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         propertyReader = new PropertyReader(getBaseContext());
         final String stringApiKeyForAnalyse = propertyReader.getProperties().getProperty("stringApiKeyForAnalyse");
 
-        TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
+        tabHost = (TabHost) findViewById(R.id.tabHost);
+        tabHost.setVisibility(View.INVISIBLE);
         tabHost.setup();
 
         //tab1
-        TabHost.TabSpec spec = tabHost.newTabSpec("Tab1");
+        TabHost.TabSpec spec = tabHost.newTabSpec("Price");
         spec.setContent(R.id.tab1);
-        spec.setIndicator("Tab One");
+        spec.setIndicator("SORTED BY PRICE");
         tabHost.addTab(spec);
 
         //tab2
         spec = tabHost.newTabSpec("tab2");
         spec.setContent(R.id.tab2);
-        spec.setIndicator("Tab Two");
+        spec.setIndicator("SORTED BY STARS");
         tabHost.addTab(spec);
 
         // Take photo from camera
@@ -103,6 +105,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                     Toast.makeText(UserSearchByPhotoActivity.this, "You selected search by image", Toast.LENGTH_LONG).show();
                     Toast.makeText(UserSearchByPhotoActivity.this, "Searching image on google", Toast.LENGTH_LONG).show();
 
+                    tabHost.setVisibility(View.VISIBLE);
 
                     googleAnalysisImage = new GoogleAnalysisImage(imageUrlString, stringApiKeyForAnalyse);
 
