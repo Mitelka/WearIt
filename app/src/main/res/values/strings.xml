@@ -71,5 +71,11 @@
     <string name="team_members_title">Team Members</string>
     <string name="history_title">History</string>
 
+    <string name="action_change_password">Change Password</string>
+    <string name="tools_title">Tools</string>
+    <string name="change_password_title">Change Password</string>
+    <string name="prompt_old_password">Old Password</string>
+    <string name="prompt_new_password">New Password</string>
+    <string name="action_change_password_short">Change Password</string>
 
 </resources>
