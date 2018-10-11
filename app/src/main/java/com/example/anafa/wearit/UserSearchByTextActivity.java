@@ -64,21 +64,16 @@ public class UserSearchByTextActivity extends AppCompatActivity
 
     private void searchTextAtGoogle(String txtToSearch)
     {
-        String responseMessage;
         InputMethodManager inputManager = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
         try
         {
-            responseMessage = googleSearch.searchAtGoogle(txtToSearch);
+            UI ui = new UI();
+            ArrayList itemListToShow;
 
-            serverConnector = new ServerConnector();
-            JSONObject GoogleSearchjson = new JSONObject(responseMessage);
-            String GoogleSearchResponse = serverConnector.sendRequestToServer(GoogleSearchjson, ServerConnector.RequestType.GoogleSearch);
-            //TODO: DO somtehing with the GoogleSearchResponse
-
-            //showResults();
-            showResultsOfSearch();
+            itemListToShow= ui.genericSearchByText(txtToSearch, propertyReader);
+            showResultsOfSearch(itemListToShow);
         }
         catch (Exception e)
         {
@@ -87,17 +82,14 @@ public class UserSearchByTextActivity extends AppCompatActivity
         }
     }
 
-    private void showResultsOfSearch() {
-        /*ListView listView = (ListView) findViewById(R.id.ResultsListView);
+    private void showResultsOfSearch(ArrayList itemListToShow)
+    {
+        ListView listView = (ListView) findViewById(R.id.ResultsListView);
 
         //TODO: Get results item list list from server
         //TODO: DELETE after getting this ArrayList from SERVER
 
-        ArrayList itemList = new ArrayList<>();
-        itemList.add(new Item("Adidas", R.drawable.adidas_gazelle, "13.98$", "www.adidas.com", 5));
-        itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il", 4));
-
         //type=2-->ListView
-        UI.showResults(listView, this, itemList, R.layout.content_list_view_results, List_View_Type);*/
+        UI.showResults(listView, this, itemListToShow, R.layout.content_list_view_results, List_View_Type);
     }
 }

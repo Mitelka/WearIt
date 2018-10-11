@@ -239,33 +239,18 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
     private void searchTextAtGoogle(String txtToSearch)
     {
-        ArrayList itemListToShow = new ArrayList<>();
-        String stringApiKey = propertyReader.getProperties().getProperty("StringapiKey");
-        String customSearchEngingID = propertyReader.getProperties().getProperty("StringcustomSearchEngineID");
-        GoogleSearch googleSearch = new GoogleSearch(stringApiKey, customSearchEngingID );
 
-        String responseMessage;
         InputMethodManager inputManager = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
-        try {
-            responseMessage = googleSearch.searchAtGoogle(txtToSearch);
+        try
+        {
+            UI ui = new UI();
+            ArrayList itemListToShow;
 
-            serverConnector = new ServerConnector();
-            JSONObject sendTOServer = modifyJsonForServer(responseMessage);
-
-            String ServerResponse = serverConnector.sendRequestToServer(sendTOServer, ServerConnector.RequestType.GoogleSearch);
-            JSONObject resultFromServer = new JSONObject(ServerResponse);
-            JSONArray resultByPrice = new JSONArray();
-            JSONArray resultByRank = new JSONArray();
-
-            resultByPrice =  resultFromServer.getJSONArray("googleResultSortedByPrice");
-            resultByRank =  resultFromServer.getJSONArray("googleResultSortedByRank");
-
-            itemListToShow = createArrayResultToShow(resultByPrice);
-
-
+            itemListToShow= ui.genericSearchByText(txtToSearch, propertyReader);
             showResultsOfSearch(itemListToShow);
+
         }
 
         catch (Exception e)
@@ -273,89 +258,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Cannot connect googleSearch", Toast.LENGTH_SHORT);
             toast.show();
         }
-    }
-
-    private ArrayList createArrayResultToShow(JSONArray resultFromServer)
-    {
-        ArrayList listToReturn = new ArrayList<>();
-
-        for(int i = 0; i < resultFromServer.length(); i++)
-        {
-            JSONObject current;
-            String itemName = EMPTY_STRING;
-            String itemImage = EMPTY_STRING;
-            String itemPrice = EMPTY_STRING;
-            String itemLink = EMPTY_STRING;
-            String itemStars = EMPTY_STRING;
-
-            try
-            {
-                current = resultFromServer.getJSONObject(i);
-                if (current.has("itemName"))
-                {
-                    itemName = current.getString("itemName");
-                }
-                if (current.has("image"))
-                {
-                    itemImage = current.getString("image");
-                }
-                if (current.has("itemPrice"))
-                {
-                    itemPrice = current.getString("itemPrice");
-                }
-                if (current.has("link"))
-                {
-                    itemLink = current.getString("link");
-                }
-                if (current.has("rank"))
-                {
-                    itemStars = current.getString("rank");
-                }
-
-                listToReturn.add(new Item(itemName, itemImage,itemPrice, itemLink, itemStars));
-
-            }
-            catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-
-        return listToReturn;
-    }
-
-    private JSONObject modifyJsonForServer(String responseMessage) throws JSONException {
-        String link = EMPTY_STRING;
-        String displayLink = EMPTY_STRING;
-
-        JSONArray modifyItemsArray = new JSONArray();
-        JSONObject GoogleSearchjson = new JSONObject(responseMessage);
-        JSONObject GoogleSearchjsonSendToServer = new JSONObject();
-        JSONObject sendTOServer = new JSONObject();
-        JSONArray items;
-        items = GoogleSearchjson.getJSONArray("items");
-        for(int i = 0 ; i< items.length(); i++)
-        {
-            JSONObject putInItem = new JSONObject();
-            if (items.getJSONObject(i).has("link"))
-            {
-                link = items.getJSONObject(i).getString("link");
-                putInItem.put("link", link);
-            }
-            if (items.getJSONObject(i).has("displayLink"))
-            {
-                displayLink = items.getJSONObject(i).getString("displayLink");
-                putInItem.put("displayLink", displayLink);
-            }
-
-            modifyItemsArray.put(putInItem);
-        }
-
-        GoogleSearchjsonSendToServer.put("items", modifyItemsArray);
-
-        sendTOServer.put("googleSearchResult", GoogleSearchjsonSendToServer);
-        return sendTOServer;
     }
 
     private void showResultsOfSearch(ArrayList itemListToShow) {
