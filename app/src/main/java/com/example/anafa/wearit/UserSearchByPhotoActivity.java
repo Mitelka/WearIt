@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -272,6 +273,20 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
         //type=2-->ListView
         UI.showResults(listView, this, itemListToShow, R.layout.content_list_view_results, List_View_Type);
+        addClickListener(listView, itemListToShow);
+
+    }
+
+    private void addClickListener(ListView listView, final ArrayList itemListToShow) {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Item currentItem = (Item) itemListToShow.get(position);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(currentItem.getItemListLink()));
+                startActivity(intent);
+            }
+        });
     }
 
     public  String removeDuplicate(String input)

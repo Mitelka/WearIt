@@ -1,7 +1,10 @@
 package com.example.anafa.wearit;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
 
@@ -30,6 +33,7 @@ public class UI {
             ((ListView) view).setAdapter(myAdapter);
         }
     }
+
 
     public ArrayList genericSearchByText(String txtToSearch, PropertyReader propertyReader)
     {
