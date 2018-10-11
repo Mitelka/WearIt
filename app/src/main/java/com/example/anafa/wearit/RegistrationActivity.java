@@ -40,9 +40,11 @@ public class RegistrationActivity extends AppCompatActivity {
 
         //android:onClick="registerButtonClickHandler"
         Button button = (Button) findViewById(R.id.registerButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 EditText etFirstName = (EditText) findViewById(R.id.firstNameEditText);
                 FirsName = etFirstName.getText().toString();
 
@@ -58,12 +60,39 @@ public class RegistrationActivity extends AppCompatActivity {
                 EditText etPassword = (EditText) findViewById(R.id.passwordEditText);
                 Password = etPassword.getText().toString();
 
+
                 Snackbar.make(v, "Hello " + FirsName + lastName +
                         "You entered: \n" + " Nickname: " + nickname +
                         "\nEmail: " + EmailAddress + "\nPassword: " +
                         Password + "\n", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                attemptRegistration();
+
+                AlertDialog.Builder builder;
+
+                if (FirsName.isEmpty() || lastName.isEmpty() || nickname.isEmpty() || EmailAddress.isEmpty() || Password.isEmpty())
+                {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    {
+                        builder = new AlertDialog.Builder(RegistrationActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+                    } else {
+                        builder = new AlertDialog.Builder(RegistrationActivity.this);
+                    }
+
+                    builder.setTitle("You Must fill All fields")
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which)
+                                {
+                                    
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+                }
+                else
+                {
+                    attemptRegistration();
+                }
 
             }
         });
@@ -79,6 +108,7 @@ public class RegistrationActivity extends AppCompatActivity {
         mapToSend.put("password", Password);
         JSONObject RegistrationJson  = serverConnector.createJSonToServer(mapToSend);
         String registrationResponse = serverConnector.sendRequestToServer(RegistrationJson, ServerConnector.RequestType.SIGNUP);
+
         try
         {
             JSONObject response = new JSONObject(registrationResponse);
