@@ -251,16 +251,10 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             responseMessage = googleSearch.searchAtGoogle(txtToSearch);
 
             serverConnector = new ServerConnector();
-            JSONObject GoogleSearchjson = new JSONObject(responseMessage);
-            JSONObject GoogleSearchjsonSendToServer = new JSONObject();
-            JSONObject sendTOServer = new JSONObject();
-            JSONArray items;
-            items = GoogleSearchjson.getJSONArray("items");
-            GoogleSearchjsonSendToServer.put("items", items);
-            sendTOServer.put("googleSearchResult", GoogleSearchjsonSendToServer);
+            JSONObject sendTOServer = modifyJsonForServer(responseMessage);
 
             String ServerResponse = serverConnector.sendRequestToServer(sendTOServer, ServerConnector.RequestType.GoogleSearch);
-            //TODO: DO somtehing with the GoogleSearchResponse
+            //TODO: DO somtehing with the ServerResponseResponse
 
             showResultsOfSearch();
         }
@@ -270,6 +264,39 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Cannot connect googleSearch", Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+
+    private JSONObject modifyJsonForServer(String responseMessage) throws JSONException {
+        String link = EMPTY_STRING;
+        String displayLink = EMPTY_STRING;
+
+        JSONArray modifyItemsArray = new JSONArray();
+        JSONObject GoogleSearchjson = new JSONObject(responseMessage);
+        JSONObject GoogleSearchjsonSendToServer = new JSONObject();
+        JSONObject sendTOServer = new JSONObject();
+        JSONArray items;
+        items = GoogleSearchjson.getJSONArray("items");
+        for(int i = 0 ; i< items.length(); i++)
+        {
+            JSONObject putInItem = new JSONObject();
+            if (items.getJSONObject(i).has("link"))
+            {
+                link = items.getJSONObject(i).getString("link");
+                putInItem.put("link", link);
+            }
+            if (items.getJSONObject(i).has("displayLink"))
+            {
+                displayLink = items.getJSONObject(i).getString("displayLink");
+                putInItem.put("displayLink", displayLink);
+            }
+
+            modifyItemsArray.put(putInItem);
+        }
+
+        GoogleSearchjsonSendToServer.put("items", modifyItemsArray);
+
+        sendTOServer.put("googleSearchResult", GoogleSearchjsonSendToServer);
+        return sendTOServer;
     }
 
     private void showResultsOfSearch() {
