@@ -82,7 +82,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which)
                                 {
-                                    
+
                                 }
                             });
                     AlertDialog alert = builder.create();
@@ -114,25 +114,11 @@ public class RegistrationActivity extends AppCompatActivity {
             JSONObject response = new JSONObject(registrationResponse);
             if (response.has("_id"))
             {
-                showAlert("Registration completed successfully!");
-                registerButtonClickHandler(true);
+                showAlert("Registration completed successfully!", true);
             }
             else
             {
-                AlertDialog.Builder builder;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
-                } else {
-                    builder = new AlertDialog.Builder(this);
-                }
-                builder.setTitle("Email is already exist!")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                registerButtonClickHandler(false);
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
+                showAlert("Email is already exist!", false);
             }
         }
 
@@ -143,12 +129,27 @@ public class RegistrationActivity extends AppCompatActivity {
         return false;
     }
 
-    private void showAlert(String message)
+    private void showAlert(String message, final Boolean MoveToNextAct)
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(message);
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle(message);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+        {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        if (MoveToNextAct)
+                        {
+                            registerButtonClickHandler(true);
+                        }
+                    }
+        });
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 
 
