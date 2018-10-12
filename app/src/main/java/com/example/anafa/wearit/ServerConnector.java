@@ -38,8 +38,8 @@ public class ServerConnector {
         PostToHistory
     }
 
-    public static Map<RequestType, String> requestTypeUrlMap;
-    public static Map<RequestType, Class<? extends GenericDTO>> requestTypeDtoMap;
+    private static Map<RequestType, String> requestTypeUrlMap;
+    private static Map<RequestType, Class<? extends GenericDTO>> requestTypeDtoMap;
 
 
     private ServerConnector()
@@ -116,9 +116,8 @@ public class ServerConnector {
             }
             rd.close();
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
 
@@ -152,8 +151,6 @@ public class ServerConnector {
             }
             rd.close();
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

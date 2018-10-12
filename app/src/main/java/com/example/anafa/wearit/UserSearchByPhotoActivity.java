@@ -1,6 +1,7 @@
 package com.example.anafa.wearit;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -53,14 +54,14 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_search_by_photo);
 
-        RadioButton cameraRadioButton = (RadioButton) findViewById(R.id.takePictureCheckBox);
-        RadioButton openPhotoFromFileRadioButton = (RadioButton) findViewById(R.id.uploadImageCheckBox);
-        dynamicImageView = (ImageView) findViewById(R.id.dynamicPhotoImageView);
-        Button searchImageOnGoogle = (Button)findViewById(R.id.searchButton);
+        RadioButton cameraRadioButton = findViewById(R.id.takePictureCheckBox);
+        RadioButton openPhotoFromFileRadioButton = findViewById(R.id.uploadImageCheckBox);
+        dynamicImageView = findViewById(R.id.dynamicPhotoImageView);
+        Button searchImageOnGoogle = findViewById(R.id.searchButton);
         propertyReader = new PropertyReader(getBaseContext());
         final String stringApiKeyForAnalyse = propertyReader.getProperties().getProperty("stringApiKeyForAnalyse");
 
-        tabHost = (TabHost) findViewById(R.id.tabHost);
+        tabHost = findViewById(R.id.tabHost);
         tabHost.setVisibility(View.INVISIBLE);
         tabHost.setup();
 
@@ -75,6 +76,8 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         spec.setContent(R.id.tab2);
         spec.setIndicator("SORTED BY STARS");
         tabHost.addTab(spec);
+
+        final Context context = this;
 
         // Take photo from camera
         cameraRadioButton.setOnClickListener(new View.OnClickListener() {
@@ -98,15 +101,17 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         });
 
         //search button action
-        searchImageOnGoogle.setOnClickListener(new View.OnClickListener(){
+        searchImageOnGoogle.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v){
-
+            public void onClick(View v)
+            {
                 if(uploadedImage) {
                     Toast.makeText(UserSearchByPhotoActivity.this, "You selected search by image", Toast.LENGTH_LONG).show();
                     Toast.makeText(UserSearchByPhotoActivity.this, "Searching image on google", Toast.LENGTH_LONG).show();
 
                     tabHost.setVisibility(View.VISIBLE);
+
 
                     googleAnalysisImage = new GoogleAnalysisImage(imageUrlString, stringApiKeyForAnalyse);
 
@@ -123,8 +128,8 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
     private String AnalysisResponse(String response) {
         String to_Search = EMPTY_STRING;
-        String bestScore= EMPTY_STRING;
-        String secondScore = EMPTY_STRING;
+        String bestScore;
+        String secondScore;
         String bestGuessLabels;
         List<String> descriptionList = new ArrayList<>();
 
@@ -251,8 +256,8 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     }
 
     private void showResultsOfSearch(ArrayList itemListToShowByPrice, ArrayList itemListToShowByStars) {
-        ListView priceListView = (ListView) findViewById(R.id.ResultsByPriceListView);
-        ListView starsListView = (ListView) findViewById(R.id.ResultsByStarsListView);
+        ListView priceListView = findViewById(R.id.ResultsByPriceListView);
+        ListView starsListView = findViewById(R.id.ResultsByStarsListView);
 
         //type=2-->ListView
         // Sorted by price
@@ -280,7 +285,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
     private void createJsonAndSendForHistory(Item currentItem)
     {
-        HashMap<String,String> mapToSend = new HashMap<String, String>();
+        HashMap<String,String> mapToSend = new HashMap<>();
         mapToSend.put("image", currentItem.getItemListImage());
         mapToSend.put("link", currentItem.getItemListLink());
         mapToSend.put("itemName", currentItem.getItemListName());

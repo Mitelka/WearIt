@@ -2,6 +2,7 @@ package com.example.anafa.wearit;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -38,28 +39,28 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
         //android:onClick="registerButtonClickHandler"
-        Button button = (Button) findViewById(R.id.registerButton);
+        Button button = findViewById(R.id.registerButton);
         button.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                EditText etFirstName = (EditText) findViewById(R.id.firstNameEditText);
+                EditText etFirstName = findViewById(R.id.firstNameEditText);
                 FirsName = etFirstName.getText().toString();
 
-                EditText etLastName = (EditText) findViewById(R.id.lastNameEditText);
+                EditText etLastName = findViewById(R.id.lastNameEditText);
                 lastName = etLastName.getText().toString();
 
-                EditText etNickname = (EditText) findViewById(R.id.nicknameEditText);
+                EditText etNickname = findViewById(R.id.nicknameEditText);
                 nickname = etNickname.getText().toString();
 
-                EditText etEmailAddress = (EditText) findViewById(R.id.emailAddressEditText);
+                EditText etEmailAddress = findViewById(R.id.emailAddressEditText);
                 EmailAddress = etEmailAddress.getText().toString();
 
-                EditText etPassword = (EditText) findViewById(R.id.passwordEditText);
+                EditText etPassword = findViewById(R.id.passwordEditText);
                 Password = etPassword.getText().toString();
 
-                EditText eRepeatPassword = (EditText) findViewById(R.id.repeatPasswordEditText);
+                EditText eRepeatPassword = findViewById(R.id.repeatPasswordEditText);
                 RepeatPassword = eRepeatPassword.getText().toString();
 
 
@@ -122,7 +123,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private boolean attemptRegistration()
     {
-        HashMap<String,String> mapToSend = new HashMap<String, String>();
+        HashMap<String,String> mapToSend = new HashMap<>();
         mapToSend.put("FirsName", FirsName);
         mapToSend.put("lastName", lastName);
         mapToSend.put("nickname", nickname);
@@ -137,6 +138,7 @@ public class RegistrationActivity extends AppCompatActivity {
             if (response.has("_id"))
             {
                 showAlert("Registration completed successfully!", true);
+
             }
             else
             {
@@ -153,6 +155,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private void showAlert(String message, final Boolean MoveToNextAct)
     {
+        final Context context = this;
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
@@ -166,6 +169,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     {
                         if (MoveToNextAct)
                         {
+                            ProgressBar.getProgressBar(context);
                             registerButtonClickHandler(true);
                         }
                     }
@@ -182,7 +186,7 @@ public class RegistrationActivity extends AppCompatActivity {
         if (isRegistration)
         {
             //pass data to next activity
-            EditText editText = (EditText)findViewById(R.id.nicknameEditText);
+            EditText editText = findViewById(R.id.nicknameEditText);
             String message = editText.getText().toString();
 
             intent = new Intent(this, UserMenuActivity.class);
