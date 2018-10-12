@@ -23,6 +23,8 @@ public class ServerConnector {
     private static final String GET = "GET";
     public static final String CONTENT_TYPE = "Content-Type";
     public static final String APPLICATION_JSON = "application/json";
+    public static final String X_AUTH = "x-auth";
+    public static String X_AUTH_Value = " ";
 
     public enum RequestType {
         SIGNUP,
@@ -75,6 +77,8 @@ public class ServerConnector {
             client.setRequestMethod(POST);
             client.setRequestProperty(CONTENT_TYPE, APPLICATION_JSON);
 
+            client.setRequestProperty(X_AUTH, X_AUTH_Value);
+
             //Send request
             DataOutputStream wr = new DataOutputStream (
                     client.getOutputStream());
@@ -86,6 +90,7 @@ public class ServerConnector {
             if (client.getResponseCode() == 200)
             {
                 is = client.getInputStream();
+                X_AUTH_Value = client.getHeaderField(X_AUTH);
             } else {
                 is = client.getErrorStream();
             }

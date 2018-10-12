@@ -20,6 +20,7 @@ public class UserSearchByTextActivity extends AppCompatActivity {
     private PropertyReader propertyReader;
     private GoogleSearch googleSearch;
     private ServerConnector serverConnector;
+    UI ui = new UI();
     TabHost tabHost;
 
 
@@ -73,7 +74,6 @@ public class UserSearchByTextActivity extends AppCompatActivity {
         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
         try {
-            UI ui = new UI();
             ArrayList itemListToShow;
 
             // Get results item list from server

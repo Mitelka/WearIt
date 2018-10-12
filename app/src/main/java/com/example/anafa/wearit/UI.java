@@ -18,7 +18,7 @@ public class UI {
 
     public static final int Grid_View_Type = 1;
     public static final int List_View_Type = 2;
-    private ServerConnector serverConnector;
+    private ServerConnector serverConnector = new ServerConnector();
     private static final String EMPTY_STRING = "";
 
     //type=1-->GridView
@@ -46,7 +46,6 @@ public class UI {
 
             responseMessage = googleSearch.searchAtGoogle(txtToSearch);
 
-            serverConnector = new ServerConnector();
             JSONObject sendTOServer = modifyJsonForServer(responseMessage);
 
             String ServerResponse = serverConnector.sendRequestToServer(sendTOServer, ServerConnector.RequestType.GoogleSearch);

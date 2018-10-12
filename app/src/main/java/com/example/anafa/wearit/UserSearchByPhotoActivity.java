@@ -43,6 +43,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     private ServerConnector serverConnector;
     private GoogleAnalysisImage googleAnalysisImage;
     private PropertyReader propertyReader;
+    UI ui = new UI();
 
     public static final int List_View_Type = 2;
 
@@ -233,7 +234,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
         try
         {
-            UI ui = new UI();
 
             // Get results item list from server
             ArrayList itemListsToShow = ui.genericSearchByText(txtToSearch, propertyReader);
