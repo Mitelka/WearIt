@@ -25,6 +25,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private String nickname;
     private String EmailAddress;
     private String Password;
+    private String RepeatPassword;
     private ServerConnector serverConnector;
     private ProgressDialog pd;
 
@@ -60,6 +61,9 @@ public class RegistrationActivity extends AppCompatActivity {
                 EditText etPassword = (EditText) findViewById(R.id.passwordEditText);
                 Password = etPassword.getText().toString();
 
+                EditText eRepeatPassword = (EditText) findViewById(R.id.repeatPasswordEditText);
+                RepeatPassword = eRepeatPassword.getText().toString();
+
 
                 Snackbar.make(v, "Hello " + FirsName + lastName +
                         "You entered: \n" + " Nickname: " + nickname +
@@ -79,6 +83,26 @@ public class RegistrationActivity extends AppCompatActivity {
                     }
 
                     builder.setTitle("You Must fill All fields")
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which)
+                                {
+
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+                }
+                else if (!(Password.equals(RepeatPassword)))
+                {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    {
+                        builder = new AlertDialog.Builder(RegistrationActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+                    } else {
+                        builder = new AlertDialog.Builder(RegistrationActivity.this);
+                    }
+
+                    builder.setTitle("Password error: Passwords fields are not equals")
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which)
                                 {

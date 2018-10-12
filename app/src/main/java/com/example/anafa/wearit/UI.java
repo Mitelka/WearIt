@@ -57,6 +57,8 @@ public class UI {
             resultByPrice = resultFromServer.getJSONArray("googleResultSortedByPrice");
             resultByRank = resultFromServer.getJSONArray("googleResultSortedByRank");
 
+            //TODO  check if ARRAYS ARE EMPTY
+
             ArrayList itemListToShowByPrice = createArrayResultToShow(resultByPrice);
             ArrayList itemListToShowByStars = createArrayResultToShow(resultByRank);
 
