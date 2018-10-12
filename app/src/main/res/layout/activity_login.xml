@@ -108,4 +108,12 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_alignParentBottom="true" android:indeterminate="true"
+        android:layout_centerHorizontal="true" android:paddingBottom="450dip"
+        android:layout_width="200dip" android:layout_height="200dip"/>
+
 </LinearLayout>

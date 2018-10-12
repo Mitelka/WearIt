@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,6 +32,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +71,7 @@ public class LoginActivity extends AppCompatActivity{
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private ProgressBar myProgressBar;
     private LinearLayout mdata_login_form;
     private ProgressDialog pd;
     private PropertyReader propertyReader;
@@ -85,6 +88,7 @@ public class LoginActivity extends AppCompatActivity{
         setupActionBar();
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        myProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         //populateAutoComplete();
         pd = null;
 
@@ -226,6 +230,7 @@ public class LoginActivity extends AppCompatActivity{
     }
     private void showAlert(String message, final Boolean MoveToNextAct, final Intent intent)
     {
+        final Context context = this;
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
@@ -239,6 +244,11 @@ public class LoginActivity extends AppCompatActivity{
             {
                 if (MoveToNextAct)
                 {
+                    ProgressDialog progressBar = new ProgressDialog(context);
+                    progressBar.setCancelable(true);//you can cancel it by pressing back button
+                    progressBar.setMessage("Loading ...");
+                    progressBar.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+                    progressBar.show();//displays the progress bar
                     goToNextActivity(true, intent);
                 }
             }
@@ -252,6 +262,7 @@ public class LoginActivity extends AppCompatActivity{
         //Intent intent = new Intent(this, UserMenuActivity.class);
         if (canGoNext)
         {
+
             startActivity(intent);
         }
     }
@@ -317,7 +328,7 @@ public class LoginActivity extends AppCompatActivity{
     {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this);
         final EditText editText = new EditText(this);
-        alertDialog.setMessage("Enter Your Email for resat password");
+        alertDialog.setMessage("Enter Your Email for reset password");
         alertDialog.setView(editText);
         alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener()
         {

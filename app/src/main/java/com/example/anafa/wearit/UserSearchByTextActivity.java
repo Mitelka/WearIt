@@ -132,7 +132,7 @@ public class UserSearchByTextActivity extends AppCompatActivity {
         try
         {
             JSONObject JsonForHistory  = new JSONObject(mapToSend);
-            String registrationResponse = ServerConnector.getInstance().sendRequestToServer(JsonForHistory, ServerConnector.RequestType.PostToHistory);
+            ServerConnector.getInstance().sendRequestToServer(JsonForHistory, ServerConnector.RequestType.PostToHistory);
         }
         catch (Exception e)
         {

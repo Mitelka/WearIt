@@ -26,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -263,16 +264,38 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         addClickListener(starsListView, itemListToShowByStars);
     }
 
-    private void addClickListener(ListView listView, final ArrayList itemListToShow) {
+    private void addClickListener(ListView listView, final ArrayList itemListToShow)
+    {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Item currentItem = (Item) itemListToShow.get(position);
+                createJsonAndSendForHistory(currentItem);
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(currentItem.getItemListLink()));
                 startActivity(intent);
             }
         });
+    }
+
+    private void createJsonAndSendForHistory(Item currentItem)
+    {
+        HashMap<String,String> mapToSend = new HashMap<String, String>();
+        mapToSend.put("image", currentItem.getItemListImage());
+        mapToSend.put("link", currentItem.getItemListLink());
+        mapToSend.put("itemName", currentItem.getItemListName());
+        mapToSend.put("itemPrice", currentItem.getItemListPrice());
+        mapToSend.put("rank", currentItem.getItemListStars());
+        try
+        {
+            JSONObject JsonForHistory  = new JSONObject(mapToSend);
+            ServerConnector.getInstance().sendRequestToServer(JsonForHistory, ServerConnector.RequestType.PostToHistory);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     public  String removeDuplicate(String input)
