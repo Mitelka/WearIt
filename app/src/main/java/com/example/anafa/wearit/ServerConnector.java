@@ -20,6 +20,7 @@ public class ServerConnector {
 
     private final static String BASE_SERVER_URL = "https://mighty-hollows-89031.herokuapp.com/";
     private static final String POST = "POST";
+    private static final String GET = "GET";
     public static final String CONTENT_TYPE = "Content-Type";
     public static final String APPLICATION_JSON = "application/json";
 
@@ -27,7 +28,8 @@ public class ServerConnector {
         SIGNUP,
         LOGIN,
         GoogleSearch,
-        ForgotPassword
+        ForgotPassword,
+        Recommended
     }
 
     public static Map<RequestType, String> requestTypeUrlMap;
@@ -48,6 +50,7 @@ public class ServerConnector {
         requestTypeUrlMap.put(RequestType.LOGIN, "auth/login");
         requestTypeUrlMap.put(RequestType.GoogleSearch, "upload/processGoogleSearchData");
         requestTypeUrlMap.put(RequestType.ForgotPassword, "auth/forgotPassword");
+        requestTypeUrlMap.put(RequestType.Recommended, "upload/favorites"); //TODO CHANGE ADDRESS
     }
 
     private void initRequestTypeDtoMap() {
@@ -77,6 +80,41 @@ public class ServerConnector {
                     client.getOutputStream());
             wr.writeBytes(jsonBody.toString());
             wr.close();
+
+            //Get Response
+            InputStream is;
+            if (client.getResponseCode() == 200)
+            {
+                is = client.getInputStream();
+            } else {
+                is = client.getErrorStream();
+            }
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+            String line;
+            while ((line = rd.readLine()) != null) {
+                response.append(line);
+                response.append('\r');
+            }
+            rd.close();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return response.toString();
+    }
+
+    public String sendGETRequestToServer(RequestType requestType)
+    {
+        StringBuilder response = new StringBuilder();
+        try
+        {
+            URL content = new URL(BASE_SERVER_URL + requestTypeUrlMap.get(requestType));
+            HttpURLConnection client = (HttpURLConnection) content.openConnection();
+            client.setRequestMethod(GET);
+            client.setRequestProperty(CONTENT_TYPE, APPLICATION_JSON);
 
             //Get Response
             InputStream is;

@@ -71,7 +71,7 @@ public class UI {
     }
 
 
-    private ArrayList createArrayResultToShow(JSONArray resultFromServer) {
+    public ArrayList createArrayResultToShow(JSONArray resultFromServer) {
         ArrayList listToReturn = new ArrayList<>();
 
         for (int i = 0; i < resultFromServer.length(); i++) {

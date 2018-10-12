@@ -18,6 +18,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -27,12 +31,13 @@ public class UserMenuActivity extends AppCompatActivity
 
     private TextToSpeech tts;
     private boolean ttsInitialized;
+    private ServerConnector serverConnector;
 
     //Show as GridView
     GridView gridView;
 
     //Use array list
-    ArrayList itemList = new ArrayList<>();
+
     public static final int Grid_View_Type = 1;
 
     @Override
@@ -72,20 +77,44 @@ public class UserMenuActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        showRecommended();
+        ArrayList itemList = SendToServerGetReqForRecommended();
+        if (!itemList.isEmpty())
+        {
+            showRecommended(itemList);
+        }
     }
 
-    private void showRecommended() {
+    private ArrayList SendToServerGetReqForRecommended()
+    {
+        UI ui = new UI();
+        serverConnector = new ServerConnector();
+        ArrayList itemList = new ArrayList<>();
+        String serverResponse = serverConnector.sendGETRequestToServer(ServerConnector.RequestType.Recommended);
 
-        /*GridView gridView = (GridView) findViewById(R.id.ResultsGridView);
+        try
+        {
+            JSONObject resultFromServer = new JSONObject(serverResponse);
+            JSONArray ArrayFromServer = resultFromServer.getJSONArray("favorites");
+            itemList = ui.createArrayResultToShow(ArrayFromServer);
+        }
+
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        return itemList;
+
+    }
+
+    private void showRecommended(ArrayList itemListToShow) {
+
+        GridView gridView = (GridView) findViewById(R.id.ResultsGridView);
 
         //TODO: Get recommended list from server
         //TODO: DELETE after getting this ArrayList from SERVER
-        itemList.add(new Item("Adidas", R.drawable.adidas_gazelle, "13.98$", "www.adidas.com", 5));
-        itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il", 4));
-
         //type=1-->GridView
-        UI.showResults(gridView, this, itemList, R.layout.content_grid_view_results, Grid_View_Type);*/
+        UI.showResults(gridView, this, itemListToShow, R.layout.content_grid_view_results, Grid_View_Type);
     }
 
 
