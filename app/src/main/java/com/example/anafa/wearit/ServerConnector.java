@@ -50,7 +50,7 @@ public class ServerConnector {
         requestTypeUrlMap.put(RequestType.LOGIN, "auth/login");
         requestTypeUrlMap.put(RequestType.GoogleSearch, "upload/processGoogleSearchData");
         requestTypeUrlMap.put(RequestType.ForgotPassword, "auth/forgotPassword");
-        requestTypeUrlMap.put(RequestType.Recommended, "upload/favorites"); //TODO CHANGE ADDRESS
+        requestTypeUrlMap.put(RequestType.Recommended, "upload/favorites");
     }
 
     private void initRequestTypeDtoMap() {

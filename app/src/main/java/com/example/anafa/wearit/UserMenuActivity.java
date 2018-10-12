@@ -111,8 +111,6 @@ public class UserMenuActivity extends AppCompatActivity
 
         GridView gridView = (GridView) findViewById(R.id.ResultsGridView);
 
-        //TODO: Get recommended list from server
-        //TODO: DELETE after getting this ArrayList from SERVER
         //type=1-->GridView
         UI.showResults(gridView, this, itemListToShow, R.layout.content_grid_view_results, Grid_View_Type);
     }

@@ -202,7 +202,7 @@ public class LoginActivity extends AppCompatActivity{
             try
             {
                 JSONObject response = new JSONObject(loginResponse);
-                if (response.has("_id"))
+                if (response.has("email"))
                 {
                     String successMessage = "Login successfully!";
                     showAlert(successMessage, true);
