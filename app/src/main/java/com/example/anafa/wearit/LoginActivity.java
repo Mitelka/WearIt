@@ -73,6 +73,8 @@ public class LoginActivity extends AppCompatActivity{
     private ServerConnector serverConnector;
     private ProgressDialog pd;
     private PropertyReader propertyReader;
+    private String nickName = "UNKNOWN";
+    private Intent intent;
 
     public static final String MESSAGE_KEY = "com.example.anafa.wearit.MESSAGE";
 
@@ -187,11 +189,8 @@ public class LoginActivity extends AppCompatActivity{
         } else {
             
             //pass data to next activity
-            //TODO: GET user nickname from SERVER to pass to next window
-            String message = "UNKNOWN";
 
             Intent intent = new Intent(this, UserMenuActivity.class);
-            intent.putExtra(MESSAGE_KEY, message);
 
             HashMap<String,String> mapToSend = new HashMap<String, String>();
             mapToSend.put("email", email);
@@ -204,14 +203,22 @@ public class LoginActivity extends AppCompatActivity{
                 JSONObject response = new JSONObject(loginResponse);
                 if (response.has("email"))
                 {
+                    String nickName = response.getString("nickname");
                     String successMessage = "Login successfully!";
-                    showAlert(successMessage, true);
+
+                    intent = new Intent(this, UserMenuActivity.class);
+                    intent.putExtra(MESSAGE_KEY, nickName);
+
+                    showAlert(successMessage, true, intent);
+
+                    //TODO: GET user nickname from SERVER to pass to next window
+
                 }
                 else
                 {
                     String serverMessage = response.getString("message");
 
-                    showAlert(serverMessage, false);
+                    showAlert(serverMessage, false, intent);
 
                 }
             } catch (JSONException e) {
@@ -219,7 +226,7 @@ public class LoginActivity extends AppCompatActivity{
             }
         }
     }
-    private void showAlert(String message, final Boolean MoveToNextAct)
+    private void showAlert(String message, final Boolean MoveToNextAct, final Intent intent)
     {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -234,7 +241,7 @@ public class LoginActivity extends AppCompatActivity{
             {
                 if (MoveToNextAct)
                 {
-                    goToNextActivity(true);
+                    goToNextActivity(true, intent);
                 }
             }
         });
@@ -242,10 +249,9 @@ public class LoginActivity extends AppCompatActivity{
         alert.show();
     }
 
-    private void goToNextActivity(Boolean canGoNext)
+    private void goToNextActivity(Boolean canGoNext, Intent intent)
     {
-        Intent intent = new Intent(this, UserMenuActivity.class);
-
+        //Intent intent = new Intent(this, UserMenuActivity.class);
         if (canGoNext)
         {
             startActivity(intent);
