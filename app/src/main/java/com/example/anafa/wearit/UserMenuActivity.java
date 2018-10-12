@@ -87,9 +87,8 @@ public class UserMenuActivity extends AppCompatActivity
     private ArrayList SendToServerGetReqForRecommended()
     {
         UI ui = new UI();
-        serverConnector = new ServerConnector();
         ArrayList itemList = new ArrayList<>();
-        String serverResponse = serverConnector.sendGETRequestToServer(ServerConnector.RequestType.Recommended);
+        String serverResponse = ServerConnector.getInstance().sendGETRequestToServer(ServerConnector.RequestType.Recommended);
 
         try
         {

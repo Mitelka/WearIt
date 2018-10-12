@@ -18,7 +18,7 @@ public class UI {
 
     public static final int Grid_View_Type = 1;
     public static final int List_View_Type = 2;
-    private ServerConnector serverConnector = new ServerConnector();
+    private ServerConnector serverConnector = ServerConnector.getInstance();
     private static final String EMPTY_STRING = "";
 
     //type=1-->GridView
@@ -47,8 +47,8 @@ public class UI {
             responseMessage = googleSearch.searchAtGoogle(txtToSearch);
 
             JSONObject sendTOServer = modifyJsonForServer(responseMessage);
-
             String ServerResponse = serverConnector.sendRequestToServer(sendTOServer, ServerConnector.RequestType.GoogleSearch);
+
             JSONObject resultFromServer = new JSONObject(ServerResponse);
             JSONArray resultByPrice = new JSONArray();
             JSONArray resultByRank = new JSONArray();
@@ -67,7 +67,6 @@ public class UI {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return itemListToShow;
     }
 

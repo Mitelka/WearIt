@@ -70,7 +70,6 @@ public class LoginActivity extends AppCompatActivity{
     private View mProgressView;
     private View mLoginFormView;
     private LinearLayout mdata_login_form;
-    private ServerConnector serverConnector;
     private ProgressDialog pd;
     private PropertyReader propertyReader;
     private String nickName = "UNKNOWN";
@@ -87,7 +86,6 @@ public class LoginActivity extends AppCompatActivity{
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         //populateAutoComplete();
-        serverConnector = new ServerConnector();
         pd = null;
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -196,8 +194,8 @@ public class LoginActivity extends AppCompatActivity{
             mapToSend.put("email", email);
             mapToSend.put("password", password);
 
-            JSONObject RegistrationJson  = serverConnector.createJSonToServer(mapToSend);
-            String loginResponse = serverConnector.sendRequestToServer(RegistrationJson, ServerConnector.RequestType.LOGIN);
+            JSONObject RegistrationJson  = ServerConnector.getInstance().createJSonToServer(mapToSend);
+            String loginResponse = ServerConnector.getInstance().sendRequestToServer(RegistrationJson, ServerConnector.RequestType.LOGIN);
             try
             {
                 JSONObject response = new JSONObject(loginResponse);
@@ -345,8 +343,8 @@ public class LoginActivity extends AppCompatActivity{
         HashMap<String,String> mapToSend = new HashMap<>();
         mapToSend.put("email", email);
 
-        JSONObject forgetPassword  = serverConnector.createJSonToServer(mapToSend);
-        String passwordRecovery = serverConnector.sendRequestToServer(forgetPassword, ServerConnector.RequestType.ForgotPassword);
+        JSONObject forgetPassword  = ServerConnector.getInstance().createJSonToServer(mapToSend);
+        String passwordRecovery = ServerConnector.getInstance().sendRequestToServer(forgetPassword, ServerConnector.RequestType.ForgotPassword);
 
         try
         {

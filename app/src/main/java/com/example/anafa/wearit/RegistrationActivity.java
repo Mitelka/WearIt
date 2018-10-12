@@ -26,14 +26,12 @@ public class RegistrationActivity extends AppCompatActivity {
     private String EmailAddress;
     private String Password;
     private String RepeatPassword;
-    private ServerConnector serverConnector;
     private ProgressDialog pd;
 
     public static final String MESSAGE_KEY = "com.example.anafa.wearit.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        serverConnector = new ServerConnector();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         pd = null;
@@ -130,8 +128,8 @@ public class RegistrationActivity extends AppCompatActivity {
         mapToSend.put("nickname", nickname);
         mapToSend.put("email", EmailAddress);
         mapToSend.put("password", Password);
-        JSONObject RegistrationJson  = serverConnector.createJSonToServer(mapToSend);
-        String registrationResponse = serverConnector.sendRequestToServer(RegistrationJson, ServerConnector.RequestType.SIGNUP);
+        JSONObject RegistrationJson  = ServerConnector.getInstance().createJSonToServer(mapToSend);
+        String registrationResponse = ServerConnector.getInstance().sendRequestToServer(RegistrationJson, ServerConnector.RequestType.SIGNUP);
 
         try
         {

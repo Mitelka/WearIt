@@ -40,7 +40,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     private static final String LOG_TEXT_KEY = "LOG_TEXT_KEY";
     Boolean isUploadPhotoSelected = false;
     String imageUrlString;
-    private ServerConnector serverConnector;
     private GoogleAnalysisImage googleAnalysisImage;
     private PropertyReader propertyReader;
     UI ui = new UI();

@@ -18,32 +18,41 @@ import java.util.Map;
 
 public class ServerConnector {
 
+    private static final String EMPTY_STRING = "";
     private final static String BASE_SERVER_URL = "https://mighty-hollows-89031.herokuapp.com/";
     private static final String POST = "POST";
     private static final String GET = "GET";
-    public static final String CONTENT_TYPE = "Content-Type";
-    public static final String APPLICATION_JSON = "application/json";
-    public static final String X_AUTH = "x-auth";
-    public static String X_AUTH_Value = " ";
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final String APPLICATION_JSON = "application/json";
+    private static final String X_AUTH = "x-auth";
+    private static String X_AUTH_Value = EMPTY_STRING;
+
+    private static ServerConnector instance;
 
     public enum RequestType {
         SIGNUP,
         LOGIN,
         GoogleSearch,
         ForgotPassword,
-        Recommended
+        Recommended,
+        PostToHistory
     }
 
     public static Map<RequestType, String> requestTypeUrlMap;
     public static Map<RequestType, Class<? extends GenericDTO>> requestTypeDtoMap;
 
 
-    public ServerConnector()
+    private ServerConnector()
     {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         initRequestTypeUrlMap();
         initRequestTypeDtoMap();
+    }
+
+    static
+    {
+        instance = new ServerConnector();
     }
 
     private void initRequestTypeUrlMap() {
@@ -53,6 +62,8 @@ public class ServerConnector {
         requestTypeUrlMap.put(RequestType.GoogleSearch, "upload/processGoogleSearchData");
         requestTypeUrlMap.put(RequestType.ForgotPassword, "auth/forgotPassword");
         requestTypeUrlMap.put(RequestType.Recommended, "upload/favorites");
+        requestTypeUrlMap.put(RequestType.PostToHistory, "upload/history");
+
     }
 
     private void initRequestTypeDtoMap() {
@@ -90,7 +101,10 @@ public class ServerConnector {
             if (client.getResponseCode() == 200)
             {
                 is = client.getInputStream();
-                X_AUTH_Value = client.getHeaderField(X_AUTH);
+                if (requestType == RequestType.SIGNUP || requestType == RequestType.LOGIN)
+                {
+                    X_AUTH_Value = client.getHeaderField(X_AUTH);
+                }
             } else {
                 is = client.getErrorStream();
             }
@@ -120,6 +134,7 @@ public class ServerConnector {
             HttpURLConnection client = (HttpURLConnection) content.openConnection();
             client.setRequestMethod(GET);
             client.setRequestProperty(CONTENT_TYPE, APPLICATION_JSON);
+            client.setRequestProperty(X_AUTH, X_AUTH_Value);
 
             //Get Response
             InputStream is;
@@ -144,5 +159,9 @@ public class ServerConnector {
         }
 
         return response.toString();
+    }
+
+    public static ServerConnector getInstance() {
+        return instance;
     }
 }
