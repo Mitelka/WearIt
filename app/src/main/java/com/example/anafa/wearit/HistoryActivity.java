@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.widget.GridView;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class HistoryActivity extends AppCompatActivity {
@@ -18,23 +22,43 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        // TODO: Get history list from user
-        // Show history list results
-        showHistory();
+        ArrayList itemList = SendToServerGetReqForHistory();
+        if (!itemList.isEmpty())
+        {
+            showHistory(itemList);
+        }
+
     }
 
-    private void showHistory() {
+    private void showHistory(ArrayList itemList) {
 
-        /*ListView listView = (ListView) findViewById(R.id.ResultsListView);
+        ListView listView = findViewById(R.id.ResultsListView);
 
         //TODO: Get recommended list from server
         //TODO: DELETE after getting this ArrayList from SERVER
 
-        ArrayList itemList = new ArrayList<>();
-        itemList.add(new Item("Adidas", R.drawable.adidas_gazelle, "13.98$", "www.adidas.com", 5));
-        itemList.add(new Item("LV", R.drawable.wearitphoto, "56.9$", "www.aliexpress/lv.co.il", 4));
-
         //type=2-->ListView
-        UI.showResults(listView, this, itemList, R.layout.content_list_view_results, List_View_Type);*/
+        UI.showResults(listView, this, itemList, R.layout.content_list_view_results, List_View_Type);
+    }
+
+    private ArrayList SendToServerGetReqForHistory()
+    {
+        UI ui = new UI();
+        ArrayList itemList = new ArrayList<>();
+        String serverResponse = ServerConnector.getInstance().sendGETRequestToServer(ServerConnector.RequestType.PostToHistory);
+
+        try
+        {
+            JSONArray resultFromServer = new JSONArray(serverResponse);
+            itemList = ui.createArrayResultToShow(resultFromServer);
+        }
+
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        return itemList;
+
     }
 }
