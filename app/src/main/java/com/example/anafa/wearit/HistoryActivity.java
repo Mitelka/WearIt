@@ -1,7 +1,11 @@
 package com.example.anafa.wearit;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
 
@@ -26,21 +30,19 @@ public class HistoryActivity extends AppCompatActivity {
         if (!itemList.isEmpty())
         {
             showHistory(itemList);
+            addClickListener(listViewContent, itemList);
         }
 
     }
 
     private void showHistory(ArrayList itemList) {
-
-        ListView listView = findViewById(R.id.ResultsListView);
-
-        //TODO: Get recommended list from server
-        //TODO: DELETE after getting this ArrayList from SERVER
+        listViewContent = findViewById(R.id.ResultsListView);
 
         //type=2-->ListView
-        UI.showResults(listView, this, itemList, R.layout.content_list_view_results, List_View_Type);
+        UI.showResults(listViewContent, this, itemList, R.layout.content_list_view_results, List_View_Type);
     }
 
+    // Get recommended list from server
     private ArrayList SendToServerGetReqForHistory()
     {
         UI ui = new UI();
@@ -60,5 +62,18 @@ public class HistoryActivity extends AppCompatActivity {
 
         return itemList;
 
+    }
+
+    private void addClickListener(ListView listView, final ArrayList itemListToShow) {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
+            {
+                Item currentItem = (Item) itemListToShow.get(position);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(currentItem.getItemListLink()));
+                startActivity(intent);
+            }
+        });
     }
 }

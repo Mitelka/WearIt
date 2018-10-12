@@ -1,6 +1,7 @@
 package com.example.anafa.wearit;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.design.widget.NavigationView;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
@@ -23,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -81,6 +84,7 @@ public class UserMenuActivity extends AppCompatActivity
         if (!itemList.isEmpty())
         {
             showRecommended(itemList);
+            addClickListener(gridView, itemList);
         }
     }
 
@@ -108,7 +112,7 @@ public class UserMenuActivity extends AppCompatActivity
 
     private void showRecommended(ArrayList itemListToShow) {
 
-        GridView gridView = (GridView) findViewById(R.id.ResultsGridView);
+        gridView = (GridView) findViewById(R.id.ResultsGridView);
 
         //type=1-->GridView
         UI.showResults(gridView, this, itemListToShow, R.layout.content_grid_view_results, Grid_View_Type);
@@ -254,5 +258,19 @@ public class UserMenuActivity extends AppCompatActivity
         } else {
             tts.speak(speech, TextToSpeech.QUEUE_FLUSH, null, "speech");
         }
+    }
+
+    private void addClickListener(GridView gridView, final ArrayList itemListToShow) {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
+            {
+                Item currentItem = (Item) itemListToShow.get(position);
+                UI.createJsonAndSendForHistory(currentItem);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(currentItem.getItemListLink()));
+                startActivity(intent);
+            }
+        });
     }
 }
