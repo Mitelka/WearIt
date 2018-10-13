@@ -19,4 +19,6 @@
     <dimen name="recommended_item_image_size">90dp</dimen>
     <dimen name="recommended_item_descreption_size">12sp</dimen>
     <dimen name="middle_title_size">30sp</dimen>
+    <dimen name="star_grid_size">15dp</dimen>
+    <dimen name="star_list_size">20dp</dimen>
 </resources>

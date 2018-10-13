@@ -13,11 +13,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UI {
 
-    public static final int Grid_View_Type = 1;
-    public static final int List_View_Type = 2;
+    private static final int Grid_View_Type = 1;
+    private static final int List_View_Type = 2;
     private ServerConnector serverConnector = ServerConnector.getInstance();
     private static final String EMPTY_STRING = "";
 
@@ -141,5 +142,24 @@ public class UI {
 
         sendTOServer.put("googleSearchResult", GoogleSearchjsonSendToServer);
         return sendTOServer;
+    }
+
+    public static void createJsonAndSendForHistory(Item currentItem)
+    {
+        HashMap<String,String> mapToSend = new HashMap<>();
+
+        mapToSend.put("image", currentItem.getItemListImage());
+        mapToSend.put("link", currentItem.getItemListLink());
+        mapToSend.put("itemName", currentItem.getItemListName());
+        mapToSend.put("itemPrice", currentItem.getItemListPrice());
+        mapToSend.put("rank", currentItem.getItemListStars());
+        try {
+            JSONObject JsonForHistory  = new JSONObject(mapToSend);
+            ServerConnector.getInstance().sendRequestToServer(JsonForHistory, ServerConnector.RequestType.PostToHistory);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

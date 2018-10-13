@@ -1,6 +1,7 @@
 package com.example.anafa.wearit;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.design.widget.NavigationView;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
@@ -23,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -36,8 +39,6 @@ public class UserMenuActivity extends AppCompatActivity
     //Show as GridView
     GridView gridView;
 
-    //Use array list
-
     public static final int Grid_View_Type = 1;
 
     @Override
@@ -50,23 +51,13 @@ public class UserMenuActivity extends AppCompatActivity
 
         TextView textView = (TextView) findViewById(R.id.messageDisplayTextView);
         textView.setText("Hello "+ message + "!");
-        //saySomething("Hello "+ message);
-        saySomething(textView.getText().toString());
+//        saySomething("Hello "+ message);
+//        saySomething(textView.getText().toString());
 
-        tts = new TextToSpeech(getApplicationContext(), this);
-
+        //tts = new TextToSpeech(getApplicationContext(), this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -81,6 +72,7 @@ public class UserMenuActivity extends AppCompatActivity
         if (!itemList.isEmpty())
         {
             showRecommended(itemList);
+            addClickListener(gridView, itemList);
         }
     }
 
@@ -108,7 +100,7 @@ public class UserMenuActivity extends AppCompatActivity
 
     private void showRecommended(ArrayList itemListToShow) {
 
-        GridView gridView = (GridView) findViewById(R.id.ResultsGridView);
+        gridView = (GridView) findViewById(R.id.ResultsGridView);
 
         //type=1-->GridView
         UI.showResults(gridView, this, itemListToShow, R.layout.content_grid_view_results, Grid_View_Type);
@@ -254,5 +246,19 @@ public class UserMenuActivity extends AppCompatActivity
         } else {
             tts.speak(speech, TextToSpeech.QUEUE_FLUSH, null, "speech");
         }
+    }
+
+    private void addClickListener(GridView gridView, final ArrayList itemListToShow) {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
+            {
+                Item currentItem = (Item) itemListToShow.get(position);
+                UI.createJsonAndSendForHistory(currentItem);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(currentItem.getItemListLink()));
+                startActivity(intent);
+            }
+        });
     }
 }

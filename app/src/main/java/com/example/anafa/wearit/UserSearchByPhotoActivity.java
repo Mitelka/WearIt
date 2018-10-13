@@ -275,32 +275,12 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Item currentItem = (Item) itemListToShow.get(position);
-                createJsonAndSendForHistory(currentItem);
+                UI.createJsonAndSendForHistory(currentItem);
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(currentItem.getItemListLink()));
                 startActivity(intent);
             }
         });
-    }
-
-    private void createJsonAndSendForHistory(Item currentItem)
-    {
-        HashMap<String,String> mapToSend = new HashMap<>();
-        mapToSend.put("image", currentItem.getItemListImage());
-        mapToSend.put("link", currentItem.getItemListLink());
-        mapToSend.put("itemName", currentItem.getItemListName());
-        mapToSend.put("itemPrice", currentItem.getItemListPrice());
-        mapToSend.put("rank", currentItem.getItemListStars());
-        try
-        {
-            JSONObject JsonForHistory  = new JSONObject(mapToSend);
-            ServerConnector.getInstance().sendRequestToServer(JsonForHistory, ServerConnector.RequestType.PostToHistory);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
     }
 
     public  String removeDuplicate(String input)
