@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +46,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     private GoogleAnalysisImage googleAnalysisImage;
     private PropertyReader propertyReader;
     UI ui = new UI();
+    private View progressbar;
 
     public static final int List_View_Type = 2;
 
@@ -79,6 +81,9 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
         final Context context = this;
 
+        progressbar = findViewById(R.id.progressBar2);
+        progressbar.setVisibility(View.INVISIBLE);
+
         // Take photo from camera
         cameraRadioButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,24 +108,52 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         //search button action
         searchImageOnGoogle.setOnClickListener(new View.OnClickListener()
         {
+
             @Override
             public void onClick(View v)
             {
                 if(uploadedImage) {
-                    Toast.makeText(UserSearchByPhotoActivity.this, "You selected search by image", Toast.LENGTH_LONG).show();
-                    Toast.makeText(UserSearchByPhotoActivity.this, "Searching image on google", Toast.LENGTH_LONG).show();
 
                     tabHost.setVisibility(View.VISIBLE);
 
+                    new YourTask().execute();
+
+                }
+                else
+                {
+                    Toast.makeText(UserSearchByPhotoActivity.this, "You didn't selected an image to search", Toast.LENGTH_LONG).show();
+                }
+                
+            }
+
+            class YourTask extends AsyncTask<String, Void, String>
+            {
+                ProgressBar progressBar = new ProgressBar();
+                @Override
+                protected void onPreExecute()
+                {
+                    //progressBar.getProgressBar(context);
+                    progressbar.setVisibility(View.VISIBLE);
+
+                }
+
+                @Override
+                protected String doInBackground(String... params) {
 
                     googleAnalysisImage = new GoogleAnalysisImage(imageUrlString, stringApiKeyForAnalyse);
 
                     String Response = googleAnalysisImage.imageAnalyzeRequest();
                     String toSearch = AnalysisResponse(Response);
+                    return toSearch;
+                }
 
-                    searchTextAtGoogle(toSearch);
-                } else {
-                    Toast.makeText(UserSearchByPhotoActivity.this, "You didn't selected an image to search", Toast.LENGTH_LONG).show();
+                @Override
+                protected void onPostExecute(String result)
+                {
+                    searchTextAtGoogle(result);
+
+                    //progressBar.dismissProgressBar();
+                    progressbar.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -250,8 +283,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
         }
         catch (Exception e)
         {
-            Toast toast = Toast.makeText(this, "Cannot connect googleSearch", Toast.LENGTH_SHORT);
-            toast.show();
+            e.printStackTrace();
         }
     }
 

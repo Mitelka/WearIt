@@ -16,9 +16,12 @@ public class ProgressBar
         progressBar.show();//displays the progress bar
     }
 
-    public void dismissProgressBar() {
-        if(progressBar != null)
+    public void dismissProgressBar()
+    {
+        if (progressBar.isShowing())
+        {
             progressBar.dismiss();
+        }
     }
 
 
