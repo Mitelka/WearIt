@@ -77,5 +77,10 @@
     <string name="prompt_old_password">Old Password</string>
     <string name="prompt_new_password">New Password</string>
     <string name="action_change_password_short">Change Password</string>
+    <string name="developer_name_1">Anafa Hyams</string>
+    <string name="developer_name_2">Erez Mitelka</string>
+    <string name="developer_name_3">Naor Levi</string>
+    <string name="developer_name_4">Matan Frank</string>
+    <string name="register_button_name">REGISTER</string>
 
 </resources>

@@ -6,52 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".AboutActivity">
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/aboutTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/brushsci"
-            android:orientation="vertical"
-            android:paddingTop="10dp"
-            android:text="@string/about_title"
-            android:textColor="@color/blackColor"
-            android:textSize="@dimen/title_size" />
-
-        <TextView
-            android:id="@+id/subTitleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/arblanca"
-            android:textStyle="bold"
-            android:text="@string/sub_title_for_app_name" />
-
-        <TextView
-            android:id="@+id/aboutSubTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/brushsci"
-            android:orientation="vertical"
-            android:paddingTop="10dp"
-            android:text="@string/about_title"
-            android:textColor="@color/darkBlueColor"
-            android:textSize="20sp" />
-
-        <ScrollView
-            android:id="@+id/aboutScrollLog"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/linearLayout"
-            android:layout_margin="16dp">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/aboutTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/brushsci"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:text="@string/about_title"
+                android:textColor="@color/blackColor"
+                android:textSize="@dimen/title_size" />
+
+            <TextView
+                android:id="@+id/subTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/arblanca"
+                android:textStyle="bold"
+                android:text="@string/sub_title_for_app_name" />
+
+            <TextView
+                android:id="@+id/aboutSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/brushsci"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:text="@string/about_title"
+                android:textColor="@color/darkBlueColor"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/aboutTvLog"
@@ -60,137 +55,146 @@
                 android:text="@string/about_app_details"
                 android:fontFamily="@font/arblanca"
                 android:textAlignment="center"
-                android:textSize="16sp"/>
-        </ScrollView>
+                android:textSize="16sp"
+                android:layout_margin="16dp"/>
 
-        <TextView
-            android:id="@+id/aboutCloseSentTvLog"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/about_close_sent_app_details"
-            android:fontFamily="@font/arblanca"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/aboutCloseSentTvLog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_close_sent_app_details"
+                android:fontFamily="@font/arblanca"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
 
-
-
-        <TextView
-            android:id="@+id/aboutTeamSubTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/brushsci"
-            android:orientation="vertical"
-            android:paddingTop="10dp"
-            android:text="@string/team_members_title"
-            android:textColor="@color/darkBlueColor"
-            android:textSize="20sp"
-            android:layout_marginTop="10dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            <TextView
+                android:id="@+id/aboutTeamSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/brushsci"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:text="@string/team_members_title"
+                android:textColor="@color/darkBlueColor"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:orientation="horizontal"
+                    android:baselineAligned="false">
 
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        app:srcCompat="@drawable/anafa_hyams" />
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:fontFamily="@font/arblanca"
-                        android:textStyle="bold"
-                        android:text="Anafa Hyams" />
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/anafa_hyams" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/arblanca"
+                            android:textStyle="bold"
+                            android:text="@string/developer_name_1" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/erez_mitelka" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/arblanca"
+                            android:textStyle="bold"
+                            android:text="@string/developer_name_2"/>
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        app:srcCompat="@drawable/erez_mitelka" />
-                    <TextView
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:baselineAligned="false">
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:fontFamily="@font/arblanca"
-                        android:textStyle="bold"
-                        android:text="Erez Mitelka"/>
-                </LinearLayout>
+                        android:orientation="vertical"
+                        android:layout_weight="1">
 
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/naor_levi"/>
 
-            </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/arblanca"
+                            android:textStyle="bold"
+                            android:text="@string/developer_name_3"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        app:srcCompat="@drawable/naor_levi"/>
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:fontFamily="@font/arblanca"
-                        android:textStyle="bold"
-                        android:text="Naor Levi"/>
-                </LinearLayout>
+                        android:orientation="vertical"
+                        android:layout_weight="1">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        app:srcCompat="@drawable/matan_frank" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:fontFamily="@font/arblanca"
-                        android:textStyle="bold"
-                        android:text="Matan Frank"/>
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/matan_frank" />
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/arblanca"
+                            android:textStyle="bold"
+                            android:text="@string/developer_name_4"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
-
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
