@@ -38,9 +38,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".UserSearchByTextActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_search_product" />
         <activity
             android:name=".UserSearchByPhotoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_search_product" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".HistoryActivity" />
