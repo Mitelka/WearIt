@@ -91,7 +91,8 @@ public class UI {
                 if (current.has("image")) {
                     itemImage = current.getString("image");
                 }
-                if (current.has("itemPrice")) {
+                if (current.has("itemPrice"))
+                {
                     itemPrice = current.getString("itemPrice");
                 }
                 if (current.has("link")) {
@@ -101,7 +102,11 @@ public class UI {
                     itemStars = current.getString("rank");
                 }
 
-                listToReturn.add(new Item(itemName, itemImage, itemPrice, itemLink, itemStars));
+                if (!(itemPrice.contains("undefined")))
+                {
+                    listToReturn.add(new Item(itemName, itemImage, itemPrice, itemLink, itemStars));
+                }
+
 
             } catch (JSONException e) {
                 e.printStackTrace();

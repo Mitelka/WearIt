@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -58,6 +59,7 @@ public class LoginActivity extends AppCompatActivity{
     private View mLoginFormView;
     private LinearLayout mdata_login_form;
     private PropertyReader propertyReader;
+    private View login_progress;
     private String nickName = "UNKNOWN";
     private Intent intent;
     ProgressBar progressBar;
@@ -93,6 +95,8 @@ public class LoginActivity extends AppCompatActivity{
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
         mdata_login_form = findViewById(R.id.data_login_form);
+        login_progress = findViewById(R.id.login_progress);
+        login_progress.setVisibility(View.INVISIBLE);
     }
 
 
@@ -221,11 +225,35 @@ public class LoginActivity extends AppCompatActivity{
             {
                 if (MoveToNextAct)
                 {
-                    progressBar = new ProgressBar();
-                    progressBar.getProgressBar(context);
-                    goToNextActivity(true, intent);
+                    new UseAsyncForTask().execute();
                 }
             }
+
+            class UseAsyncForTask extends AsyncTask<String, Void, String>
+            {
+                @Override
+                protected void onPreExecute()
+                {
+                    login_progress.setVisibility(View.VISIBLE);
+
+                }
+
+                @Override
+                protected String doInBackground(String... params)
+                {
+                    goToNextActivity(true, intent);
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(String result)
+                {
+
+                    login_progress.setVisibility(View.INVISIBLE);
+                }
+            }
+
+
         });
         final AlertDialog alert = builder.create();
         alert.show();
@@ -255,37 +283,6 @@ public class LoginActivity extends AppCompatActivity{
      * Shows the progress UI and hides the login form.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
 
     public void connectButtonClickHandler(View view) {
         //Snackbar.make(coordinatorLayout, "You selected Sign In", Snackbar.LENGTH_LONG).setAction("Action", null).show();

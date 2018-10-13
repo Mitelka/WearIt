@@ -153,7 +153,8 @@ public class UserMenuActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(MenuItem item)
+    {
         // Handle navigation view item clicks here.
         //TODO: Deleting the start activity on each condition and adding it outside the loop
         int id = item.getItemId();
@@ -165,8 +166,11 @@ public class UserMenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
             Intent intent = new Intent(this, UserSearchByPhotoActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_history) {
+        } else if (id == R.id.nav_history)
+        {
             Intent intent = new Intent(this, HistoryActivity.class);
+            ProgressBar progressBar = new ProgressBar();
+            progressBar.getProgressBar(this);
             startActivity(intent);
         } else if (id == R.id.nav_tools) {
             Intent intent = new Intent(this, ToolsActivity.class);

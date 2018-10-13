@@ -28,7 +28,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -114,7 +113,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 if(uploadedImage) {
-                    new YourTask().execute();
+                    new UseAsyncForTask().execute();
 
                 }
                 else
@@ -124,7 +123,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                 
             }
 
-            class YourTask extends AsyncTask<String, Void, String>
+            class UseAsyncForTask extends AsyncTask<String, Void, String>
             {
                 @Override
                 protected void onPreExecute()
