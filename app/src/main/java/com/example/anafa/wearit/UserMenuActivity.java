@@ -39,8 +39,6 @@ public class UserMenuActivity extends AppCompatActivity
     //Show as GridView
     GridView gridView;
 
-    //Use array list
-
     public static final int Grid_View_Type = 1;
 
     @Override
@@ -53,23 +51,13 @@ public class UserMenuActivity extends AppCompatActivity
 
         TextView textView = (TextView) findViewById(R.id.messageDisplayTextView);
         textView.setText("Hello "+ message + "!");
-        //saySomething("Hello "+ message);
-        saySomething(textView.getText().toString());
+//        saySomething("Hello "+ message);
+//        saySomething(textView.getText().toString());
 
-        tts = new TextToSpeech(getApplicationContext(), this);
-
+        //tts = new TextToSpeech(getApplicationContext(), this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

@@ -37,7 +37,6 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
         pd = null;
 
-
         //android:onClick="registerButtonClickHandler"
         Button button = findViewById(R.id.registerButton);
         button.setOnClickListener(new View.OnClickListener()
@@ -64,11 +63,11 @@ public class RegistrationActivity extends AppCompatActivity {
                 RepeatPassword = eRepeatPassword.getText().toString();
 
 
-                Snackbar.make(v, "Hello " + FirsName + lastName +
-                        "You entered: \n" + " Nickname: " + nickname +
-                        "\nEmail: " + EmailAddress + "\nPassword: " +
-                        Password + "\n", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(v, "Hello " + FirsName + lastName +
+//                        "You entered: \n" + " Nickname: " + nickname +
+//                        "\nEmail: " + EmailAddress + "\nPassword: " +
+//                        Password + "\n", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
 
                 AlertDialog.Builder builder;
 
