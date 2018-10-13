@@ -47,6 +47,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     private PropertyReader propertyReader;
     UI ui = new UI();
     private View progressbar;
+    private Bitmap bitmap;
 
     public static final int List_View_Type = 2;
 
@@ -201,13 +202,12 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Bitmap picture= null;
 
         if (resultCode == Activity.RESULT_OK)
         {
             if (requestCode == REQUEST_CAMERA)
             {
-                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                bitmap = (Bitmap) data.getExtras().get("data");
                 Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 Uri selectImageUri = takePicture.getData();
                 dynamicImageView.setImageBitmap(bitmap);
@@ -219,8 +219,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
                 imageUrlString = base64Data;
 
-                Drawable verticalImage = new BitmapDrawable(getResources(),bitmap);
-                dynamicImageView.setImageDrawable(verticalImage);
+                setBitmap();
             }
             else if(requestCode == SELECT_FILE)
             {
@@ -229,9 +228,9 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                 isUploadPhotoSelected = true;
                 try
                 {
-                    picture = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+                    bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
                     ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-                    picture.compress(Bitmap.CompressFormat.JPEG, 90, byteStream);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, byteStream);
                     String base64Data = Base64.encodeToString(byteStream.toByteArray(),
                             Base64.URL_SAFE);
 
@@ -241,10 +240,14 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                Drawable verticalImage = new BitmapDrawable(getResources(),picture);
-                dynamicImageView.setImageDrawable(verticalImage);
+                setBitmap();
             }
         }
+    }
+
+    private void setBitmap() {
+        Drawable verticalImage = new BitmapDrawable(getResources(), bitmap);
+        dynamicImageView.setImageDrawable(verticalImage);
     }
 
 
