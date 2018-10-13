@@ -13,8 +13,6 @@ import java.util.ArrayList;
 
 public class HistoryActivity extends AppCompatActivity {
 
-    ListView listViewContent;
-
     public static final int List_View_Type = 2;
 
     @Override
@@ -33,9 +31,6 @@ public class HistoryActivity extends AppCompatActivity {
     private void showHistory(ArrayList itemList) {
 
         ListView listView = findViewById(R.id.ResultsListView);
-
-        //TODO: Get recommended list from server
-        //TODO: DELETE after getting this ArrayList from SERVER
 
         //type=2-->ListView
         UI.showResults(listView, this, itemList, R.layout.content_list_view_results, List_View_Type);

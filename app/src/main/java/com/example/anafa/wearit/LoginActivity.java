@@ -57,10 +57,10 @@ public class LoginActivity extends AppCompatActivity{
     private View mProgressView;
     private View mLoginFormView;
     private LinearLayout mdata_login_form;
-    private ProgressDialog pd;
     private PropertyReader propertyReader;
     private String nickName = "UNKNOWN";
     private Intent intent;
+    ProgressBar progressBar;
 
     public static final String MESSAGE_KEY = "com.example.anafa.wearit.MESSAGE";
 
@@ -73,7 +73,6 @@ public class LoginActivity extends AppCompatActivity{
         // Set up the login form.
         mEmailView = findViewById(R.id.email);
         //populateAutoComplete();
-        pd = null;
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -222,7 +221,8 @@ public class LoginActivity extends AppCompatActivity{
             {
                 if (MoveToNextAct)
                 {
-                    ProgressBar.getProgressBar(context);
+                    progressBar = new ProgressBar();
+                    progressBar.getProgressBar(context);
                     goToNextActivity(true, intent);
                 }
             }

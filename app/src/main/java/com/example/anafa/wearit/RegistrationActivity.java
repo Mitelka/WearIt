@@ -28,6 +28,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private String Password;
     private String RepeatPassword;
     private ProgressDialog pd;
+    ProgressBar progressBar;
 
     public static final String MESSAGE_KEY = "com.example.anafa.wearit.MESSAGE";
 
@@ -64,8 +65,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 RepeatPassword = eRepeatPassword.getText().toString();
 
 
-                Snackbar.make(v, "Hello " + FirsName + lastName +
-                        "You entered: \n" + " Nickname: " + nickname +
+                Snackbar.make(v, "Hello " + " " + FirsName + " " + lastName +
+                        " You entered: \n" + " Nickname: " + nickname +
                         "\nEmail: " + EmailAddress + "\nPassword: " +
                         Password + "\n", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -169,7 +170,8 @@ public class RegistrationActivity extends AppCompatActivity {
                     {
                         if (MoveToNextAct)
                         {
-                            ProgressBar.getProgressBar(context);
+                            progressBar = new ProgressBar();
+                            progressBar.getProgressBar(context);
                             registerButtonClickHandler(true);
                         }
                     }
