@@ -102,7 +102,7 @@ public class UI {
                     itemStars = current.getString("rank");
                 }
 
-                if (!(itemPrice.contains("undefined")))
+                if (!(itemPrice.contains("undefined")) && !(itemName.isEmpty() && itemImage.isEmpty() && itemLink.isEmpty() && itemPrice.isEmpty()))
                 {
                     listToReturn.add(new Item(itemName, itemImage, itemPrice, itemLink, itemStars));
                 }
