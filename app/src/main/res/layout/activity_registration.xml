@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="@dimen/padding_registration_form"
     android:paddingRight="@dimen/padding_registration_form"
     tools:context=".RegistrationActivity">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,215 +15,226 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:fontFamily="@font/brushsci"
-                android:orientation="vertical"
-                android:paddingTop="10dp"
-                android:text="@string/registration_form_title"
-                android:textColor="@color/blackColor"
-                android:textSize="@dimen/title_size" />
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/firstNameProperties"
+                android:id="@+id/regLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="15sp">
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/firstNameTextView"
+                    android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/first_name_header"
-                    android:paddingLeft="@dimen/padding_registration_form"/>
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/brushsci"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp"
+                    android:text="@string/registration_form_title"
+                    android:textColor="@color/blackColor"
+                    android:textSize="@dimen/title_size" />
 
-
-                <EditText
-                    android:id="@+id/firstNameEditText"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/firstNameProperties"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:paddingRight="@dimen/padding_registration_form"/>
+                    android:orientation="horizontal"
+                    android:paddingTop="15sp">
 
+                    <TextView
+                        android:id="@+id/firstNameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/first_name_header"
+                        android:paddingLeft="@dimen/padding_registration_form"
+                        android:paddingRight="@dimen/padding_registration_form"/>
+
+
+                    <EditText
+                        android:id="@+id/firstNameEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="@dimen/padding_registration_form"
+                        android:paddingRight="@dimen/padding_registration_form"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lastNameProperties"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lastNameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/last_name_header"
+                        android:paddingLeft="@dimen/padding_registration_form"
+                        android:paddingRight="@dimen/padding_registration_form"/>
+
+
+                    <EditText
+                        android:id="@+id/lastNameEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="@dimen/padding_registration_form"
+                        android:paddingRight="@dimen/padding_registration_form"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/emailAddressProperties"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/emailAddressTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/email_address_header"
+                        android:paddingLeft="@dimen/padding_registration_form"
+                        android:paddingRight="@dimen/padding_registration_form"/>
+
+
+                    <EditText
+                        android:id="@+id/emailAddressEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textEmailAddress"
+                        android:paddingLeft="@dimen/padding_registration_form"
+                        android:paddingRight="@dimen/padding_registration_form"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/nicknameProperties"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/nicknameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/nickname_header"
+                        android:paddingLeft="@dimen/padding_registration_form"
+                        android:paddingRight="@dimen/padding_registration_form"/>
+
+
+                    <EditText
+                        android:id="@+id/nicknameEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="@dimen/padding_registration_form"
+                        android:paddingRight="@dimen/padding_registration_form" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/passwordProperties"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/passwordTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/password_header"
+                        android:paddingLeft="@dimen/padding_registration_form"
+                        android:paddingRight="@dimen/padding_registration_form"/>
+
+
+                    <EditText
+                        android:id="@+id/passwordEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textPassword"
+                        android:paddingLeft="@dimen/padding_registration_form"
+                        android:paddingRight="@dimen/padding_registration_form"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/repeatPasswordProperties"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/repeatPasswordTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/repeat_password_header"
+                        android:paddingLeft="@dimen/padding_registration_form"
+                        android:paddingRight="@dimen/padding_registration_form"/>
+
+
+                    <EditText
+                        android:id="@+id/repeatPasswordEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textPassword"
+                        android:paddingLeft="@dimen/padding_registration_form"
+                        android:paddingRight="@dimen/padding_registration_form" />
+
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/robotCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="25sp"
+                    android:text="@string/robot_header"
+                    android:textSize="@dimen/reg_check_box_size" />
+
+                <CheckBox
+                    android:id="@+id/policiesCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/policies_header"
+                    android:textSize="@dimen/reg_check_box_size" />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/lastNameProperties"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/lastNameTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/last_name_header"
-                    android:paddingLeft="@dimen/padding_registration_form"/>
-
-
-                <EditText
-                    android:id="@+id/lastNameEditText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:paddingRight="@dimen/padding_registration_form"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/emailAddressProperties"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/emailAddressTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/email_address_header"
-                    android:paddingLeft="@dimen/padding_registration_form"/>
-
-
-                <EditText
-                    android:id="@+id/emailAddressEditText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textEmailAddress"
-                    android:paddingRight="@dimen/padding_registration_form"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"></LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/nicknameProperties"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/nicknameTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/nickname_header"
-                    android:paddingLeft="@dimen/padding_registration_form"/>
-
-
-                <EditText
-                    android:id="@+id/nicknameEditText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:paddingRight="@dimen/padding_registration_form" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/passwordProperties"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/passwordTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/password_header"
-                    android:paddingLeft="@dimen/padding_registration_form"/>
-
-
-                <EditText
-                    android:id="@+id/passwordEditText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPassword"
-                    android:paddingRight="@dimen/padding_registration_form"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/repeatPasswordProperties"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/repeatPasswordTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/repeat_password_header"
-                    android:paddingLeft="@dimen/padding_registration_form"/>
-
-
-                <EditText
-                    android:id="@+id/repeatPasswordEditText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPassword"
-                    android:paddingRight="@dimen/padding_registration_form" />
-
-            </LinearLayout>
-
-            <CheckBox
-                android:id="@+id/robotCheckBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="25sp"
-                android:text="@string/robot_header"
-                android:textSize="@dimen/reg_check_box_size" />
-
-
-            <CheckBox
-                android:id="@+id/policiesCheckBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/policies_header"
-                android:textSize="@dimen/reg_check_box_size" />
-
-        </LinearLayout>
+        </ScrollView>
 
         <Button
             android:id="@+id/registerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_gravity="bottom"
-            android:text="REGISTER"
-            />
-
+            android:text="@string/register_button_name" />
 
     </RelativeLayout>
+
 </android.support.constraint.ConstraintLayout>
