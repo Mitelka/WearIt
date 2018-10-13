@@ -125,7 +125,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
 
             class YourTask extends AsyncTask<String, Void, String>
             {
-                ProgressBar progressBar = new ProgressBar();
                 @Override
                 protected void onPreExecute()
                 {

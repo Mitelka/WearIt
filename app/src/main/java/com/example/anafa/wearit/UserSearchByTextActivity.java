@@ -2,6 +2,7 @@ package com.example.anafa.wearit;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -26,12 +27,17 @@ public class UserSearchByTextActivity extends AppCompatActivity {
     private ServerConnector serverConnector;
     UI ui = new UI();
     TabHost tabHost;
+    private View progressbar;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_search_by_text);
+
+        progressbar = findViewById(R.id.progressBar);
+        progressbar.setVisibility(View.INVISIBLE);
 
         propertyReader = new PropertyReader(getBaseContext());
         String stringApiKey = propertyReader.getProperties().getProperty("StringapiKey");
@@ -58,16 +64,43 @@ public class UserSearchByTextActivity extends AppCompatActivity {
         spec.setIndicator("SORTED BY STARS");
         tabHost.addTab(spec);
 
-        searchBtn.setOnClickListener(new View.OnClickListener() {
+        searchBtn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 String txtToSearch = text.getText().toString();
                 Toast.makeText(UserSearchByTextActivity.this, "product name to search: " + txtToSearch, Toast.LENGTH_LONG).show();
-                if (!txtToSearch.equals(EMPTY_STRING)) {
-                    searchTextAtGoogle(txtToSearch);
-                    tabHost.setVisibility(View.VISIBLE);
+                if (!txtToSearch.equals(EMPTY_STRING))
+                {
+                    new YourTask().execute(txtToSearch);
+                    //tabHost.setVisibility(View.VISIBLE);
                 } else {
                     Toast.makeText(UserSearchByTextActivity.this, "You didn't entered product name to search", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            class YourTask extends AsyncTask<String, Void, String>
+            {
+                @Override
+                protected void onPreExecute()
+                {
+                    progressbar.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                protected String doInBackground(String... params)
+                {
+                    return params[0];
+                }
+
+                @Override
+                protected void onPostExecute(String result)
+                {
+                    searchTextAtGoogle(result);
+
+                    tabHost.setVisibility(View.VISIBLE);
+                    progressbar.setVisibility(View.INVISIBLE);
                 }
             }
         });

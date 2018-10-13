@@ -27,6 +27,7 @@
             android:textColor="@color/blackColor"
             android:textSize="@dimen/title_size" />
 
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,6 +61,15 @@
 
 
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="180dp"
+            tools:layout_editor_absoluteY="258dp"
+            android:gravity="center"/>
 
         <TabHost
             android:id="@+id/tabHost"
@@ -132,5 +142,6 @@
 
 
     </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>
