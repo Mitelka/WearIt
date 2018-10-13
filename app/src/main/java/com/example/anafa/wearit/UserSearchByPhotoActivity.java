@@ -113,9 +113,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 if(uploadedImage) {
-
-                    tabHost.setVisibility(View.VISIBLE);
-
                     new YourTask().execute();
 
                 }
@@ -132,7 +129,6 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                 @Override
                 protected void onPreExecute()
                 {
-                    //progressBar.getProgressBar(context);
                     progressbar.setVisibility(View.VISIBLE);
 
                 }
@@ -152,7 +148,7 @@ public class UserSearchByPhotoActivity extends AppCompatActivity {
                 {
                     searchTextAtGoogle(result);
 
-                    //progressBar.dismissProgressBar();
+                    tabHost.setVisibility(View.VISIBLE);
                     progressbar.setVisibility(View.INVISIBLE);
                 }
             }

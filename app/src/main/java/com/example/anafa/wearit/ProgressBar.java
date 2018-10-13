@@ -5,7 +5,6 @@ import android.content.Context;
 
 public class ProgressBar
 {
-    ProgressDialog progressBar;
 
     public void getProgressBar(Context context)
     {
@@ -15,14 +14,5 @@ public class ProgressBar
         progressBar.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
         progressBar.show();//displays the progress bar
     }
-
-    public void dismissProgressBar()
-    {
-        if (progressBar.isShowing())
-        {
-            progressBar.dismiss();
-        }
-    }
-
 
 }
