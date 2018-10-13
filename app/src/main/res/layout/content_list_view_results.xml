@@ -49,16 +49,29 @@
             android:paddingLeft="@dimen/item_description_padding"
             android:textSize="@dimen/item_descreption_size" />
 
-        <TextView
-            android:id="@+id/itemStarsTextView"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
             android:layout_below="@id/itemLinkTextView"
             android:layout_toEndOf="@id/itemImageView"
             android:layout_toRightOf="@id/itemImageView"
-            android:paddingLeft="@dimen/item_description_padding"
-            android:textSize="@dimen/item_descreption_size"/>
+            android:paddingLeft="@dimen/item_description_padding">
 
+            <TextView
+                android:id="@+id/itemStarsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/item_descreption_size"/>
+
+            <ImageView
+                android:id="@+id/starImageView"
+                android:layout_width="@dimen/star_list_size"
+                android:layout_height="@dimen/star_list_size"
+                android:src="@drawable/yellowstar"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 </LinearLayout>
